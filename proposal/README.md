@@ -10,8 +10,10 @@
 ## Project Description
 
 ### Project Approach/Description
+...
 
 ### Functionality
+...
 
 ### Operations
 1. Users can sign up/login to the application
