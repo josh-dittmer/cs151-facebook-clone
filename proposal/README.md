@@ -20,7 +20,10 @@
 8. Security
 
 ### Functionality
-...
+1. UML diagrams will be used to sort out the different features and their subfeatures
+2. Create backend first to develp the features we want and then frontend to finalize the UI for these features
+3. Database to store usernames, passwords, pictures, etc
+4. Security (password encryption)
 
 ### Operations
 1. Users can sign up/login to the application
