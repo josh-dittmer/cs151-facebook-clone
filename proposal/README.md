@@ -10,7 +10,14 @@
 ## Project Description
 
 ### Project Approach/Description
-...
+1. Design diagrams for application operations (UML diagrams)
+2. Plan out how the code for the backend will work
+3. Implement the code for the backend
+4. Plan how we want the UI to look
+5. Frontend planning (Javafx or React)
+6. Implement code for UI
+7. Somewhere to store data (database maybe)
+8. Security
 
 ### Functionality
 ...
