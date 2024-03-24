@@ -10,10 +10,20 @@
 ## Project Description
 
 ### Project Approach/Description
-...
+1. Design diagrams for application operations (UML diagrams)
+2. Plan out how the code for the backend will work
+3. Implement the code for the backend
+4. Plan how we want the UI to look
+5. Frontend planning (Javafx or React)
+6. Implement code for UI
+7. Somewhere to store data (database maybe)
+8. Security
 
 ### Functionality
-...
+1. UML diagrams will be used to sort out the different features and their subfeatures
+2. Create backend first to develp the features we want and then frontend to finalize the UI for these features
+3. Database to store usernames, passwords, pictures, etc
+4. Security (password encryption)
 
 ### Operations
 1. Users can sign up/login to the application
