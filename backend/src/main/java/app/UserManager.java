@@ -34,8 +34,10 @@ public class UserManager {
             String userUsername = resultSet.getString("USERNAME");
             String userDisplayName = resultSet.getString("DISPLAY_NAME");
             String userBio = resultSet.getString("BIO");
+            int userNumFollowers = resultSet.getInt("NUM_FOLLOWERS");
+            int userNumFollowing = resultSet.getInt("NUM_FOLLOWING");
 
-            user = new User(userId, userUsername, userDisplayName, userBio);
+            user = new User(userId, userUsername, userDisplayName, userBio, userNumFollowing, userNumFollowers);
 
         } catch(SQLException e) {
             log.error("SQL error while getting user: " + e.getMessage());

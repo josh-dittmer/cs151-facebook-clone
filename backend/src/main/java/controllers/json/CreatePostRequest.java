@@ -1,11 +1,11 @@
 package controllers.json;
 
-public class PostRequest {
+public class CreatePostRequest {
     private String text;
     private boolean hasImage;
     private String token;
 
-    public PostRequest() {
+    public CreatePostRequest() {
         this.text = "";
         this.hasImage = false;
     }

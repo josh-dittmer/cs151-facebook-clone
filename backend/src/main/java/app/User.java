@@ -4,12 +4,16 @@ public class User {
     private String username;
     private String displayName;
     private String bio;
+    private int numFollowers;
+    private int numFollowing;
 
-    public User(String userId, String username, String displayName, String bio) {
+    public User(String userId, String username, String displayName, String bio, int numFollowers, int numFollowing) {
         this.userId = userId;
         this.username = username;
         this.displayName = displayName;
         this.bio = bio;
+        this.numFollowers = numFollowers;
+        this.numFollowing = numFollowing;
     }
 
     public String getUserId() {
@@ -42,5 +46,20 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+    public int getNumFollowers() {
+        return this.numFollowers;
+    }
+
+    public void setNumFollowers(int numFollowers) {
+        this.numFollowers = numFollowers;
+    }
+
+    public int getNumFollowing() {
+        return this.numFollowing;
+    }
+
+    public void setNumFollowing(int numFollowing) {
+        this.numFollowing = numFollowing;
     }
 }

@@ -1,9 +1,9 @@
 package controllers.json;
 
-public class PostResponse {
+public class CreatePostResponse {
     private String postId;
 
-    public PostResponse(String postId) {
+    public CreatePostResponse(String postId) {
         this.postId = postId;
     }
 

@@ -2,6 +2,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 
+import { getUserProfile, UserProfileResponse } from '@/deps/api_requests';
+
+import Cookie from 'js-cookie';
+
+
 interface ProfileProps {
     userId: string
 };
@@ -17,13 +22,30 @@ export default function ProfileComponent({ userId }: ProfileProps) {
 
     // load profile
     useEffect(() => {
-        setUsername('test.user1');
-        setDisplayName('Test User');
-        setBio('I am a very interesting little guy');
-        setNumFollowers(1456);
-        setNumFollowing(531);
-        setMyProfile(false);
-        setFollowing(false);
+        const token: string | undefined = Cookie.get('token');
+        if (!token) {
+            return;
+        }
+
+        getUserProfile(userId, token)
+        .then((res: UserProfileResponse) => {
+            setUsername(res.username);
+            setDisplayName(res.displayName);
+            setBio(res.bio);
+            setNumFollowers(res.numFollowers);
+            setNumFollowing(res.numFollowing);
+
+            if (userId === 'me') {
+                setMyProfile(true);
+                setFollowing(false);
+            } else {
+                // will check if following in future
+                setFollowing(false);
+            }
+        })
+        .catch((err) => {
+            console.log('Failed to load user profile: ' + err);
+        });
     }, []);
 
     return (

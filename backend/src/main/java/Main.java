@@ -1,7 +1,4 @@
-import app.DatabaseConnection;
-import app.PostManager;
-import app.SessionManager;
-import app.UserManager;
+import app.*;
 import com.hellokaton.blade.Blade;
 import com.hellokaton.blade.options.CorsOptions;
 import com.hellokaton.blade.options.HttpOptions;
@@ -32,10 +29,11 @@ public class Main {
         SessionManager sessionManager = new SessionManager(databaseConn);
         PostManager postManager = new PostManager(databaseConn);
         UserManager userManager = new UserManager(databaseConn);
+        LikeManager likeManager = new LikeManager(databaseConn);
 
         // api controllers
         LoginController loginController = new LoginController(sessionManager);
-        ContentController contentController = new ContentController(sessionManager, postManager, userManager);
+        ContentController contentController = new ContentController(sessionManager, postManager, userManager, likeManager);
 
         log.info("Starting Blade initialization...");
 

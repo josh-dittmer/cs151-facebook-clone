@@ -1,22 +1,22 @@
 package controllers.json;
 
 public class UserPostsRequest {
-    private String userId;
+    private String[] userIds;
     private int page;
     private String token;
 
     public UserPostsRequest() {
-        this.userId = "";
+        this.userIds = new String[0];
         this.page = 0;
         this.token = "";
     }
 
-    public String getUserId() {
-        return userId;
+    public String[] getUserIds() {
+        return userIds;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserIds(String[] userIds) {
+        this.userIds = userIds;
     }
 
     public int getPage() {
@@ -28,7 +28,7 @@ public class UserPostsRequest {
     }
 
     public String getToken() {
-        return userId;
+        return token;
     }
 
     public void setToken(String token) {

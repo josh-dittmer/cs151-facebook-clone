@@ -285,3 +285,126 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desk
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 12 more
+2024-04-05 16:48:30.083255-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE POSTS (\000d\000a    ID INT NOT NULL AUTO_INCREMENT,\000d\000a    POST_ID VARCHAR(64) NOT NULL,\000d\000a    USER_ID VARCHAR(64) [*]NOT_NULL,\000d\000a    HAS_IMAGE BOOLEAN NOT_NULL,\000d\000a    NUM_LIKES INTEGER NOT_NULL,\000d\000a    NUM_COMMENTS INTEGER NOT_NULL,\000d\000a    TIMESTAMP DATETIME NOT NULL DEFAULT(GETDATE()),\000d\000a    PRIMARY KEY (ID)\000d\000a)"; expected "ARRAY, INVISIBLE, VISIBLE, NOT NULL, DEFAULT, GENERATED, ON UPDATE, NOT NULL, DEFAULT ON NULL, SEQUENCE, SELECTIVITY, COMMENT, CONSTRAINT, COMMENT, PRIMARY KEY, UNIQUE, NOT NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+CREATE TABLE POSTS (
+    ID INT NOT NULL AUTO_INCREMENT,
+    POST_ID VARCHAR(64) NOT NULL,
+    USER_ID VARCHAR(64) NOT_NULL,
+    HAS_IMAGE BOOLEAN NOT_NULL,
+    NUM_LIKES INTEGER NOT_NULL,
+    NUM_COMMENTS INTEGER NOT_NULL,
+    TIMESTAMP DATETIME NOT NULL DEFAULT(GETDATE()),
+    PRIMARY KEY (ID)
+) [42001-224]
+2024-04-05 16:52:23.953624-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Function "GETDATE" not found; SQL statement:
+CREATE TABLE POSTS (
+    ID INT NOT NULL AUTO_INCREMENT,
+    POST_ID VARCHAR(64) NOT NULL,
+    USER_ID VARCHAR(64) NOT NULL,
+    HAS_IMAGE BOOLEAN NOT NULL,
+    NUM_LIKES INTEGER NOT NULL,
+    NUM_COMMENTS INTEGER NOT NULL,
+    TIMESTAMP DATETIME NOT NULL DEFAULT(GETDATE()),
+    PRIMARY KEY (ID)
+) [90022-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.Parser.readFunction(Parser.java:3786)
+	at org.h2.command.Parser.readTermWithIdentifier(Parser.java:5148)
+	at org.h2.command.Parser.readTerm(Parser.java:4834)
+	at org.h2.command.Parser.readFactor(Parser.java:3337)
+	at org.h2.command.Parser.readSum(Parser.java:3324)
+	at org.h2.command.Parser.readConcat(Parser.java:3289)
+	at org.h2.command.Parser.readCondition(Parser.java:3079)
+	at org.h2.command.Parser.readExpression(Parser.java:2999)
+	at org.h2.command.Parser.readTermWithoutIdentifier(Parser.java:4929)
+	at org.h2.command.Parser.readTerm(Parser.java:4834)
+	at org.h2.command.Parser.readFactor(Parser.java:3337)
+	at org.h2.command.Parser.readSum(Parser.java:3324)
+	at org.h2.command.Parser.readConcat(Parser.java:3289)
+	at org.h2.command.Parser.readCondition(Parser.java:3079)
+	at org.h2.command.Parser.readExpression(Parser.java:2999)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5582)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8999)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8939)
+	at org.h2.command.Parser.parseCreate(Parser.java:6404)
+	at org.h2.command.Parser.parsePrepared(Parser.java:666)
+	at org.h2.command.Parser.parse(Parser.java:592)
+	at org.h2.command.Parser.parse(Parser.java:564)
+	at org.h2.command.Parser.prepareCommand(Parser.java:483)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1109)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1096)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-04-05 16:52:37.419756-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Function "GETTIMESTAMP" not found; SQL statement:
+CREATE TABLE POSTS (
+    ID INT NOT NULL AUTO_INCREMENT,
+    POST_ID VARCHAR(64) NOT NULL,
+    USER_ID VARCHAR(64) NOT NULL,
+    HAS_IMAGE BOOLEAN NOT NULL,
+    NUM_LIKES INTEGER NOT NULL,
+    NUM_COMMENTS INTEGER NOT NULL,
+    TIMESTAMP DATETIME NOT NULL DEFAULT(GETTIMESTAMP()),
+    PRIMARY KEY (ID)
+) [90022-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.Parser.readFunction(Parser.java:3786)
+	at org.h2.command.Parser.readTermWithIdentifier(Parser.java:5148)
+	at org.h2.command.Parser.readTerm(Parser.java:4834)
+	at org.h2.command.Parser.readFactor(Parser.java:3337)
+	at org.h2.command.Parser.readSum(Parser.java:3324)
+	at org.h2.command.Parser.readConcat(Parser.java:3289)
+	at org.h2.command.Parser.readCondition(Parser.java:3079)
+	at org.h2.command.Parser.readExpression(Parser.java:2999)
+	at org.h2.command.Parser.readTermWithoutIdentifier(Parser.java:4929)
+	at org.h2.command.Parser.readTerm(Parser.java:4834)
+	at org.h2.command.Parser.readFactor(Parser.java:3337)
+	at org.h2.command.Parser.readSum(Parser.java:3324)
+	at org.h2.command.Parser.readConcat(Parser.java:3289)
+	at org.h2.command.Parser.readCondition(Parser.java:3079)
+	at org.h2.command.Parser.readExpression(Parser.java:2999)
+	at org.h2.command.Parser.parseColumnForTable(Parser.java:5582)
+	at org.h2.command.Parser.parseTableColumnDefinition(Parser.java:8999)
+	at org.h2.command.Parser.parseCreateTable(Parser.java:8939)
+	at org.h2.command.Parser.parseCreate(Parser.java:6404)
+	at org.h2.command.Parser.parsePrepared(Parser.java:666)
+	at org.h2.command.Parser.parse(Parser.java:592)
+	at org.h2.command.Parser.parse(Parser.java:564)
+	at org.h2.command.Parser.prepareCommand(Parser.java:483)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1109)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1096)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-04-08 13:23:43.535276-07:00 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO USERS[*]"; expected "., (, OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO USERS [42001-224]
+2024-04-08 13:23:43.535220-07:00 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO USERS[*]"; expected "., (, OVERRIDING USER VALUE, OVERRIDING SYSTEM VALUE, DIRECT, DEFAULT VALUES, VALUES, SET, WITH, (, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO USERS [42001-224]
+2024-04-08 13:30:49.505332-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS (POST_ID, USER_ID, TEXT, HAS_IMAGE) VALUES ('oD5cH80b6NRfeszUC5tdUScidqkVXEwhjGETyCnMkhUkbqoB2VX4L67eF0ZTA4oz', 'abc123', 'Hello, world!, 'FALSE[*]')"; SQL statement:
+INSERT INTO POSTS (POST_ID, USER_ID, TEXT, HAS_IMAGE) VALUES ('oD5cH80b6NRfeszUC5tdUScidqkVXEwhjGETyCnMkhUkbqoB2VX4L67eF0ZTA4oz', 'abc123', 'Hello, world!, 'FALSE') [42000-224]

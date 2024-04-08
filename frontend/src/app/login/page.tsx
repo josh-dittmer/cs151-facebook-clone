@@ -19,7 +19,7 @@ export default function LoginPage() {
         e.preventDefault();
         
         login(username, password)
-        .then((res) => {
+        .then((res: LoginResponse) => {
             setErrorMessage('');
             document.cookie = 'token=' + res.token + '; path=/';
             router.push('/home/timeline');

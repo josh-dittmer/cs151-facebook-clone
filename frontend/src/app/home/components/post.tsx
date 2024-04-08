@@ -22,7 +22,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
     
     return (
         <div className="flex justify-center mb-1">
-            <div className="p-4 bg-blue-50 w-96 md:w-3/5">
+            <div className="p-4 shadow w-96 md:w-3/5">
                 <div className="p-1 flex items-center whitespace-nowrap">
                     <Image 
                         src="/img/no_pfp.png"
@@ -33,8 +33,8 @@ export default function PostComponent({ postId, userId, username, displayName, t
                     />
                     <span className="p-2">{displayName}</span>
                 </div>
-                <div className="py-2 border-t-2 border-t-blue-500">
-                    {hasImage && (
+                <div className="py-2">
+                    {hasImage === true && (
                         <div className="">
                             <Image
                                 src="/img/example.jpg"
@@ -46,7 +46,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                         </div>
                     )}
                     <div className="my-2">
-                        <div className="mb-2 border-b-2 border-gray-200">
+                        <div className="mb-2 border-b-2s border-gray-200">
                             <span className="text-xs text-gray-400">{timestamp}</span>
                         </div>
                         <div>
@@ -55,7 +55,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="flex items-center p-2 border-2 border-blue-200 rounded-full">
+                        <div className="flex items-center p-2 border-2 border-gray-200 rounded-full">
                             <Image
                                 src="/img/like.svg"
                                 width="23"
@@ -65,7 +65,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                             />
                             <span className="text-xs ml-2">{numLikes}</span>
                         </div>
-                        <div className="flex items-center ml-2 p-2 border-2 border-blue-200 rounded-full">
+                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 rounded-full">
                             <Image
                                 src="/img/comment.svg"
                                 width="23"
