@@ -115,7 +115,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                         </div>
                         <div className="flex items-center ml-2 p-2 border-2 border-gray-200 rounded-full">
                             <Image
-                                src="/img/comment.svg"
+                                src="/img/comment.png"
                                 width="23"
                                 height="23"
                                 alt="Comment"
