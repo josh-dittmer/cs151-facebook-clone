@@ -62,7 +62,17 @@ export default function ProfileComponent({ userId }: ProfileProps) {
                     <div className="ml-5">
                         <span className="text-xl p-2">{username}</span>
                         <br />
-                        <button className="mt-3 ml-2 p-2 bg-gray-200 rounded">Follow</button>
+                        {isMyProfile === true ? (
+                            <button className="mt-3 ml-2 p-2 bg-gray-200 rounded">Edit Profile</button>
+                        ) : (
+                            <div>
+                                {following === true ? (
+                                    <button className="mt-3 ml-2 p-2 bg-gray-200 rounded">Unfollow</button>
+                                ) : (
+                                    <button className="mt-3 ml-2 p-2 bg-blue-500 text-white rounded">Follow</button>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="mt-3">
