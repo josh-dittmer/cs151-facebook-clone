@@ -97,7 +97,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                                         width="23"
                                         height="23"
                                         alt="Like"
-                                        className=""
+                                        className="pulse-animation"
                                     />
                                 </a>
                             ) : (

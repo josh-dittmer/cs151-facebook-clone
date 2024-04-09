@@ -33,8 +33,6 @@ public class DatabaseConnection {
         }
         query += "TRUE;";
 
-        System.out.println(query);
-
         return statement.executeQuery(query);
     }
 

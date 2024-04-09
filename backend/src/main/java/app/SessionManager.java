@@ -66,7 +66,7 @@ public class SessionManager {
 
             // check if session is expired, otherwise delete
             Timestamp timestamp = resultSet.getTimestamp("TIMESTAMP");
-            System.out.println(timestamp);
+            //System.out.println(timestamp);
 
             String sessionUserId = resultSet.getString("USER_ID");
 

@@ -59,7 +59,6 @@ public class LikeManager {
 
             ResultSet resultSet = this.databaseConn.lookup("LIKES", "1", criteria);
             if (!resultSet.isBeforeFirst()) {
-                System.out.println("Check likes no results");
                 return false;
             }
         } catch(SQLException e) {

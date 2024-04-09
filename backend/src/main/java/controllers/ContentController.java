@@ -86,8 +86,6 @@ public class ContentController {
 
         for (Post post : allPosts) {
             post.setLiked(this.likeManager.checkLiked(session.getUserId(), post.getPostId()));
-            System.out.println("Post caption: " + post.getText());
-            System.out.println("Post liked: " + post.isLiked());
         }
 
         // sort posts by date
