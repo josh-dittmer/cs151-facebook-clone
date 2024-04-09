@@ -1,5 +1,9 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+
+import { LikePostResponse, likePost, unlikePost } from '@/deps/api_requests';
+
+import Cookie from 'js-cookie';
 
 interface PostProps {
     postId: string,
@@ -15,6 +19,36 @@ interface PostProps {
 }
 
 export default function PostComponent({ postId, userId, username, displayName, text, hasImage, liked, numLikes, numComments, timestamp }: PostProps) {
+    const [likedState, setLikedState] = useState<boolean>(liked);
+    const [numLikesState, setNumLikesState] = useState<number>(numLikes);
+    
+    const token: string | undefined = Cookie.get('token');
+    if (!token) {
+        return;
+    }
+
+    const clientLikePost = () => {
+        likePost(postId, token)
+        .then((res: LikePostResponse) => {
+            setLikedState(true);
+            setNumLikesState((+numLikesState + 1));
+        })
+        .catch((err) => {
+            console.log('Failed to like post: ' + err);
+        })
+    };
+
+    const clientUnlikePost = () => {
+        unlikePost(postId, token)
+        .then((res: LikePostResponse) => {
+            setLikedState(false);
+            setNumLikesState((+numLikesState - 1));
+        })
+        .catch((err) => {
+            console.log('Failed to unlike post: ' + err);
+        })
+    };
+
     // load comments here
     useEffect(() => {
         
@@ -56,14 +90,28 @@ export default function PostComponent({ postId, userId, username, displayName, t
                     </div>
                     <div className="flex items-center">
                         <div className="flex items-center p-2 border-2 border-gray-200 rounded-full">
-                            <Image
-                                src="/img/like.svg"
-                                width="23"
-                                height="23"
-                                alt="Like"
-                                className=""
-                            />
-                            <span className="text-xs ml-2">{numLikes}</span>
+                            {likedState === true ? (
+                                <a onClick={clientUnlikePost}>
+                                    <Image
+                                        src="/img/liked.svg"
+                                        width="23"
+                                        height="23"
+                                        alt="Like"
+                                        className=""
+                                    />
+                                </a>
+                            ) : (
+                                <a onClick={clientLikePost}>
+                                    <Image
+                                        src="/img/unliked.svg"
+                                        width="23"
+                                        height="23"
+                                        alt="Like"
+                                        className=""
+                                    />
+                                </a> 
+                            )}
+                            <span className="text-xs ml-2">{numLikesState}</span>
                         </div>
                         <div className="flex items-center ml-2 p-2 border-2 border-gray-200 rounded-full">
                             <Image

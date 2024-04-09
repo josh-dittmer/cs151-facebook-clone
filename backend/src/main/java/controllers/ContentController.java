@@ -47,6 +47,10 @@ public class ContentController {
             return new GenericError("user not found", -4).toString();
         }
 
+        if (user.getUserId().equals(session.getUserId())) {
+            user.setIsMyProfile(true);
+        }
+
         return new UserProfileResponse(user).toString();
     }
 
@@ -82,6 +86,8 @@ public class ContentController {
 
         for (Post post : allPosts) {
             post.setLiked(this.likeManager.checkLiked(session.getUserId(), post.getPostId()));
+            System.out.println("Post caption: " + post.getText());
+            System.out.println("Post liked: " + post.isLiked());
         }
 
         // sort posts by date
@@ -116,5 +122,47 @@ public class ContentController {
         }
 
         return new CreatePostResponse(postId).toString();
+    }
+
+    @POST(value="/like_post", responseType= ResponseType.JSON)
+    public String likePost(@Body LikePostRequest data) {
+        if (data == null) {
+            log.warn("/like_post: Request had invalid parameters");
+            return new GenericError("invalid parameters", -1).toString();
+        }
+
+        Session session = this.sessionManager.validateSession(data.getToken());
+        if (session == null) {
+            log.warn("/like_post: Session not found");
+            return new GenericError("session not found", -3).toString();
+        }
+
+        if (!this.likeManager.likePost(session.getUserId(), data.getPostId())) {
+            log.warn("/like_post: Failed to like post");
+            return new GenericError("like post failed", -7).toString();
+        }
+
+        return new GenericSuccess().toString();
+    }
+
+    @POST(value="/unlike_post", responseType= ResponseType.JSON)
+    public String unlikePost(@Body LikePostRequest data) {
+        if (data == null) {
+            log.warn("/unlike_post: Request had invalid parameters");
+            return new GenericError("invalid parameters", -1).toString();
+        }
+
+        Session session = this.sessionManager.validateSession(data.getToken());
+        if (session == null) {
+            log.warn("/unlike_post: Session not found");
+            return new GenericError("session not found", -3).toString();
+        }
+
+        if (!this.likeManager.unlikePost(session.getUserId(), data.getPostId())) {
+            log.warn("/unlike_post: Failed to like post");
+            return new GenericError("unlike post failed", -8).toString();
+        }
+
+        return new GenericSuccess().toString();
     }
 }

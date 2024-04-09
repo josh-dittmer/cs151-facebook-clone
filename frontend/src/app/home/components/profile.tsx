@@ -17,7 +17,7 @@ export default function ProfileComponent({ userId }: ProfileProps) {
     const [bio, setBio] = useState<string>('');
     const [numFollowers, setNumFollowers] = useState<number>(0);
     const [numFollowing, setNumFollowing] = useState<number>(0);
-    const [myProfile, setMyProfile] = useState<boolean>(false);
+    const [isMyProfile, setIsMyProfile] = useState<boolean>(false);
     const [following, setFollowing] = useState<boolean>(false);
 
     // load profile
@@ -34,9 +34,9 @@ export default function ProfileComponent({ userId }: ProfileProps) {
             setBio(res.bio);
             setNumFollowers(res.numFollowers);
             setNumFollowing(res.numFollowing);
+            setIsMyProfile(res.isMyProfile);
 
-            if (userId === 'me') {
-                setMyProfile(true);
+            if (isMyProfile) {
                 setFollowing(false);
             } else {
                 // will check if following in future

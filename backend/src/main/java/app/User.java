@@ -6,14 +6,16 @@ public class User {
     private String bio;
     private int numFollowers;
     private int numFollowing;
+    private boolean isMyProfile;
 
-    public User(String userId, String username, String displayName, String bio, int numFollowers, int numFollowing) {
+    public User(String userId, String username, String displayName, String bio, int numFollowers, int numFollowing, boolean isMyProfile) {
         this.userId = userId;
         this.username = username;
         this.displayName = displayName;
         this.bio = bio;
         this.numFollowers = numFollowers;
         this.numFollowing = numFollowing;
+        this.isMyProfile = isMyProfile;
     }
 
     public String getUserId() {
@@ -61,5 +63,13 @@ public class User {
 
     public void setNumFollowing(int numFollowing) {
         this.numFollowing = numFollowing;
+    }
+
+    public boolean isMyProfile() {
+        return this.isMyProfile;
+    }
+
+    public void setIsMyProfile(boolean isMyProfile) {
+        this.isMyProfile = isMyProfile;
     }
 }

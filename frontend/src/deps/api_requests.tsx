@@ -52,7 +52,8 @@ export interface UserProfileResponse {
     displayName: string,
     bio: string,
     numFollowers: number,
-    numFollowing: number
+    numFollowing: number,
+    isMyProfile: boolean
 }
 
 export async function getUserProfile(userId: string, token: string): Promise<UserProfileResponse> {
@@ -133,6 +134,50 @@ export async function createPost(text: string, hasImage: boolean, token: string)
 
             let createPostResponse: CreatePostResponse = res as CreatePostResponse;
             resolve(createPostResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export interface LikePostResponse {
+    success: boolean
+};
+
+export async function likePost(postId: string, token: string): Promise<LikePostResponse> {
+    return new Promise<LikePostResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/like_post', 'post', {
+            postId: postId,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject('like post failed');
+            }
+
+            let likePostResponse: LikePostResponse = res as LikePostResponse;
+            resolve(likePostResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function unlikePost(postId: string, token: string): Promise<LikePostResponse> {
+    return new Promise<LikePostResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/unlike_post', 'post', {
+            postId: postId,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject('unlike post failed');
+            }
+
+            let likePostResponse: LikePostResponse = res as LikePostResponse;
+            resolve(likePostResponse);
         })
         .catch((err) => {
             reject(err);

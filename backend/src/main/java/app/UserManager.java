@@ -37,7 +37,7 @@ public class UserManager {
             int userNumFollowers = resultSet.getInt("NUM_FOLLOWERS");
             int userNumFollowing = resultSet.getInt("NUM_FOLLOWING");
 
-            user = new User(userId, userUsername, userDisplayName, userBio, userNumFollowing, userNumFollowers);
+            user = new User(userId, userUsername, userDisplayName, userBio, userNumFollowing, userNumFollowers, false);
 
         } catch(SQLException e) {
             log.error("SQL error while getting user: " + e.getMessage());

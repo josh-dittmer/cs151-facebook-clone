@@ -23,7 +23,8 @@ public class UserProfileResponse {
         str += "\"displayName\":\"" + this.user.getDisplayName() + "\",";
         str += "\"bio\":\"" + this.user.getBio() + "\",";
         str += "\"numFollowers\":" + this.user.getNumFollowers() + ",";
-        str += "\"numFollowing\":" + this.user.getNumFollowing() + "}";
+        str += "\"numFollowing\":" + this.user.getNumFollowing() + ",";
+        str += "\"isMyProfile\":" + this.user.isMyProfile() + "}";
 
         return str;
     }
