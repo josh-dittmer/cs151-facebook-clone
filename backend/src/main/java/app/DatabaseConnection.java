@@ -49,11 +49,6 @@ public class DatabaseConnection {
         return statement.executeQuery(query);
     }
 
-    /*public void insert(String table, String columns, String values) throws SQLException {
-        Statement statement = this.conn.createStatement();
-        statement.executeUpdate("INSERT INTO " + table + " (" + columns + ")" + " VALUES (" + values + ")");
-    }*/
-
     public void insert(String table, Map<String, String> data) throws SQLException {
         Statement statement = this.conn.createStatement();
 
@@ -78,14 +73,47 @@ public class DatabaseConnection {
         statement.executeUpdate(query);
     }
 
-    public void update(String table, String column, String value, String updates) throws SQLException {
+    /*public void update(String table, String column, String value, String updates) throws SQLException {
         Statement statement = this.conn.createStatement();
         statement.executeUpdate("UPDATE " + table + " SET " + updates + " WHERE " + column + "='" + value + "'");
+    }*/
+
+    public void update(String table, String column, String value, Map<String, String> updates) throws SQLException {
+        Statement statement = this.conn.createStatement();
+
+        boolean first = true;
+
+        String updateStr = "";
+
+        for (Map.Entry<String, String> entry : updates.entrySet()) {
+            if (!first) {
+                updateStr += ", ";
+            } else {
+                first = false;
+            }
+
+            updateStr += entry.getKey() + "=" + entry.getValue();
+        }
+
+        String query = "UPDATE " + table + " SET " + updateStr + " WHERE " + column + "='" + value + "'";
+        statement.executeUpdate(query);
     }
 
-    public void delete(String table, String column, String value) throws SQLException {
+    /*public void delete(String table, String column, String value) throws SQLException {
         Statement statement = this.conn.createStatement();
         statement.executeUpdate("DELETE FROM " + table + " WHERE " + column + "='" + value + "'");
+    }*/
+
+    public void delete(String table, Map<String, String> criteria) throws SQLException {
+        Statement statement = this.conn.createStatement();
+        String query = "DELETE FROM " +  table + " WHERE ";
+
+        for (Map.Entry<String, String> entry : criteria.entrySet()) {
+            query += entry.getKey() + "='" + entry.getValue() + "' AND ";
+        }
+        query += "TRUE;";
+
+        statement.executeUpdate(query);
     }
 
 }

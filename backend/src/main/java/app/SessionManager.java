@@ -45,7 +45,6 @@ public class SessionManager {
             sessionData.put("TOKEN", token);
             sessionData.put("USER_ID", userId);
 
-            //this.app.getDatabaseConn().insert("SESSIONS", "TOKEN, USER_ID", "'" + token + "', '" + userId + "'");
             this.app.getDatabaseConn().insert("SESSIONS", sessionData);
 
             session = new Session(token, userId);
@@ -79,7 +78,10 @@ public class SessionManager {
             String sessionUserId = resultSet.getString("USER_ID");
 
             // update session timestamp
-            this.app.getDatabaseConn().update("SESSIONS", "TOKEN", token, "TIMESTAMP=CURRENT_TIMESTAMP()");
+            Map<String, String> sessionUpdates = new HashMap<String, String>();
+            sessionUpdates.put("TIMESTAMP", "CURRENT_TIMESTAMP()");
+
+            this.app.getDatabaseConn().update("SESSIONS", "TOKEN", token, sessionUpdates);
 
             session = new Session(token, sessionUserId);
 
@@ -102,7 +104,9 @@ public class SessionManager {
                 return null;
             }
 
-            this.app.getDatabaseConn().delete("SESSIONS", "TOKEN", token);
+            Map<String, String> criteria = new HashMap<String, String>();
+            criteria.put("TOKEN", token);
+            this.app.getDatabaseConn().delete("SESSIONS", criteria);
         } catch(SQLException e) {
             log.error("SQL error while deleting session: " + e.getMessage());
             return null;

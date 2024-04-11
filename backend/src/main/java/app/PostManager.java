@@ -69,12 +69,6 @@ public class PostManager {
             postData.put("TEXT", text);
             postData.put("HAS_IMAGE", (hasImage) ? "TRUE" : "FALSE");
 
-            /*String columns = "POST_ID, USER_ID, TEXT, HAS_IMAGE";
-            String values = "'" + postId + "', " +
-                    "'" + userId + "', " +
-                    "'" + text + "', " +
-                    "'" + ((hasImage) ? "TRUE" : "FALSE") + "'";*/
-
             this.app.getDatabaseConn().insert("POSTS", postData);
         } catch(SQLException e) {
             log.error("SQL error while creating user post: " + e.getMessage());

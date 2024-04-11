@@ -27,10 +27,12 @@ public class LikeManager {
             Map<String, String> likeData = new HashMap<String, String>();
             likeData.put("POST_ID", postId);
             likeData.put("USER_ID", userId);
-
-            //this.app.getDatabaseConn().insert("LIKES", "POST_ID, USER_ID", "'" + postId + "', '" + userId + "'");
             this.app.getDatabaseConn().insert("LIKES", likeData);
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, "NUM_LIKES=NUM_LIKES+1");
+
+            Map<String, String> likeUpdates = new HashMap<String, String>();
+            likeUpdates.put("NUM_LIKES", "NUM_LIKES+1");
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, likeUpdates);
+
         } catch(SQLException e) {
             log.error("SQL error while liking post: " + e.getMessage());
             return false;
@@ -46,8 +48,15 @@ public class LikeManager {
                 return false;
             }
 
-            this.app.getDatabaseConn().delete("LIKES", "POST_ID", postId);
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, "NUM_LIKES=NUM_LIKES-1");
+            Map<String, String> criteria = new HashMap<String, String>();
+            criteria.put("POST_ID", postId);
+            criteria.put("USER_ID", userId);
+            this.app.getDatabaseConn().delete("LIKES", criteria);
+
+            Map<String, String> likeUpdates = new HashMap<String, String>();
+            likeUpdates.put("NUM_LIKES", "NUM_LIKES-1");
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, likeUpdates);
+
         } catch(SQLException e) {
             log.error("SQL error while unliking post: " + e.getMessage());
             return false;
