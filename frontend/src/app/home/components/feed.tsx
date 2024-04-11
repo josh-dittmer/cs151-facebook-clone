@@ -24,6 +24,7 @@ export default function FeedComponent({ userIds }: FeedProps) {
         let res: UserPostsResponse = await getUserPosts(userIds, 0, token);
         res.posts.forEach((post: UserPost) => {
             postArr.push(<PostComponent 
+                key={post.postId}
                 postId={post.postId}
                 userId={post.userId}
                 username={post.username}

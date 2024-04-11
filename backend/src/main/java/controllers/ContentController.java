@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -17,16 +18,10 @@ import java.util.Comparator;
 public class ContentController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    private SessionManager sessionManager;
-    private PostManager postManager;
-    private UserManager userManager;
-    private LikeManager likeManager;
+    private Application app;
 
-    public ContentController(SessionManager sessionManager, PostManager postManager, UserManager userManager, LikeManager likeManager) {
-        this.sessionManager = sessionManager;
-        this.postManager = postManager;
-        this.userManager = userManager;
-        this.likeManager = likeManager;
+    public ContentController(Application app) {
+        this.app = app;
     }
 
     @POST(value="/user_profile", responseType= ResponseType.JSON)
@@ -36,19 +31,15 @@ public class ContentController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = this.sessionManager.validateSession(data.getToken());
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             return new GenericError("session not found", -3).toString();
         }
 
-        User user = this.userManager.getUser((data.getUserId().equals("me")) ? session.getUserId() : data.getUserId());
+        User user = this.app.getUserManager().getUser(data.getUserId(), session.getUserId());
         if (user == null) {
             log.warn("/user_profile: User [" + data.getUserId() + "] not found");
             return new GenericError("user not found", -4).toString();
-        }
-
-        if (user.getUserId().equals(session.getUserId())) {
-            user.setIsMyProfile(true);
         }
 
         return new UserProfileResponse(user).toString();
@@ -62,41 +53,31 @@ public class ContentController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = this.sessionManager.validateSession(data.getToken());
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             return new GenericError("session not found", -3).toString();
         }
 
-        ArrayList<Post> allPosts = new ArrayList<Post>();
+        ArrayList<User> users = new ArrayList<>();
+        ArrayList<Post> posts = new ArrayList<Post>();
 
-        for (String userId : data.getUserIds()) {
-            User user = this.userManager.getUser((userId.equals("me")) ? session.getUserId() : userId);
+        ArrayList<String> userIds = new ArrayList<String>(Arrays.asList(data.getUserIds()));
+        users = this.app.getUserManager().getUsers(userIds, session.getUserId());
 
-            if (user == null) {
-                log.warn("/user_posts: User [" + userId + "] not found");
-            } else {
-                ArrayList<Post> userPosts = this.postManager.getUserPosts(user);
-                if (userPosts == null) {
-                    log.warn("/user_posts: Failed to load user posts for [" + userId + "]");
-                } else {
-                    allPosts.addAll(userPosts);
-                }
-            }
-        }
-
-        for (Post post : allPosts) {
-            post.setLiked(this.likeManager.checkLiked(session.getUserId(), post.getPostId()));
+        posts = this.app.getPostManager().getUserPosts(users, session.getUserId());
+        if (posts == null) {
+            log.warn("/user_posts: Failed to load user posts");
         }
 
         // sort posts by date
-        Collections.sort(allPosts, new Comparator<Post>() {
+        Collections.sort(posts, new Comparator<Post>() {
             @Override
             public int compare(Post p1, Post p2) {
                 return p2.getTimestamp().compareTo(p1.getTimestamp());
             }
         });
 
-        return new UserPostsResponse(allPosts).toString();
+        return new UserPostsResponse(posts).toString();
     }
 
     // create a post
@@ -107,13 +88,13 @@ public class ContentController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = this.sessionManager.validateSession(data.getToken());
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/create_post: Session not found");
             return new GenericError("session not found", -3).toString();
         }
 
-        String postId = this.postManager.createPost(session.getUserId(), data.getText(), data.hasImage());
+        String postId = this.app.getPostManager().createPost(session.getUserId(), data.getText(), data.hasImage());
         if (postId == null) {
             log.warn("/create_post: Failed to create post");
             return new GenericError("failed to create post", -6).toString();
@@ -129,13 +110,13 @@ public class ContentController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = this.sessionManager.validateSession(data.getToken());
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/like_post: Session not found");
             return new GenericError("session not found", -3).toString();
         }
 
-        if (!this.likeManager.likePost(session.getUserId(), data.getPostId())) {
+        if (!this.app.getLikeManager().likePost(session.getUserId(), data.getPostId())) {
             log.warn("/like_post: Failed to like post");
             return new GenericError("like post failed", -7).toString();
         }
@@ -150,13 +131,13 @@ public class ContentController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = this.sessionManager.validateSession(data.getToken());
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/unlike_post: Session not found");
             return new GenericError("session not found", -3).toString();
         }
 
-        if (!this.likeManager.unlikePost(session.getUserId(), data.getPostId())) {
+        if (!this.app.getLikeManager().unlikePost(session.getUserId(), data.getPostId())) {
             log.warn("/unlike_post: Failed to like post");
             return new GenericError("unlike post failed", -8).toString();
         }

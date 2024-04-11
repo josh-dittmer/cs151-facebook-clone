@@ -28,3 +28,6 @@ CREATE TABLE USERS (
     NUM_FOLLOWING INTEGER NOT NULL,
     PRIMARY KEY (ID)
 );
+
+INSERT INTO USERS (USER_ID, USERNAME, PASSWORD, DISPLAY_NAME, BIO)
+VALUES ('abc1234', 'test.user1', '1234', 'Test User', 'Hello my friend I am a test user :)');

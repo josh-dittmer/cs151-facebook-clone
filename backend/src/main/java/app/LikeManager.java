@@ -11,10 +11,10 @@ import java.util.Map;
 public class LikeManager {
     private static final Logger log = LoggerFactory.getLogger(LikeManager.class);
 
-    private DatabaseConnection databaseConn;
+    private Application app;
 
-    public LikeManager(DatabaseConnection databaseConn) {
-        this.databaseConn = databaseConn;
+    public LikeManager(Application app) {
+        this.app = app;
     }
 
     public boolean likePost(String userId, String postId) {
@@ -24,8 +24,13 @@ public class LikeManager {
                 return false;
             }
 
-            this.databaseConn.insert("LIKES", "POST_ID, USER_ID", "'" + postId + "', '" + userId + "'");
-            this.databaseConn.update("POSTS", "POST_ID", postId, "NUM_LIKES=NUM_LIKES+1");
+            Map<String, String> likeData = new HashMap<String, String>();
+            likeData.put("POST_ID", postId);
+            likeData.put("USER_ID", userId);
+
+            //this.app.getDatabaseConn().insert("LIKES", "POST_ID, USER_ID", "'" + postId + "', '" + userId + "'");
+            this.app.getDatabaseConn().insert("LIKES", likeData);
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, "NUM_LIKES=NUM_LIKES+1");
         } catch(SQLException e) {
             log.error("SQL error while liking post: " + e.getMessage());
             return false;
@@ -41,8 +46,8 @@ public class LikeManager {
                 return false;
             }
 
-            this.databaseConn.delete("LIKES", "POST_ID", postId);
-            this.databaseConn.update("POSTS", "POST_ID", postId, "NUM_LIKES=NUM_LIKES-1");
+            this.app.getDatabaseConn().delete("LIKES", "POST_ID", postId);
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, "NUM_LIKES=NUM_LIKES-1");
         } catch(SQLException e) {
             log.error("SQL error while unliking post: " + e.getMessage());
             return false;
@@ -57,7 +62,7 @@ public class LikeManager {
             criteria.put("USER_ID", userId);
             criteria.put("POST_ID", postId);
 
-            ResultSet resultSet = this.databaseConn.lookup("LIKES", "1", criteria);
+            ResultSet resultSet = this.app.getDatabaseConn().lookup("LIKES", "1", criteria);
             if (!resultSet.isBeforeFirst()) {
                 return false;
             }

@@ -41,7 +41,7 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                         </Link>
                     </li>
                     <li>
-                        <Link href="/home/my_profile" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                        <Link href="/home/profile/me" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                             <img src="/img/profile.png" className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" />
                             <span className="flex-1 ms-3 whitespace-nowrap">My Profile</span>
                         </Link>

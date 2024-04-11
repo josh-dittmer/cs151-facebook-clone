@@ -46,11 +46,11 @@ export default function MakePostComponent() {
                     <div className="mt-3 flex items-center">
                         <button 
                             type="submit"
-                            className="p-2 bg-blue-500 text-white rounded"
+                            className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
                         >
                             Share
                         </button>
-                        <div className="ml-4 bg-gray-200 rounded-full p-2">
+                        <div className="ml-4 bg-gray-200 hover:bg-gray-300 rounded-full p-2">
                             <label 
                                 htmlFor="image-picker"
                                 className=""

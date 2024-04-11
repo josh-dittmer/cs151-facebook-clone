@@ -8,21 +8,23 @@ import util.RandomUID;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SessionManager {
     private static final Logger log = LoggerFactory.getLogger(SessionManager.class);
 
-    private DatabaseConnection databaseConn;
+    private Application app;
 
-    public SessionManager(DatabaseConnection databaseConn) {
-        this.databaseConn = databaseConn;
+    public SessionManager(Application app) {
+        this.app = app;
     }
 
     public Session createSession(String username, String password) {
         Session session;
 
         try {
-            ResultSet resultSet = this.databaseConn.lookup("USERS", "USERNAME", username);
+            ResultSet resultSet = this.app.getDatabaseConn().lookup("USERS", "USERNAME", username);
 
             // no results
             if (!resultSet.next()) {
@@ -39,7 +41,13 @@ public class SessionManager {
             // generate random session token
             String token = RandomUID.generate(64);
 
-            this.databaseConn.insert("SESSIONS", "TOKEN, USER_ID", "'" + token + "', '" + userId + "'");
+            Map<String, String> sessionData = new HashMap<String, String>();
+            sessionData.put("TOKEN", token);
+            sessionData.put("USER_ID", userId);
+
+            //this.app.getDatabaseConn().insert("SESSIONS", "TOKEN, USER_ID", "'" + token + "', '" + userId + "'");
+            this.app.getDatabaseConn().insert("SESSIONS", sessionData);
+
             session = new Session(token, userId);
 
             log.info("Created session [" + token + "]");
@@ -56,7 +64,7 @@ public class SessionManager {
         Session session;
 
         try {
-            ResultSet resultSet = this.databaseConn.lookup("SESSIONS", "TOKEN", token);
+            ResultSet resultSet = this.app.getDatabaseConn().lookup("SESSIONS", "TOKEN", token);
 
             // no results
             if (!resultSet.next()) {
@@ -71,7 +79,7 @@ public class SessionManager {
             String sessionUserId = resultSet.getString("USER_ID");
 
             // update session timestamp
-            this.databaseConn.update("SESSIONS", "TOKEN", token, "TIMESTAMP=CURRENT_TIMESTAMP()");
+            this.app.getDatabaseConn().update("SESSIONS", "TOKEN", token, "TIMESTAMP=CURRENT_TIMESTAMP()");
 
             session = new Session(token, sessionUserId);
 
@@ -94,7 +102,7 @@ public class SessionManager {
                 return null;
             }
 
-            this.databaseConn.delete("SESSIONS", "TOKEN", token);
+            this.app.getDatabaseConn().delete("SESSIONS", "TOKEN", token);
         } catch(SQLException e) {
             log.error("SQL error while deleting session: " + e.getMessage());
             return null;

@@ -1,7 +1,6 @@
 package controllers;
 
-import app.Session;
-import app.SessionManager;
+import app.*;
 import com.hellokaton.blade.annotation.Path;
 import com.hellokaton.blade.annotation.request.Body;
 import com.hellokaton.blade.annotation.route.GET;
@@ -17,10 +16,10 @@ import org.slf4j.LoggerFactory;
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    private SessionManager sessionManager;
+    private Application app;
 
-    public LoginController(SessionManager sessionManager) {
-        this.sessionManager = sessionManager;
+    public LoginController(Application app) {
+        this.app = app;
     }
     @POST(value="/login", responseType=ResponseType.JSON)
     public String login(@Body LoginRequest data) {
@@ -29,7 +28,7 @@ public class LoginController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = sessionManager.createSession(data.getUsername(), data.getPassword());
+        Session session = this.app.getSessionManager().createSession(data.getUsername(), data.getPassword());
         if (session == null) {
             log.warn("/login: Could not create session");
             return new GenericError("invalid credentials", -2).toString();
@@ -46,7 +45,7 @@ public class LoginController {
             return new GenericError("invalid parameters", -1).toString();
         }
 
-        Session session = sessionManager.deleteSession(data.getToken());
+        Session session = this.app.getSessionManager().deleteSession(data.getToken());
         if (session == null) {
             log.warn("/logout: Could not find session");
             return new GenericError("session not found", -3).toString();

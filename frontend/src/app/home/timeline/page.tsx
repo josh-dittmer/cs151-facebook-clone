@@ -15,7 +15,7 @@ export default function TimelinePage() {
             <div className="border-b-2 border-b-blue-50 mb-5 p-5">
                 <h1 className="text-3xl font-bold">My Timeline</h1>
             </div>
-            <FeedComponent userIds={['abc123']}></FeedComponent>
+            <FeedComponent userIds={['me']}></FeedComponent>
         </div>
     );
 }

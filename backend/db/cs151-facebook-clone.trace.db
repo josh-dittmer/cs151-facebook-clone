@@ -21,7 +21,7 @@ org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The
 	at org.h2.Driver.connect(Driver.java:59)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
-	at Main.main(Main.java:28)
+	at app.Application.main(app.Application.java:28)
 Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
@@ -205,7 +205,7 @@ org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The
 	at org.h2.Driver.connect(Driver.java:59)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
-	at Main.main(Main.java:18)
+	at app.Application.main(app.Application.java:18)
 Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
@@ -242,7 +242,7 @@ org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The
 	at org.h2.Driver.connect(Driver.java:59)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
-	at Main.main(Main.java:19)
+	at app.Application.main(app.Application.java:19)
 Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
@@ -273,7 +273,7 @@ org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The
 	at org.h2.Driver.connect(Driver.java:59)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
 	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
-	at Main.main(Main.java:21)
+	at app.Application.main(app.Application.java:21)
 Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
@@ -408,3 +408,128 @@ INSERT INTO USERS [42001-224]
 2024-04-08 13:30:49.505332-07:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS (POST_ID, USER_ID, TEXT, HAS_IMAGE) VALUES ('oD5cH80b6NRfeszUC5tdUScidqkVXEwhjGETyCnMkhUkbqoB2VX4L67eF0ZTA4oz', 'abc123', 'Hello, world!, 'FALSE[*]')"; SQL statement:
 INSERT INTO POSTS (POST_ID, USER_ID, TEXT, HAS_IMAGE) VALUES ('oD5cH80b6NRfeszUC5tdUScidqkVXEwhjGETyCnMkhUkbqoB2VX4L67eF0ZTA4oz', 'abc123', 'Hello, world!, 'FALSE') [42000-224]
+2024-04-10 21:53:12.774739-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "USER_ID" not found; SQL statement:
+INSERT INTO USERS (USER_ID, USERNAME, PASSWORD, DISPLAY_NAME, BIO)
+VALUES (USER_ID='abc1234', USERNAME='test.user1', PASSWORD='1234', DISPLAY_NAME='Test User', BIO='Hello my friend I am a test user :)') [42122-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:244)
+	at org.h2.expression.ExpressionColumn.optimizeOther(ExpressionColumn.java:226)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:213)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:147)
+	at org.h2.command.dml.Insert.doPrepare(Insert.java:300)
+	at org.h2.command.dml.DataChangeStatement.prepare(DataChangeStatement.java:37)
+	at org.h2.command.Parser.prepareCommand(Parser.java:489)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1109)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1096)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-04-10 22:54:26.223982-07:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at app.Application.<init>(Application.java:30)
+	at app.Application.main(Application.java:78)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 19 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 13 more
+2024-04-10 22:54:48.456398-07:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at app.Application.<init>(Application.java:30)
+	at app.Application.main(Application.java:78)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 19 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 13 more
+2024-04-10 23:52:31.030307-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO LIKES([*]('POST_ID', 'USER_ID') VALUES ((GkbCmHPO6MDsVnuOPqiohzoQld3nTbNWASHVqyJnSCJkrbhX5YfiKjG2MHKBdnAl, abc123)"; expected "identifier"; SQL statement:
+INSERT INTO LIKES(('POST_ID', 'USER_ID') VALUES ((GkbCmHPO6MDsVnuOPqiohzoQld3nTbNWASHVqyJnSCJkrbhX5YfiKjG2MHKBdnAl, abc123) [42001-224]
+2024-04-10 23:54:13.488622-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO LIKES([*]'POST_ID', 'USER_ID') VALUES (GkbCmHPO6MDsVnuOPqiohzoQld3nTbNWASHVqyJnSCJkrbhX5YfiKjG2MHKBdnAl, abc123)"; expected "identifier"; SQL statement:
+INSERT INTO LIKES('POST_ID', 'USER_ID') VALUES (GkbCmHPO6MDsVnuOPqiohzoQld3nTbNWASHVqyJnSCJkrbhX5YfiKjG2MHKBdnAl, abc123) [42001-224]
+2024-04-10 23:54:55.690332-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: Method is only allowed for a query. Use execute or executeUpdate instead of executeQuery; SQL statement:
+INSERT INTO LIKES(POST_ID, USER_ID) VALUES ('GkbCmHPO6MDsVnuOPqiohzoQld3nTbNWASHVqyJnSCJkrbhX5YfiKjG2MHKBdnAl', 'abc123') [90002-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.Prepared.query(Prepared.java:256)
+	at org.h2.command.CommandContainer.query(CommandContainer.java:252)
+	at org.h2.command.Command.executeQuery(Command.java:192)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:101)
+	at app.DatabaseConnection.insert(DatabaseConnection.java:78)
+	at app.LikeManager.likePost(LikeManager.java:32)
+	at controllers.ContentController.likePost(ContentController.java:119)
+	at controllers.ContentControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)

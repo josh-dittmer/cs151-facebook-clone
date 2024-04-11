@@ -40,3 +40,12 @@ body {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.5); }
 }
+
+.inner-focus-scale {
+  transform: scale(1.0);
+}
+
+.inner-focus-scale:focus-within, .inner-focus-scale:hover {
+  transform: scale(1.05);
+  transition: all 0.1s;
+}

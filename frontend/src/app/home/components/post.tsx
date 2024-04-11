@@ -89,7 +89,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="flex items-center p-2 border-2 border-gray-200 rounded-full">
+                        <div className="flex items-center p-2 border-2 border-gray-200 hover:border-gray-300 rounded-full">
                             {likedState === true ? (
                                 <a onClick={clientUnlikePost}>
                                     <Image
@@ -113,7 +113,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                             )}
                             <span className="text-xs ml-2">{numLikesState}</span>
                         </div>
-                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 rounded-full">
+                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 hover:border-gray-300 rounded-full">
                             <Image
                                 src="/img/comment.png"
                                 width="23"
