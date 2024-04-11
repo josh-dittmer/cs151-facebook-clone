@@ -12,7 +12,7 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                             <img src="/img/sidebar.png" className="w-6 h-6" />
                         </button>
                         
-                        <h1 className="p-2 rounded bg-blue-500 text-white text-2xl text-bold">Facebook😂😂</h1>
+                        <h1 className="p-2 text-blue-500 text-3xl">Facebook😂😂</h1>
                     </div>
                 </div>
             </div>

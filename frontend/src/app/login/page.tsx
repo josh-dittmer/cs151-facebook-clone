@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { login, LoginResponse } from '@/deps/api_requests'
 
@@ -32,8 +33,10 @@ export default function LoginPage() {
     return (
         <div className={styles.content}>
             <div className="flex h-screen items-center justify-center">
-                <div className="bg-white py-10 px-10 text-center shadow-xl rounded">
-                    <h1 className="p-2 rounded bg-blue-500 text-white text-2xl text-bold">Facebook😂😂</h1>
+                <div className="bg-white py-10 px-10 text-center shadow-xl shadow-inner rounded">
+                    <center>
+                        <h1 className="p-2 text-4xl text-blue-500">Facebook😂😂</h1>
+                    </center>
                     <br />
                     {errorMessage && (
                     <div className="px-1 py-1">
@@ -48,7 +51,7 @@ export default function LoginPage() {
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username..."
                             required
-                            className="p-2 my-2 border-b-2 border-blue-500 placeholder:text-black"
+                            className="p-3 my-2 w-72 border-2 border-blue-200 rounded shadow-inner focus:outline-none focus-scale"
                         />
                         <br />
                         <input 
@@ -57,17 +60,25 @@ export default function LoginPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password..."
                             required
-                            className="p-2 my-2 border-b-2 border-blue-500 placeholder:text-black"
+                            className="p-3 my-2 w-72 border-2 border-blue-200 rounded shadow-inner focus:outline-none focus-scale"
                         />
-                        <br />
                         <br />
                         <button
                             type="submit"
-                            className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold"
+                            className="px-4 py-2 mt-4 rounded bg-blue-500 hover:bg-blue-600 text-white"
                         >
                             Login
                         </button>
                     </form>
+                    <div className="mt-5">
+                        <span className="text-sm">Don't have an account? </span>
+                        <Link 
+                            href="/signup"
+                            className="text-blue-500 underline text-sm"
+                        >
+                            Sign up!
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

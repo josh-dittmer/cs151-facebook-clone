@@ -63,10 +63,15 @@ public class ContentController {
 
         ArrayList<String> userIds = new ArrayList<String>(Arrays.asList(data.getUserIds()));
         users = this.app.getUserManager().getUsers(userIds, session.getUserId());
+        if (users == null) {
+            log.warn("/user_posts: Failed to load users");
+            return new GenericError("failed to load users", -9).toString();
+        }
 
         posts = this.app.getPostManager().getUserPosts(users, session.getUserId());
         if (posts == null) {
             log.warn("/user_posts: Failed to load user posts");
+            return new GenericError("failed to load user posts", -10).toString();
         }
 
         // sort posts by date

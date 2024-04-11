@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { LikePostResponse, likePost, unlikePost } from '@/deps/api_requests';
 
@@ -34,7 +35,8 @@ export default function PostComponent({ postId, userId, username, displayName, t
             setNumLikesState((+numLikesState + 1));
         })
         .catch((err) => {
-            console.log('Failed to like post: ' + err);
+            console.log('Failed to like post!');
+            console.log(err);
         })
     };
 
@@ -45,7 +47,8 @@ export default function PostComponent({ postId, userId, username, displayName, t
             setNumLikesState((+numLikesState - 1));
         })
         .catch((err) => {
-            console.log('Failed to unlike post: ' + err);
+            console.log('Failed to unlike post!');
+            console.log(err);
         })
     };
 
@@ -57,16 +60,18 @@ export default function PostComponent({ postId, userId, username, displayName, t
     return (
         <div className="flex justify-center mb-1">
             <div className="p-4 shadow w-96 md:w-3/5">
-                <div className="p-1 flex items-center whitespace-nowrap">
-                    <Image 
-                        src="/img/no_pfp.png"
-                        width="35"
-                        height="35"
-                        alt="Profile photo"
-                        className="p-1 border-2 border-blue-500 rounded-full"
-                    />
-                    <span className="p-2">{displayName}</span>
-                </div>
+                <Link href={'/home/profile/' + userId}>
+                    <div className="p-1 flex items-center whitespace-nowrap">
+                        <Image 
+                            src="/img/no_pfp.png"
+                            width="35"
+                            height="35"
+                            alt="Profile photo"
+                            className="p-1 border-2 border-blue-500 rounded-full"
+                        />
+                        <span className="p-2">{displayName}</span>
+                    </div>
+                </Link>
                 <div className="py-2">
                     {hasImage === true && (
                         <div className="">
@@ -84,7 +89,9 @@ export default function PostComponent({ postId, userId, username, displayName, t
                             <span className="text-xs text-gray-400">{timestamp}</span>
                         </div>
                         <div>
-                            <span className="text-sm font-bold mr-2">{username}</span>
+                            <Link href={'/home/profile/' + userId}>
+                                <span className="text-sm font-bold mr-2">{username}</span>
+                            </Link>
                             <span className="text-sm">{text}</span>
                         </div>
                     </div>
@@ -113,7 +120,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                             )}
                             <span className="text-xs ml-2">{numLikesState}</span>
                         </div>
-                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 hover:border-gray-300 rounded-full">
+                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 hover:border-gray-300w rounded-full">
                             <Image
                                 src="/img/comment.png"
                                 width="23"

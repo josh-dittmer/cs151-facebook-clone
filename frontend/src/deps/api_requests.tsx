@@ -34,7 +34,7 @@ export async function login(username: string, password: string): Promise<LoginRe
         })
         .then((res) => {
             if (!res.success) {
-                reject('login failed');
+                reject(res);
             }
 
             let loginResponse: LoginResponse = res as LoginResponse;
@@ -64,7 +64,7 @@ export async function getUserProfile(userId: string, token: string): Promise<Use
         })
         .then((res) => {
             if (!res.success) {
-                reject('get user profile failed');
+                reject(res);
             }
 
             let userProfileResponse: UserProfileResponse = res as UserProfileResponse;
@@ -103,7 +103,7 @@ export async function getUserPosts(userIds: string[], page: number, token: strin
         })
         .then((res) => {
             if (!res.success) {
-                reject('get user posts failed');
+                reject(res);
             }
 
             let userPostsResponse: UserPostsResponse = res as UserPostsResponse;
@@ -129,7 +129,7 @@ export async function createPost(text: string, hasImage: boolean, token: string)
         })
         .then((res) => {
             if (!res.success) {
-                reject('create post failed');
+                reject(res);
             }
 
             let createPostResponse: CreatePostResponse = res as CreatePostResponse;
@@ -153,7 +153,7 @@ export async function likePost(postId: string, token: string): Promise<LikePostR
         })
         .then((res) => {
             if (!res.success) {
-                reject('like post failed');
+                reject(res);
             }
 
             let likePostResponse: LikePostResponse = res as LikePostResponse;
@@ -173,7 +173,7 @@ export async function unlikePost(postId: string, token: string): Promise<LikePos
         })
         .then((res) => {
             if (!res.success) {
-                reject('unlike post failed');
+                reject(res);
             }
 
             let likePostResponse: LikePostResponse = res as LikePostResponse;

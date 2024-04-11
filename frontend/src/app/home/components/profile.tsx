@@ -45,7 +45,8 @@ export default function ProfileComponent({ userId }: ProfileProps) {
             }
         })
         .catch((err) => {
-            console.log('Failed to load user profile: ' + err);
+            console.log('Failed to load user profile!');
+            console.log(err);
         });
     }, []);
 

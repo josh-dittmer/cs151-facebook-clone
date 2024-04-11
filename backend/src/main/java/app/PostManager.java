@@ -32,28 +32,26 @@ public class PostManager {
             ResultSet postResultSet = this.app.getDatabaseConn().lookupAll("POSTS", "USER_ID", userMap.keySet());
 
             while (postResultSet.next()) {
-                String postId = postResultSet.getString("POST_ID");
                 String userId = postResultSet.getString("USER_ID");
-                String postText = postResultSet.getString("TEXT");
-                boolean postHasImage = postResultSet.getBoolean("HAS_IMAGE");
-                int postNumLikes = postResultSet.getInt("NUM_LIKES");
-                int postNumComments = postResultSet.getInt("NUM_COMMENTS");
-                Timestamp postTimestamp = postResultSet.getTimestamp("TIMESTAMP");
 
                 User user = userMap.get(userId);
                 if (user == null) {
                     continue;
                 }
 
-                posts.add(new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, false, postNumLikes, postNumComments, postTimestamp));
+                String postId = postResultSet.getString("POST_ID");
+                String postText = postResultSet.getString("TEXT");
+                boolean postHasImage = postResultSet.getBoolean("HAS_IMAGE");
+                int postNumLikes = postResultSet.getInt("NUM_LIKES");
+                int postNumComments = postResultSet.getInt("NUM_COMMENTS");
+                Timestamp postTimestamp = postResultSet.getTimestamp("TIMESTAMP");
+                boolean postLiked = this.app.getLikeManager().checkLiked(myUserId, postId);
+
+                posts.add(new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp));
             }
         } catch(SQLException e) {
             log.error("SQL error while getting user posts: " + e.getMessage());
             return null;
-        }
-
-        for (Post post : posts) {
-            post.setLiked(this.app.getLikeManager().checkLiked(myUserId, post.getPostId()));
         }
 
         return posts;

@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -73,11 +71,6 @@ public class DatabaseConnection {
         statement.executeUpdate(query);
     }
 
-    /*public void update(String table, String column, String value, String updates) throws SQLException {
-        Statement statement = this.conn.createStatement();
-        statement.executeUpdate("UPDATE " + table + " SET " + updates + " WHERE " + column + "='" + value + "'");
-    }*/
-
     public void update(String table, String column, String value, Map<String, String> updates) throws SQLException {
         Statement statement = this.conn.createStatement();
 
@@ -98,11 +91,6 @@ public class DatabaseConnection {
         String query = "UPDATE " + table + " SET " + updateStr + " WHERE " + column + "='" + value + "'";
         statement.executeUpdate(query);
     }
-
-    /*public void delete(String table, String column, String value) throws SQLException {
-        Statement statement = this.conn.createStatement();
-        statement.executeUpdate("DELETE FROM " + table + " WHERE " + column + "='" + value + "'");
-    }*/
 
     public void delete(String table, Map<String, String> criteria) throws SQLException {
         Statement statement = this.conn.createStatement();
