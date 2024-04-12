@@ -46,14 +46,47 @@ export async function login(username: string, password: string): Promise<LoginRe
     });
 }
 
-export interface UserProfileResponse {
-    success: boolean,
+export async function signup(username: string, password: string, displayName: string, bio: string): Promise<LoginResponse> {
+    return new Promise<LoginResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/signup', 'post', {
+            username: username,
+            password: password,
+            displayName: displayName,
+            bio: bio
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let loginResponse: LoginResponse = res as LoginResponse;
+            resolve(loginResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export interface User {
+    userId: string,
     username: string,
     displayName: string,
     bio: string,
     numFollowers: number,
     numFollowing: number,
     isMyProfile: boolean
+}
+
+export interface UserProfileResponse {
+    success: boolean,
+    user: User
+    /*username: string,
+    displayName: string,
+    bio: string,
+    numFollowers: number,
+    numFollowing: number,
+    isMyProfile: boolean*/
 }
 
 export async function getUserProfile(userId: string, token: string): Promise<UserProfileResponse> {
@@ -178,6 +211,31 @@ export async function unlikePost(postId: string, token: string): Promise<LikePos
 
             let likePostResponse: LikePostResponse = res as LikePostResponse;
             resolve(likePostResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export interface UserListResponse {
+    success: boolean,
+    users: Array<User>
+}
+
+export async function search(query: string, token: string): Promise<UserListResponse> {
+    return new Promise<UserListResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/search', 'post', {
+            query: query,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let userListResponse: UserListResponse = res as UserListResponse;
+            resolve(userListResponse);
         })
         .catch((err) => {
             reject(err);

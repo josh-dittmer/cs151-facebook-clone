@@ -30,12 +30,12 @@ export default function ProfileComponent({ userId }: ProfileProps) {
 
         getUserProfile(userId, token)
         .then((res: UserProfileResponse) => {
-            setUsername(res.username);
-            setDisplayName(res.displayName);
-            setBio(res.bio);
-            setNumFollowers(res.numFollowers);
-            setNumFollowing(res.numFollowing);
-            setIsMyProfile(res.isMyProfile);
+            setUsername(res.user.username);
+            setDisplayName(res.user.displayName);
+            setBio(res.user.bio);
+            setNumFollowers(res.user.numFollowers);
+            setNumFollowing(res.user.numFollowing);
+            setIsMyProfile(res.user.isMyProfile);
 
             if (isMyProfile) {
                 setFollowing(false);

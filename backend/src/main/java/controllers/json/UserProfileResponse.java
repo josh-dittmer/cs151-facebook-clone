@@ -18,13 +18,14 @@ public class UserProfileResponse {
 
     @Override
     public String toString() {
-        String str = "{\"success\":true,";
+        String str = "{\"success\":true,\"user\":{";
+        str += "\"userId\":\"" + this.user.getUserId() + "\",";
         str += "\"username\":\"" + this.user.getUsername() + "\",";
         str += "\"displayName\":\"" + this.user.getDisplayName() + "\",";
         str += "\"bio\":\"" + this.user.getBio() + "\",";
         str += "\"numFollowers\":" + this.user.getNumFollowers() + ",";
         str += "\"numFollowing\":" + this.user.getNumFollowing() + ",";
-        str += "\"isMyProfile\":" + this.user.isMyProfile() + "}";
+        str += "\"isMyProfile\":" + this.user.isMyProfile() + "}}";
 
         return str;
     }

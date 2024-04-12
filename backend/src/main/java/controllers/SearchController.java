@@ -2,8 +2,14 @@ package controllers;
 
 import app.*;
 import com.hellokaton.blade.annotation.Path;
+import com.hellokaton.blade.annotation.request.Body;
+import com.hellokaton.blade.annotation.route.POST;
+import com.hellokaton.blade.mvc.ui.ResponseType;
+import controllers.json.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
 
 @Path
 public class SearchController {
@@ -13,6 +19,28 @@ public class SearchController {
 
     public SearchController(Application app) {
         this.app = app;
+    }
+
+    @POST(value="/search", responseType= ResponseType.JSON)
+    public String search(@Body SearchRequest data) {
+        if (data == null) {
+            log.warn("/search: Request had invalid parameters");
+            return new GenericError("invalid parameters", -1).toString();
+        }
+
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
+        if (session == null) {
+            log.warn("/search: Session not found");
+            return new GenericError("session not found", -3).toString();
+        }
+
+        ArrayList<User> results = this.app.getSearchManager().search(data.getQuery(), session.getUserId());
+        if (results == null) {
+            log.warn("/search: Search failed");
+            return new GenericError("search failed", -9).toString();
+        }
+
+        return new UserListResponse(results).toString();
     }
 
 

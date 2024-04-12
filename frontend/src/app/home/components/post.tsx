@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { LikePostResponse, likePost, unlikePost } from '@/deps/api_requests';
+import { LikePostResponse, likePost, unlikePost, UserPost } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
 interface PostProps {
-    postId: string,
+    post: UserPost
+    /*postId: string,
     userId: string,
     username: string,
     displayName: string,
@@ -16,12 +17,12 @@ interface PostProps {
     liked: boolean,
     numLikes: number,
     numComments: number,
-    timestamp: string
+    timestamp: string*/
 }
 
-export default function PostComponent({ postId, userId, username, displayName, text, hasImage, liked, numLikes, numComments, timestamp }: PostProps) {
-    const [likedState, setLikedState] = useState<boolean>(liked);
-    const [numLikesState, setNumLikesState] = useState<number>(numLikes);
+export default function PostComponent({ post }: PostProps) {
+    const [likedState, setLikedState] = useState<boolean>(post.liked);
+    const [numLikesState, setNumLikesState] = useState<number>(post.numLikes);
     
     const token: string | undefined = Cookie.get('token');
     if (!token) {
@@ -29,7 +30,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
     }
 
     const clientLikePost = () => {
-        likePost(postId, token)
+        likePost(post.postId, token)
         .then((res: LikePostResponse) => {
             setLikedState(true);
             setNumLikesState((+numLikesState + 1));
@@ -41,7 +42,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
     };
 
     const clientUnlikePost = () => {
-        unlikePost(postId, token)
+        unlikePost(post.postId, token)
         .then((res: LikePostResponse) => {
             setLikedState(false);
             setNumLikesState((+numLikesState - 1));
@@ -60,7 +61,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
     return (
         <div className="flex justify-center mb-1">
             <div className="p-4 shadow w-96 md:w-3/5">
-                <Link href={'/home/profile/' + userId}>
+                <Link href={'/home/profile/' + post.userId}>
                     <div className="p-1 flex items-center whitespace-nowrap">
                         <Image 
                             src="/img/no_pfp.png"
@@ -69,11 +70,11 @@ export default function PostComponent({ postId, userId, username, displayName, t
                             alt="Profile photo"
                             className="p-1 border-2 border-blue-500 rounded-full"
                         />
-                        <span className="p-2">{displayName}</span>
+                        <span className="p-2">{post.displayName}</span>
                     </div>
                 </Link>
                 <div className="py-2">
-                    {hasImage === true && (
+                    {post.hasImage === true && (
                         <div className="">
                             <Image
                                 src="/img/example.jpg"
@@ -86,13 +87,13 @@ export default function PostComponent({ postId, userId, username, displayName, t
                     )}
                     <div className="my-2">
                         <div className="mb-2 border-b-2s border-gray-200">
-                            <span className="text-xs text-gray-400">{timestamp}</span>
+                            <span className="text-xs text-gray-400">{post.timestamp}</span>
                         </div>
                         <div>
-                            <Link href={'/home/profile/' + userId}>
-                                <span className="text-sm font-bold mr-2">{username}</span>
+                            <Link href={'/home/profile/' + post.userId}>
+                                <span className="text-sm font-bold mr-2">{post.username}</span>
                             </Link>
-                            <span className="text-sm">{text}</span>
+                            <span className="text-sm">{post.text}</span>
                         </div>
                     </div>
                     <div className="flex items-center">
@@ -128,7 +129,7 @@ export default function PostComponent({ postId, userId, username, displayName, t
                                 alt="Comment"
                                 className=""
                             />
-                            <span className="text-xs ml-1">{numComments}</span>
+                            <span className="text-xs ml-1">{post.numComments}</span>
                         </div>
                     </div>
                 </div>

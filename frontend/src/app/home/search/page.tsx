@@ -1,10 +1,46 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 
+import { search, UserListResponse, User } from '@/deps/api_requests';
+
+import Cookie from 'js-cookie';
+import ProfileCardComponent from '../components/profile_card';
+
 export default function SearchPage() {
+    const [userResults, setUserResults] = useState<React.ReactElement[]>([]);
+    const [numResults, setNumResults] = useState<number>(0);
+
     const handleTextChange = (e: any) => {
-        console.log(e.target.value);
+        if (e.target.value === '') {
+            setUserResults([]);
+            return;
+        }
+
+        const token: string | undefined = Cookie.get('token');
+        if (!token) {
+            return;
+        }
+
+        search(e.target.value, token)
+        .then((res: UserListResponse) => {
+            const userResultArr: React.ReactElement[] = [];
+
+            res.users.forEach((user: User) => {
+                userResultArr.push(<ProfileCardComponent 
+                    key={user.userId}
+                    user={user}
+                />);
+            });
+
+            setUserResults(userResultArr);
+            setNumResults(userResultArr.length);
+        })
+        .catch((err) => {
+            console.log('Search failed!')
+            console.log(err);
+        })
     };
     
     return (
@@ -19,6 +55,15 @@ export default function SearchPage() {
                         className="ml-2 w-full focus:outline-none"
                     />
                 </div>
+            </div>
+            <div>
+                {userResults.length > 0 && (
+                    <div className="border-b-2 border-b-blue-50 mb-5 p-5">
+                        <h1 className="text-xl font-bold">Results ({numResults})</h1>
+                    </div>
+                )}
+
+                {userResults}
             </div>
         </div>
     );

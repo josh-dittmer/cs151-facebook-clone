@@ -54,4 +54,26 @@ public class LoginController {
         log.info("/logout: Successfully deleted session [" + session.getToken() + "]");
         return new GenericSuccess().toString();
     }
+
+    @POST(value="/signup", responseType=ResponseType.JSON)
+    public String signup(@Body SignupRequest data) {
+        if (data == null) {
+            log.warn("/signup: Request had invalid parameters");
+            return new GenericError("invalid parameters", -1).toString();
+        }
+
+        User user = this.app.getUserManager().createUser(data.getUsername(), data.getPassword(), data.getDisplayName(), data.getBio());
+        if (user == null) {
+            log.warn("/signup: Failed to create user");
+            return new GenericError("user create failed", -9).toString();
+        }
+
+        Session session = this.app.getSessionManager().createSession(data.getUsername(), data.getPassword());
+        if (session == null) {
+            log.warn("/signup: Could not create session");
+            return new GenericError("invalid credentials", -2).toString();
+        }
+
+        return new LoginResponse(session.getToken()).toString();
+    }
 }

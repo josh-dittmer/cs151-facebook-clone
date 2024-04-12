@@ -21,6 +21,7 @@ public class Application {
     private PostManager postManager;
     private UserManager userManager;
     private LikeManager likeManager;
+    private SearchManager searchManager;
 
     private LoginController loginController;
     private ContentController contentController;
@@ -30,10 +31,18 @@ public class Application {
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/cs151-facebook-clone", "sa", "");
         this.databaseConn = new DatabaseConnection(conn);
 
+        // database must be created
+        if (this.databaseConn.numTables() != 5) {
+            log.warn("Database does not exist! Creating...");
+            this.databaseConn.createDb();
+            log.info("Database created successfully!");
+        }
+
         this.sessionManager = new SessionManager(this);
         this.postManager = new PostManager(this);
         this.userManager = new UserManager(this);
         this.likeManager = new LikeManager(this);
+        this.searchManager = new SearchManager(this);
 
         this.loginController = new LoginController(this);
         this.contentController = new ContentController(this);
@@ -59,6 +68,7 @@ public class Application {
     public LikeManager getLikeManager() {
         return likeManager;
     }
+    public SearchManager getSearchManager() { return searchManager; }
 
     public LoginController getLoginController() {
         return loginController;
@@ -71,6 +81,7 @@ public class Application {
     public SearchController getSearchController() {
         return searchController;
     }
+
     public static void main(String[] args) {
         Application app;
 

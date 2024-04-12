@@ -25,7 +25,8 @@ export default function MakePostComponent() {
             location.reload();
         })
         .catch((err) => {
-            console.log('Failed to create post: ' + err);
+            console.log('Failed to create post!');
+            console.log(err);
         })
     };
 
