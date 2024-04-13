@@ -6,6 +6,8 @@ import com.hellokaton.blade.annotation.request.Body;
 import com.hellokaton.blade.annotation.route.POST;
 import com.hellokaton.blade.mvc.ui.ResponseType;
 import controllers.json.*;
+import controllers.json.generic.ErrorResponse;
+import controllers.json.generic.UserListResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,19 +27,19 @@ public class SearchController {
     public String search(@Body SearchRequest data) {
         if (data == null) {
             log.warn("/search: Request had invalid parameters");
-            return new GenericError("invalid parameters", -1).toString();
+            return new ErrorResponse("invalid parameters", -1).toString();
         }
 
         Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/search: Session not found");
-            return new GenericError("session not found", -3).toString();
+            return new ErrorResponse("session not found", -3).toString();
         }
 
         ArrayList<User> results = this.app.getSearchManager().search(data.getQuery(), session.getUserId());
         if (results == null) {
             log.warn("/search: Search failed");
-            return new GenericError("search failed", -9).toString();
+            return new ErrorResponse("search failed", -9).toString();
         }
 
         return new UserListResponse(results).toString();

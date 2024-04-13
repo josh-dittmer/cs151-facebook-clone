@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { signup, LoginResponse } from '@/deps/api_requests';
+import { signup, TokenResponse } from '@/deps/api_requests';
 
 export default function SignupPage() {
     const [username, setUsername] = useState<string>('');
@@ -23,7 +23,7 @@ export default function SignupPage() {
         e.preventDefault();
         
         signup(username, password, displayName, bio)
-        .then((res: LoginResponse) => {
+        .then((res: TokenResponse) => {
             setErrorMessage('');
             document.cookie = 'token=' + res.token + '; path=/';
             router.push('/home/timeline');

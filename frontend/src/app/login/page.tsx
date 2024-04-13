@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-import { login, LoginResponse } from '@/deps/api_requests'
+import { login, TokenResponse } from '@/deps/api_requests'
 
 export default function LoginPage() {
     const [username, setUsername] = useState<string>('');
@@ -20,7 +20,7 @@ export default function LoginPage() {
         e.preventDefault();
         
         login(username, password)
-        .then((res: LoginResponse) => {
+        .then((res: TokenResponse) => {
             setErrorMessage('');
             document.cookie = 'token=' + res.token + '; path=/';
             router.push('/home/timeline');
@@ -55,7 +55,7 @@ export default function LoginPage() {
                         />
                         <br />
                         <input 
-                            type="text"
+                            type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password..."

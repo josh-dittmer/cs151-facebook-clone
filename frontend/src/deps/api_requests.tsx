@@ -3,7 +3,7 @@ const apiPort: string = '9000';
 
 export const apiUrl: string = 'http://' + apiHost + ':' + apiPort;
 
-export interface GenericResponse {
+export interface SuccessResponse {
     success: boolean
 }
 
@@ -25,13 +25,13 @@ export async function makeRequest(url: string, method: string, data: Object): Pr
     });
 }
 
-export interface LoginResponse {
+export interface TokenResponse {
     success: boolean,
     token: string
 }
 
-export async function login(username: string, password: string): Promise<LoginResponse> {
-    return new Promise<LoginResponse>(async (resolve, reject) => {
+export async function login(username: string, password: string): Promise<TokenResponse> {
+    return new Promise<TokenResponse>(async (resolve, reject) => {
         makeRequest(apiUrl + '/login', 'post', {
             username: username,
             password: password
@@ -41,7 +41,7 @@ export async function login(username: string, password: string): Promise<LoginRe
                 reject(res);
             }
 
-            let loginResponse: LoginResponse = res as LoginResponse;
+            let loginResponse: TokenResponse = res as TokenResponse;
             resolve(loginResponse);
         })
         .catch((err) => {
@@ -50,8 +50,8 @@ export async function login(username: string, password: string): Promise<LoginRe
     });
 }
 
-export async function logout(token: string): Promise<GenericResponse> {
-    return new Promise<GenericResponse>(async (resolve, reject) => {
+export async function logout(token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
         makeRequest(apiUrl + '/logout', 'post', {
             token: token,
         })
@@ -60,7 +60,7 @@ export async function logout(token: string): Promise<GenericResponse> {
                 reject(res);
             }
 
-            let logoutResponse: GenericResponse = res as GenericResponse;
+            let logoutResponse: SuccessResponse = res as SuccessResponse;
             resolve(logoutResponse);
         })
         .catch((err) => {
@@ -69,8 +69,8 @@ export async function logout(token: string): Promise<GenericResponse> {
     });
 }
 
-export async function signup(username: string, password: string, displayName: string, bio: string): Promise<LoginResponse> {
-    return new Promise<LoginResponse>(async (resolve, reject) => {
+export async function signup(username: string, password: string, displayName: string, bio: string): Promise<TokenResponse> {
+    return new Promise<TokenResponse>(async (resolve, reject) => {
         makeRequest(apiUrl + '/signup', 'post', {
             username: username,
             password: password,
@@ -82,7 +82,7 @@ export async function signup(username: string, password: string, displayName: st
                 reject(res);
             }
 
-            let loginResponse: LoginResponse = res as LoginResponse;
+            let loginResponse: TokenResponse = res as TokenResponse;
             resolve(loginResponse);
         })
         .catch((err) => {
@@ -142,7 +142,8 @@ export interface UserPost {
     liked: boolean,
     numLikes: number,
     numComments: number,
-    timestamp: string
+    timestamp: string,
+    isMyPost: boolean
 }
 
 export interface UserPostsResponse {
@@ -197,14 +198,10 @@ export async function createPost(text: string, hasImage: boolean, token: string)
     });
 }
 
-export interface LikePostResponse {
-    success: boolean
-};
-
-export async function likePost(postId: string, token: string): Promise<LikePostResponse> {
-    return new Promise<LikePostResponse>(async (resolve, reject) => {
-        makeRequest(apiUrl + '/like_post', 'post', {
-            postId: postId,
+export async function deletePost(postId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/delete_post', 'post', {
+            itemId: postId,
             token: token
         })
         .then((res) => {
@@ -212,7 +209,27 @@ export async function likePost(postId: string, token: string): Promise<LikePostR
                 reject(res);
             }
 
-            let likePostResponse: LikePostResponse = res as LikePostResponse;
+            let deletePostResponse: SuccessResponse = res as SuccessResponse;
+            resolve(deletePostResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function likePost(postId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/like_post', 'post', {
+            itemId: postId,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let likePostResponse: SuccessResponse = res as SuccessResponse;
             resolve(likePostResponse);
         })
         .catch((err) => {
@@ -221,10 +238,10 @@ export async function likePost(postId: string, token: string): Promise<LikePostR
     });
 }
 
-export async function unlikePost(postId: string, token: string): Promise<LikePostResponse> {
-    return new Promise<LikePostResponse>(async (resolve, reject) => {
+export async function unlikePost(postId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
         makeRequest(apiUrl + '/unlike_post', 'post', {
-            postId: postId,
+            itemId: postId,
             token: token
         })
         .then((res) => {
@@ -232,7 +249,7 @@ export async function unlikePost(postId: string, token: string): Promise<LikePos
                 reject(res);
             }
 
-            let likePostResponse: LikePostResponse = res as LikePostResponse;
+            let likePostResponse: SuccessResponse = res as SuccessResponse;
             resolve(likePostResponse);
         })
         .catch((err) => {

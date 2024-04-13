@@ -1,4 +1,4 @@
-package controllers.json;
+package controllers.json.generic;
 
 public class GenericRequest {
     private String token;

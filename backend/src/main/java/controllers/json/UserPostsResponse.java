@@ -35,7 +35,8 @@ public class UserPostsResponse {
             str += "\"liked\":" + post.isLiked() + ",";
             str += "\"numLikes\":\"" + post.getNumLikes() + "\",";
             str += "\"numComments\":\"" + post.getNumComments() + "\",";
-            str += "\"timestamp\":\"" + post.getTimestamp() + "\"}";
+            str += "\"timestamp\":\"" + post.getTimestamp() + "\",";
+            str += "\"isMyPost\":" + post.isMyPost() + "}";
 
             if (i != posts.size() - 1) {
                 str += ", ";

@@ -1,10 +1,10 @@
-package controllers.json;
+package controllers.json.generic;
 
-public class GenericError {
+public class ErrorResponse {
     private String message;
     private int code;
 
-    public GenericError(String message, int code) {
+    public ErrorResponse(String message, int code) {
         this.message = message;
         this.code = code;
     }

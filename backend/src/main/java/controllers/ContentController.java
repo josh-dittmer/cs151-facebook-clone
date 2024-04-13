@@ -6,6 +6,9 @@ import com.hellokaton.blade.annotation.request.Body;
 import com.hellokaton.blade.annotation.route.POST;
 import com.hellokaton.blade.mvc.ui.ResponseType;
 import controllers.json.*;
+import controllers.json.generic.ErrorResponse;
+import controllers.json.generic.ItemActionRequest;
+import controllers.json.generic.SuccessResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,18 +31,18 @@ public class ContentController {
     public String viewUserProfile(@Body UserProfileRequest data) {
         if (data == null) {
             log.warn("/user_profile: Request had invalid parameters");
-            return new GenericError("invalid parameters", -1).toString();
+            return new ErrorResponse("invalid parameters", -1).toString();
         }
 
         Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
-            return new GenericError("session not found", -3).toString();
+            return new ErrorResponse("session not found", -3).toString();
         }
 
         User user = this.app.getUserManager().getUser(data.getUserId(), session.getUserId());
         if (user == null) {
             log.warn("/user_profile: User [" + data.getUserId() + "] not found");
-            return new GenericError("user not found", -4).toString();
+            return new ErrorResponse("user not found", -4).toString();
         }
 
         return new UserProfileResponse(user).toString();
@@ -50,12 +53,12 @@ public class ContentController {
     public String viewUserPosts(@Body UserPostsRequest data) {
         if (data == null) {
             log.warn("/user_posts: Request had invalid parameters");
-            return new GenericError("invalid parameters", -1).toString();
+            return new ErrorResponse("invalid parameters", -1).toString();
         }
 
         Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
-            return new GenericError("session not found", -3).toString();
+            return new ErrorResponse("session not found", -3).toString();
         }
 
         ArrayList<User> users = new ArrayList<>();
@@ -65,13 +68,13 @@ public class ContentController {
         users = this.app.getUserManager().getUsers(userIds, session.getUserId());
         if (users == null) {
             log.warn("/user_posts: Failed to load users");
-            return new GenericError("failed to load users", -9).toString();
+            return new ErrorResponse("failed to load users", -9).toString();
         }
 
         posts = this.app.getPostManager().getUserPosts(users, session.getUserId());
         if (posts == null) {
             log.warn("/user_posts: Failed to load user posts");
-            return new GenericError("failed to load user posts", -10).toString();
+            return new ErrorResponse("failed to load user posts", -10).toString();
         }
 
         // sort posts by date
@@ -90,63 +93,84 @@ public class ContentController {
     public String createPost(@Body CreatePostRequest data) {
         if (data == null) {
             log.warn("/create_post: Request had invalid parameters");
-            return new GenericError("invalid parameters", -1).toString();
+            return new ErrorResponse("invalid parameters", -1).toString();
         }
 
         Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/create_post: Session not found");
-            return new GenericError("session not found", -3).toString();
+            return new ErrorResponse("session not found", -3).toString();
         }
 
         String postId = this.app.getPostManager().createPost(session.getUserId(), data.getText(), data.hasImage());
         if (postId == null) {
             log.warn("/create_post: Failed to create post");
-            return new GenericError("failed to create post", -6).toString();
+            return new ErrorResponse("failed to create post", -6).toString();
         }
 
         return new CreatePostResponse(postId).toString();
     }
 
+    @POST(value="/delete_post", responseType= ResponseType.JSON)
+    public String deletePost(@Body ItemActionRequest data) {
+        if (data == null) {
+            log.warn("/delete_post: Request had invalid parameters");
+            return new ErrorResponse("invalid parameters", -1).toString();
+        }
+
+        Session session = this.app.getSessionManager().validateSession(data.getToken());
+        if (session == null) {
+            log.warn("/delete_post: Session not found");
+            return new ErrorResponse("session not found", -3).toString();
+        }
+
+        if (!this.app.getPostManager().deletePost(session.getUserId(), data.getItemId())) {
+            log.warn("/delete_post: Failed to delete post");
+            return new ErrorResponse("failed to delete post", -10).toString();
+        }
+
+        return new SuccessResponse().toString();
+    }
+
     @POST(value="/like_post", responseType= ResponseType.JSON)
-    public String likePost(@Body LikePostRequest data) {
+    public String likePost(@Body ItemActionRequest data) {
         if (data == null) {
             log.warn("/like_post: Request had invalid parameters");
-            return new GenericError("invalid parameters", -1).toString();
+            return new ErrorResponse("invalid parameters", -1).toString();
         }
 
         Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/like_post: Session not found");
-            return new GenericError("session not found", -3).toString();
+            return new ErrorResponse("session not found", -3).toString();
         }
 
-        if (!this.app.getLikeManager().likePost(session.getUserId(), data.getPostId())) {
+        if (!this.app.getLikeManager().likePost(session.getUserId(), data.getItemId())) {
             log.warn("/like_post: Failed to like post");
-            return new GenericError("like post failed", -7).toString();
+            return new ErrorResponse("like post failed", -7).toString();
         }
 
-        return new GenericSuccess().toString();
+        return new SuccessResponse().toString();
     }
 
     @POST(value="/unlike_post", responseType= ResponseType.JSON)
-    public String unlikePost(@Body LikePostRequest data) {
+    public String unlikePost(@Body ItemActionRequest data) {
         if (data == null) {
             log.warn("/unlike_post: Request had invalid parameters");
-            return new GenericError("invalid parameters", -1).toString();
+            return new ErrorResponse("invalid parameters", -1).toString();
         }
 
         Session session = this.app.getSessionManager().validateSession(data.getToken());
         if (session == null) {
             log.warn("/unlike_post: Session not found");
-            return new GenericError("session not found", -3).toString();
+            return new ErrorResponse("session not found", -3).toString();
         }
 
-        if (!this.app.getLikeManager().unlikePost(session.getUserId(), data.getPostId())) {
+        if (!this.app.getLikeManager().unlikePost(session.getUserId(), data.getItemId())) {
             log.warn("/unlike_post: Failed to like post");
-            return new GenericError("unlike post failed", -8).toString();
+            return new ErrorResponse("unlike post failed", -8).toString();
         }
 
-        return new GenericSuccess().toString();
+        return new SuccessResponse().toString();
     }
 }

@@ -1,4 +1,4 @@
-package controllers.json;
+package controllers.json.generic;
 
 import app.Post;
 import app.User;

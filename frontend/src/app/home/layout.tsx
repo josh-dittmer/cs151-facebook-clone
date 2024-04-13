@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { getUserProfile, UserProfileResponse, logout, GenericResponse } from '@/deps/api_requests';
+import { getUserProfile, UserProfileResponse, logout, SuccessResponse } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -55,7 +55,7 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
         }
 
         logout(token)
-        .then((res: GenericResponse) => {
+        .then((res: SuccessResponse) => {
             document.cookie = '';
             router.push('/login');
         })

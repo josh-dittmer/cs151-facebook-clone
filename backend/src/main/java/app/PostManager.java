@@ -46,8 +46,9 @@ public class PostManager {
                 int postNumComments = postResultSet.getInt("NUM_COMMENTS");
                 Timestamp postTimestamp = postResultSet.getTimestamp("TIMESTAMP");
                 boolean postLiked = this.app.getLikeManager().checkLiked(myUserId, postId);
+                boolean isMyPost = userId.equals(myUserId);
 
-                posts.add(new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp));
+                posts.add(new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp, isMyPost));
             }
         } catch(SQLException e) {
             log.error("SQL error while getting user posts: " + e.getMessage());
@@ -74,5 +75,20 @@ public class PostManager {
         }
 
         return postId;
+    }
+
+    public boolean deletePost(String userId, String postId) {
+        try {
+            Map<String, String> criteria = new HashMap<String, String>();
+            criteria.put("POST_ID", postId);
+            criteria.put("USER_ID", userId);
+
+            this.app.getDatabaseConn().delete("POSTS", criteria);
+        } catch(SQLException e) {
+            log.error("SQL error while deleting user post: " + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 }

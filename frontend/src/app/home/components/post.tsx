@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { LikePostResponse, likePost, unlikePost, UserPost } from '@/deps/api_requests';
+import { SuccessResponse, likePost, unlikePost, deletePost, UserPost } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -25,6 +25,12 @@ export default function PostComponent({ post }: PostProps) {
     const [likedState, setLikedState] = useState<boolean>(post.liked);
     const [numLikesState, setNumLikesState] = useState<number>(post.numLikes);
     
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
+
+    const toggleDeleteConfirmation = () => {
+        setShowDeleteConfirmation(!showDeleteConfirmation);
+    }
+
     const router = useRouter();
 
     const token: string | undefined = Cookie.get('token');
@@ -34,7 +40,7 @@ export default function PostComponent({ post }: PostProps) {
 
     const clientLikePost = () => {
         likePost(post.postId, token)
-        .then((res: LikePostResponse) => {
+        .then((res: SuccessResponse) => {
             setLikedState(true);
             setNumLikesState((+numLikesState + 1));
         })
@@ -51,7 +57,7 @@ export default function PostComponent({ post }: PostProps) {
 
     const clientUnlikePost = () => {
         unlikePost(post.postId, token)
-        .then((res: LikePostResponse) => {
+        .then((res: SuccessResponse) => {
             setLikedState(false);
             setNumLikesState((+numLikesState - 1));
         })
@@ -66,6 +72,22 @@ export default function PostComponent({ post }: PostProps) {
         })
     };
 
+    const clientDeletePost = () => {
+        deletePost(post.postId, token)
+        .then((res: SuccessResponse) => {
+            location.reload();
+        })
+        .catch((err) => {
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to delete post!');
+                console.log(err);
+            }
+        })
+    }
+
     // load comments here
     useEffect(() => {
         
@@ -74,18 +96,66 @@ export default function PostComponent({ post }: PostProps) {
     return (
         <div className="flex justify-center mb-1">
             <div className="p-4 shadow w-96 md:w-3/5">
-                <Link href={'/home/profile/' + post.userId}>
-                    <div className="p-1 flex items-center whitespace-nowrap">
-                        <Image 
-                            src="/img/no_pfp.png"
-                            width="35"
-                            height="35"
-                            alt="Profile photo"
-                            className="p-1 border-2 border-blue-500 rounded-full"
-                        />
-                        <span className="p-2">{post.displayName}</span>
+                <div className="flex justify-between items-center">
+                    <Link href={'/home/profile/' + post.userId}>
+                        <div className="p-1 flex justify-start whitespace-nowrap">
+                            <Image 
+                                src="/img/no_pfp.png"
+                                width="40"
+                                height="40"
+                                alt="Profile photo"
+                                className="p-1 border-2 border-blue-500 rounded-full"
+                            />
+                            <span className="p-2">{post.displayName}</span>
+                        </div>
+                    </Link>
+                    <div className={'flex justify-end ' + (post.isMyPost ? '' : 'hidden')}>
+                        {showDeleteConfirmation ? (
+                            <div className="flex items-center">
+                                <span className="text-xs text-gray-500 mr-1">Delete post?</span>
+                                <button
+                                    className="rounded hover:bg-gray-200 p-2"
+                                    onClick={clientDeletePost}
+                                >
+                                    <Image
+                                        src="/img/x_symbol.svg"
+                                        width="16"
+                                        height="16"
+                                        alt="Confirm delete post"
+                                        className=""
+                                    />
+                                </button>
+                                <button
+                                    className="rounded hover:bg-gray-200 p-2 mr-1"
+                                    onClick={toggleDeleteConfirmation}
+                                >
+                                    <Image
+                                        src="/img/back.svg"
+                                        width="16"
+                                        height="16"
+                                        alt="Cancel delete post"
+                                        className=""
+                                    />
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button
+                                    className="rounded hover:bg-gray-200 p-2"
+                                    onClick={toggleDeleteConfirmation}
+                                >
+                                    <Image
+                                        src="/img/x_symbol.svg"
+                                        width="16"
+                                        height="16"
+                                        alt="Delete post"
+                                        className=""
+                                    />
+                                </button>
+                            </div>
+                        )}
                     </div>
-                </Link>
+                </div>
                 <div className="py-2">
                     {post.hasImage === true && (
                         <div className="">
@@ -98,11 +168,11 @@ export default function PostComponent({ post }: PostProps) {
                             />
                         </div>
                     )}
-                    <div className="my-2">
+                    <div className="my-2 break-words">
                         <div className="mb-2 border-b-2s border-gray-200">
                             <span className="text-xs text-gray-400">{post.timestamp}</span>
                         </div>
-                        <div>
+                        <div className="">
                             <Link href={'/home/profile/' + post.userId}>
                                 <span className="text-sm font-bold mr-2">{post.username}</span>
                             </Link>

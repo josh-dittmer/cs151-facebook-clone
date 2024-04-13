@@ -13,8 +13,9 @@ public class Post {
     private int numLikes;
     private int numComments;
     private Timestamp timestamp;
+    private boolean isMyPost;
 
-    public Post(String postId, String userId, String username, String displayName, String text, boolean hasImage, boolean liked, int numLikes, int numComments, Timestamp timestamp) {
+    public Post(String postId, String userId, String username, String displayName, String text, boolean hasImage, boolean liked, int numLikes, int numComments, Timestamp timestamp, boolean isMyPost) {
         this.postId = postId;
         this.userId = userId;
         this.username = username;
@@ -25,6 +26,7 @@ public class Post {
         this.numLikes = numLikes;
         this.numComments = numComments;
         this.timestamp = timestamp;
+        this.isMyPost = isMyPost;
     }
 
     public String getPostId() {
@@ -105,5 +107,13 @@ public class Post {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean isMyPost() {
+        return isMyPost;
+    }
+
+    public void setMyPost(boolean myPost) {
+        isMyPost = myPost;
     }
 }
