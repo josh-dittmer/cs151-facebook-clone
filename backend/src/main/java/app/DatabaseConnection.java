@@ -177,7 +177,15 @@ public class DatabaseConnection {
                 "    PRIMARY KEY (ID)\n" +
                 ");\n";
 
-        String sql = createUsers + createPosts + createLikes + createComments + createSessions;
+        String createFollows = "CREATE TABLE FOLLOWS (\n" +
+                "    ID INT NOT NULL AUTO_INCREMENT,\n" +
+                "    SRC_USER_ID VARCHAR(64) NOT NULL,\n" +
+                "    DEST_USER_ID VARCHAR(64) NOT NULL,\n" +
+                "    TIMESTAMP DATETIME NOT NULL DEFAULT(CURRENT_TIMESTAMP()),\n" +
+                "    PRIMARY KEY (ID)\n" +
+                ");\n";
+
+        String sql = createUsers + createPosts + createLikes + createComments + createSessions + createFollows;
 
         Statement statement = this.conn.createStatement();
         statement.execute(sql);

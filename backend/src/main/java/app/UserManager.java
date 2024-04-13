@@ -38,7 +38,7 @@ public class UserManager {
             return null;
         }
 
-        return new User(userId, username, password, bio, 0, 0, true);
+        return new User(userId, username, password, bio, 0, 0, true, false);
     }
 
     public User getUser(String userId, String myUserId) {
@@ -82,7 +82,7 @@ public class UserManager {
         return users;
     }
 
-    public User userFromResultSet(ResultSet results, String myUserId) throws SQLException {
+    public User userFromResultSet(ResultSet results, String myUserId, boolean isFollowing) throws SQLException {
         String userId = results.getString("USER_ID");
         String userUsername = results.getString("USERNAME");
         String userDisplayName = results.getString("DISPLAY_NAME");
@@ -90,8 +90,16 @@ public class UserManager {
         int userNumFollowers = results.getInt("NUM_FOLLOWERS");
         int userNumFollowing = results.getInt("NUM_FOLLOWING");
         boolean isMyProfile = (userId.equals(myUserId));
+        //boolean isFollowing = this.app.getFollowManager().checkFollowing(myUserId, userId);
 
-        return new User(userId, userUsername, userDisplayName, userBio, userNumFollowing, userNumFollowers, isMyProfile);
+        return new User(userId, userUsername, userDisplayName, userBio, userNumFollowers, userNumFollowing, isMyProfile, isFollowing);
+    }
+
+    public User userFromResultSet(ResultSet results, String myUserId) throws SQLException {
+        User user = userFromResultSet(results, myUserId, false);
+        user.setIsFollowing(this.app.getFollowManager().checkFollowing(myUserId, user.getUserId()));
+
+        return user;
     }
 
     public User deleteUser(String userId) {

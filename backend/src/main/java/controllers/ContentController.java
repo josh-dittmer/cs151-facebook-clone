@@ -50,7 +50,7 @@ public class ContentController {
 
     // view a user's posts
     @POST(value="/user_posts", responseType= ResponseType.JSON)
-    public String viewUserPosts(@Body UserPostsRequest data) {
+    public String getUserPosts(@Body UserPostsRequest data) {
         if (data == null) {
             log.warn("/user_posts: Request had invalid parameters");
             return new ErrorResponse("invalid parameters", -1).toString();

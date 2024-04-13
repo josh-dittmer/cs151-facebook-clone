@@ -25,7 +25,8 @@ public class UserProfileResponse {
         str += "\"bio\":\"" + this.user.getBio() + "\",";
         str += "\"numFollowers\":" + this.user.getNumFollowers() + ",";
         str += "\"numFollowing\":" + this.user.getNumFollowing() + ",";
-        str += "\"isMyProfile\":" + this.user.isMyProfile() + "}}";
+        str += "\"isMyProfile\":" + this.user.isMyProfile() + ",";
+        str += "\"isFollowing\":" + user.isFollowing() + "}}";
 
         return str;
     }

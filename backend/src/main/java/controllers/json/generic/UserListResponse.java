@@ -33,7 +33,8 @@ public class UserListResponse {
             str += "\"bio\":\"" + user.getBio() + "\",";
             str += "\"numFollowers\":" + user.getNumFollowers() + ",";
             str += "\"numFollowing\":" + user.getNumFollowing() + ",";
-            str += "\"isMyProfile\":" + user.isMyProfile() + "}";
+            str += "\"isMyProfile\":" + user.isMyProfile() + ",";
+            str += "\"isFollowing\":" + user.isFollowing() + "}";
 
             if (i != users.size() - 1) {
                 str += ", ";

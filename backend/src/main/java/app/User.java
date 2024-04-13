@@ -7,8 +7,9 @@ public class User {
     private int numFollowers;
     private int numFollowing;
     private boolean isMyProfile;
+    private boolean isFollowing;
 
-    public User(String userId, String username, String displayName, String bio, int numFollowers, int numFollowing, boolean isMyProfile) {
+    public User(String userId, String username, String displayName, String bio, int numFollowers, int numFollowing, boolean isMyProfile, boolean isFollowing) {
         this.userId = userId;
         this.username = username;
         this.displayName = displayName;
@@ -16,6 +17,7 @@ public class User {
         this.numFollowers = numFollowers;
         this.numFollowing = numFollowing;
         this.isMyProfile = isMyProfile;
+        this.isFollowing = isFollowing;
     }
 
     public String getUserId() {
@@ -69,7 +71,15 @@ public class User {
         return this.isMyProfile;
     }
 
-    public void setIsMyProfile(boolean isMyProfile) {
-        this.isMyProfile = isMyProfile;
+    public void setIsMyProfile(boolean isFollowing) {
+        this.isFollowing = isFollowing;
+    }
+
+    public boolean isFollowing() {
+        return this.isFollowing;
+    }
+
+    public void setIsFollowing(boolean isFollowing) {
+        this.isFollowing = isFollowing;
     }
 }

@@ -98,7 +98,8 @@ export interface User {
     bio: string,
     numFollowers: number,
     numFollowing: number,
-    isMyProfile: boolean
+    isMyProfile: boolean,
+    isFollowing: boolean
 }
 
 export interface UserProfileResponse {
@@ -267,6 +268,66 @@ export async function search(query: string, token: string): Promise<UserListResp
     return new Promise<UserListResponse>(async (resolve, reject) => {
         makeRequest(apiUrl + '/search', 'post', {
             query: query,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let userListResponse: UserListResponse = res as UserListResponse;
+            resolve(userListResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function followUser(userId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/follow_user', 'post', {
+            itemId: userId,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let likePostResponse: SuccessResponse = res as SuccessResponse;
+            resolve(likePostResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function unfollowUser(userId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/unfollow_user', 'post', {
+            itemId: userId,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let likePostResponse: SuccessResponse = res as SuccessResponse;
+            resolve(likePostResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function getUserFollowing(userId: string, token: string): Promise<UserListResponse> {
+    return new Promise<UserListResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/user_following', 'post', {
+            itemId: userId,
             token: token
         })
         .then((res) => {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { getUserProfile, UserProfileResponse } from '@/deps/api_requests';
+import { getUserProfile, UserProfileResponse, followUser, unfollowUser, SuccessResponse } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 import MakePostComponent from './make_post';
@@ -24,6 +24,50 @@ export default function ProfileComponent({ userId }: ProfileProps) {
 
     const router = useRouter();
 
+    const follow = () => {
+        const token: string | undefined = Cookie.get('token');
+        if (!token) {
+            return;
+        }
+
+        followUser(userId, token)
+        .then((res: SuccessResponse) => {
+            setFollowing(true);
+            setNumFollowers(numFollowers + 1);
+        })
+        .catch((err) => {
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to follow user!');
+                console.log(err);
+            }
+        })
+    };
+
+    const unfollow = () => {
+        const token: string | undefined = Cookie.get('token');
+        if (!token) {
+            return;
+        }
+
+        unfollowUser(userId, token)
+        .then((res: SuccessResponse) => {
+            setFollowing(false);
+            setNumFollowers(numFollowers - 1);
+        })
+        .catch((err) => {
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to unfollow user!');
+                console.log(err);
+            }
+        })
+    };
+
     // load profile
     useEffect(() => {
         const token: string | undefined = Cookie.get('token');
@@ -41,10 +85,10 @@ export default function ProfileComponent({ userId }: ProfileProps) {
             setIsMyProfile(res.user.isMyProfile);
 
             if (isMyProfile) {
-                setFollowing(false);
+                setFollowing(true);
             } else {
                 // will check if following in future
-                setFollowing(false);
+                setFollowing(res.user.isFollowing);
             }
         })
         .catch((err) => {
@@ -78,9 +122,9 @@ export default function ProfileComponent({ userId }: ProfileProps) {
                             ) : (
                                 <div>
                                     {following === true ? (
-                                        <button className="mt-3 ml-2 p-2 bg-gray-200 rounded">Unfollow</button>
+                                        <button onClick={unfollow} className="mt-3 ml-2 p-2 bg-gray-200 rounded">Unfollow</button>
                                     ) : (
-                                        <button className="mt-3 ml-2 p-2 bg-blue-500 text-white rounded">Follow</button>
+                                        <button onClick={follow} className="mt-3 ml-2 p-2 bg-blue-500 text-white rounded">Follow</button>
                                     )}
                                 </div>
                             )}
