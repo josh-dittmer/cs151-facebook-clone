@@ -25,8 +25,13 @@ export default function MakePostComponent() {
             location.reload();
         })
         .catch((err) => {
-            console.log('Failed to create post!');
-            console.log(err);
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to create post!');
+                console.log(err);
+            }
         })
     };
 

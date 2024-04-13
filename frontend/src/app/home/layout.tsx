@@ -1,10 +1,11 @@
 'use client';
 
 import  { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { getUserProfile, UserProfileResponse } from '@/deps/api_requests';
+import { getUserProfile, UserProfileResponse, logout, GenericResponse } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -13,10 +14,17 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
     const [userId, setUserId] = useState<string>();
 
     const [sidebarShowing, setSidebarShowing] = useState<boolean>(true);
+    const [profileDropdownShowing, setProfileDropdownShowing] = useState<boolean>(false);
     
     const toggleSidebar = () => {
         setSidebarShowing(!sidebarShowing);
     }
+
+    const toggleProfileDropdown = () => {
+        setProfileDropdownShowing(!profileDropdownShowing);
+    }
+
+    const router = useRouter();
 
     useEffect(() => {
         const token: string | undefined = Cookie.get('token');
@@ -30,10 +38,32 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
             setUserId(res.user.userId);
         })
         .catch((err) => {
-            console.log('Failed to load user profile!');
-            console.log(err);
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to load user profile!');
+                console.log(err);
+            }
         });
     }, []);
+
+    const clientLogout = () => {
+        const token: string | undefined = Cookie.get('token');
+        if (!token) {
+            return;
+        }
+
+        logout(token)
+        .then((res: GenericResponse) => {
+            document.cookie = '';
+            router.push('/login');
+        })
+        .catch((err) => {
+            console.log('Failed to logout!');
+            console.log(err);
+        })
+    }
 
     return (
         <div>
@@ -57,12 +87,25 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                                 alt="Profile photo"
                                 className="p-1 border-2 border-blue-500 rounded-full mr-1"
                             />
-                            <button id="profile-dropdown-button" data-dropdown-toggle="profile-dropdown" data-dropdown-trigger="click" className="text-gray-500" type="button">{username}⌄</button>
-                            <div id="profile-dropdown" className="hidden">
-                                <p>Test</p>
-                            </div>
+                            <button onClick={toggleProfileDropdown} className="text-gray-500">{username}⌄</button>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className={(profileDropdownShowing ? '' : 'hidden')}>
+                <div className="fixed top-100 right-0 z-50 p-5 border border-gray-200 bg-white">
+                    <h1 className="text-lg">Options</h1>
+                    <ul>
+                        <li className="p-2">
+                            <Link href="/home/profile/me" onClick={toggleProfileDropdown} className="underline"> Profile</Link>
+                        </li>
+                        <li className="p-2">
+                            <Link href="#"  onClick={toggleProfileDropdown} className="underline">Settings</Link>
+                        </li>
+                        <li className="p-2">
+                            <button onClick={clientLogout} className="text-red-500 underline">Log out</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
             </nav>

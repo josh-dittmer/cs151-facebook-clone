@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -24,6 +25,8 @@ export default function PostComponent({ post }: PostProps) {
     const [likedState, setLikedState] = useState<boolean>(post.liked);
     const [numLikesState, setNumLikesState] = useState<number>(post.numLikes);
     
+    const router = useRouter();
+
     const token: string | undefined = Cookie.get('token');
     if (!token) {
         return;
@@ -36,8 +39,13 @@ export default function PostComponent({ post }: PostProps) {
             setNumLikesState((+numLikesState + 1));
         })
         .catch((err) => {
-            console.log('Failed to like post!');
-            console.log(err);
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to like post!');
+                console.log(err);
+            }
         })
     };
 
@@ -48,8 +56,13 @@ export default function PostComponent({ post }: PostProps) {
             setNumLikesState((+numLikesState - 1));
         })
         .catch((err) => {
-            console.log('Failed to unlike post!');
-            console.log(err);
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to unlike post!');
+                console.log(err);
+            }
         })
     };
 

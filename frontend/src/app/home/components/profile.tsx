@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 import { getUserProfile, UserProfileResponse } from '@/deps/api_requests';
@@ -20,6 +21,8 @@ export default function ProfileComponent({ userId }: ProfileProps) {
     const [numFollowing, setNumFollowing] = useState<number>(0);
     const [isMyProfile, setIsMyProfile] = useState<boolean>(false);
     const [following, setFollowing] = useState<boolean>(false);
+
+    const router = useRouter();
 
     // load profile
     useEffect(() => {
@@ -45,8 +48,13 @@ export default function ProfileComponent({ userId }: ProfileProps) {
             }
         })
         .catch((err) => {
-            console.log('Failed to load user profile!');
-            console.log(err);
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to load user profile!');
+                console.log(err);
+            }
         });
     }, []);
 

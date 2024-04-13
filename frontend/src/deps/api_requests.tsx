@@ -3,6 +3,10 @@ const apiPort: string = '9000';
 
 export const apiUrl: string = 'http://' + apiHost + ':' + apiPort;
 
+export interface GenericResponse {
+    success: boolean
+}
+
 export async function makeRequest(url: string, method: string, data: Object): Promise<any> {
     return new Promise((resolve, reject) => {
         fetch(url, {
@@ -39,6 +43,25 @@ export async function login(username: string, password: string): Promise<LoginRe
 
             let loginResponse: LoginResponse = res as LoginResponse;
             resolve(loginResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function logout(token: string): Promise<GenericResponse> {
+    return new Promise<GenericResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/logout', 'post', {
+            token: token,
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let logoutResponse: GenericResponse = res as GenericResponse;
+            resolve(logoutResponse);
         })
         .catch((err) => {
             reject(err);
