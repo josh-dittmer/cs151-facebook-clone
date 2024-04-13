@@ -38,7 +38,7 @@ export default function SignupPage() {
             <div className="md:flex h-screen items-center justify-center">
                 <div className="bg-white py-10 px-10 text-center shadow-xl shadow-inner rounded">
                     <center>
-                        <h1 className="p-2 text-4xl text-blue-500">Facebook😂😂</h1>
+                        <h1 className="p-2 text-4xl text-blue-500">Facebook</h1>
                     </center>
                     <br />
                     {errorMessage && (
@@ -80,9 +80,9 @@ export default function SignupPage() {
                                     className="p-3 my-2 w-72 border-2 border-blue-200 rounded shadow-inner focus:outline-none focus-scale"
                                 />
                             </div>
-                            {/*<div className="m-4 flex-none">
-                                <hr className="h-full bg-gray-200 w-1" />
-                    </div>*/}
+                            <div className="m-4 flex-none md:block sm:hidden">
+                                <hr className="h-full bg-gray-200 w-0.5" />
+                            </div>
                             <div className="p-2">
                                 <input 
                                     type="text"

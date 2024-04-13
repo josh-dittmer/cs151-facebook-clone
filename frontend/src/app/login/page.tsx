@@ -35,7 +35,7 @@ export default function LoginPage() {
             <div className="flex h-screen items-center justify-center">
                 <div className="bg-white py-10 px-10 text-center shadow-xl shadow-inner rounded">
                     <center>
-                        <h1 className="p-2 text-4xl text-blue-500">Facebook😂😂</h1>
+                        <h1 className="p-2 text-4xl text-blue-500">Facebook</h1>
                     </center>
                     <br />
                     {errorMessage && (

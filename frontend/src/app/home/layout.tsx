@@ -76,18 +76,19 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                             <img src="/img/sidebar.png" className="w-6 h-6" />
                         </button>
                         
-                        <h1 className="p-2 text-blue-500 text-3xl">Facebook😂😂</h1>
+                        <h1 className="p-2 text-blue-500 text-3xl overflow-hidden text-nowrap">Facebook</h1>
                     </div>
                     <div className="flex items-center justify-end">
                         <div className="flex items-center">
                             <Image 
                                 src="/img/no_pfp.png"
+                                onClick={toggleProfileDropdown}
                                 width="30"
                                 height="30"
                                 alt="Profile photo"
                                 className="p-1 border-2 border-blue-500 rounded-full mr-1"
                             />
-                            <button onClick={toggleProfileDropdown} className="text-gray-500">{username}⌄</button>
+                            <button onClick={toggleProfileDropdown} className="text-gray-500 hidden md:block">{username}⌄</button>
                         </div>
                     </div>
                 </div>
