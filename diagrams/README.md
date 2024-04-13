@@ -1,4 +1,4 @@
 **Diagrams for Facebook Clone**
 | Diagram   | Description                |
 |-----------|----------------------------|
-|![facebook-clone Sequence Diagram](https://github.com/josh-dittmer/cs151-facebook-clone/assets/images/facebook-clone-Sequence-Diagram.png) | The sequence diagram for login shows the interactions and communication between the different components 
+|![facebook-clone Sequence Diagram](https://github.com/josh-dittmer/cs151-facebook-clone/assets/images/facebook-clone%20Sequence%20Diagram.png) | The sequence diagram for login shows the interactions and communication between the different components 
