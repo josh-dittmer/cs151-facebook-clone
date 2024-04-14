@@ -31,7 +31,7 @@ public class UserPostsResponse {
             str += "\"username\":\"" + post.getUsername() + "\",";
             str += "\"displayName\":\"" + post.getDisplayName() + "\",";
             str += "\"text\":\"" + post.getText() + "\",";
-            str += "\"hasImage\":\"" + post.hasImage() + "\",";
+            str += "\"hasImage\":" + post.hasImage() + ",";
             str += "\"liked\":" + post.isLiked() + ",";
             str += "\"numLikes\":\"" + post.getNumLikes() + "\",";
             str += "\"numComments\":\"" + post.getNumComments() + "\",";

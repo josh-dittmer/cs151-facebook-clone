@@ -39,16 +39,7 @@ public class PostManager {
                     continue;
                 }
 
-                String postId = postResultSet.getString("POST_ID");
-                String postText = postResultSet.getString("TEXT");
-                boolean postHasImage = postResultSet.getBoolean("HAS_IMAGE");
-                int postNumLikes = postResultSet.getInt("NUM_LIKES");
-                int postNumComments = postResultSet.getInt("NUM_COMMENTS");
-                Timestamp postTimestamp = postResultSet.getTimestamp("TIMESTAMP");
-                boolean postLiked = this.app.getLikeManager().checkLiked(myUserId, postId);
-                boolean isMyPost = userId.equals(myUserId);
-
-                posts.add(new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp, isMyPost));
+                posts.add(postFromResultSet(postResultSet, user, myUserId));
             }
         } catch(SQLException e) {
             log.error("SQL error while getting user posts: " + e.getMessage());
@@ -56,6 +47,43 @@ public class PostManager {
         }
 
         return posts;
+    }
+
+    public Post getPost(User user, String postId, String myUserId) {
+        Post post;
+
+        try {
+            Map<String, String> criteria = new HashMap<String, String>();
+            criteria.put("POST_ID", postId);
+            criteria.put("USER_ID", user.getUserId());
+
+            ResultSet results = this.app.getDatabaseConn().lookup("POSTS", "*", criteria);
+
+            if (!results.next()) {
+                return null;
+            }
+
+            post = postFromResultSet(results, user, myUserId);
+        } catch(SQLException e) {
+            log.error("SQL error while getting user posts: " + e.getMessage());
+            return null;
+        }
+
+        return post;
+    }
+
+    public Post postFromResultSet(ResultSet results, User user, String myUserId) throws SQLException {
+        String postId = results.getString("POST_ID");
+        String userId = results.getString("USER_ID");
+        String postText = results.getString("TEXT");
+        boolean postHasImage = results.getBoolean("HAS_IMAGE");
+        int postNumLikes = results.getInt("NUM_LIKES");
+        int postNumComments = results.getInt("NUM_COMMENTS");
+        Timestamp postTimestamp = results.getTimestamp("TIMESTAMP");
+        boolean postLiked = this.app.getLikeManager().checkLiked(myUserId, postId);
+        boolean isMyPost = userId.equals(myUserId);
+
+        return new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp, isMyPost);
     }
 
     public String createPost(String userId, String text, boolean hasImage) {
@@ -77,8 +105,25 @@ public class PostManager {
         return postId;
     }
 
-    public boolean deletePost(String userId, String postId) {
+    public boolean deletePost(String userId, String postId, String myUserId) {
+        Post post;
+        User user;
+
         try {
+            user = this.app.getUserManager().getUser(userId, myUserId);
+            if (user == null) {
+                return false;
+            }
+
+            post = this.getPost(user, postId, myUserId);
+            if (post == null) {
+                return false;
+            }
+
+            if (post.hasImage()) {
+                this.app.getResourceManager().deleteResource(post.getPostId());
+            }
+
             Map<String, String> criteria = new HashMap<String, String>();
             criteria.put("POST_ID", postId);
             criteria.put("USER_ID", userId);

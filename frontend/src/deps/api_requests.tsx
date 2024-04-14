@@ -343,3 +343,31 @@ export async function getUserFollowing(userId: string, token: string): Promise<U
         });
     });
 }
+
+export async function uploadFile(file: File, associatedId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
+        let data: FormData = new FormData();
+
+        data.append('file', file);
+        data.append('associatedId', associatedId);
+        data.append('token', token);
+
+        fetch(apiUrl + '/upload', {
+            method: 'POST',
+            body: data
+        })
+        .then((res) => {
+            res.json()
+            .then((jsonRes) => {
+                if (!jsonRes.success) {
+                    reject(jsonRes);
+                }
+
+                resolve(jsonRes);
+            })
+        })
+        .catch(() => {
+            reject('upload failed');
+        })
+    });
+}

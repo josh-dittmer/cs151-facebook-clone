@@ -185,7 +185,18 @@ public class DatabaseConnection {
                 "    PRIMARY KEY (ID)\n" +
                 ");\n";
 
-        String sql = createUsers + createPosts + createLikes + createComments + createSessions + createFollows;
+        String createUploads = "CREATE TABLE UPLOADS (\n" +
+                "    ID INT NOT NULL AUTO_INCREMENT,\n" +
+                "    RESOURCE_ID VARCHAR(64) NOT NULL,\n" +
+                "    USER_ID VARCHAR(64) NOT NULL,\n" +
+                "    ASSOCIATED_ID VARCHAR(64) NOT NULL,\n" +
+                "    IS_REMOTE_RESOURCE BOOLEAN NOT NULL,\n" +
+                "    RESOURCE_LOCATION TEXT NOT NULL,\n" +
+                "    TIMESTAMP DATETIME NOT NULL DEFAULT(CURRENT_TIMESTAMP()),\n" +
+                "    PRIMARY KEY (ID)\n" +
+                ");\n";
+
+        String sql = /*createUsers + createPosts + createLikes + createComments + createSessions + createFollows +*/ createUploads;
 
         Statement statement = this.conn.createStatement();
         statement.execute(sql);

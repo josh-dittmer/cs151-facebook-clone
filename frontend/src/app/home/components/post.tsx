@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { SuccessResponse, likePost, unlikePost, deletePost, UserPost } from '@/deps/api_requests';
+import { SuccessResponse, likePost, unlikePost, deletePost, UserPost, apiUrl } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -158,13 +158,11 @@ export default function PostComponent({ post }: PostProps) {
                 </div>
                 <div className="py-2">
                     {post.hasImage === true && (
-                        <div className="">
-                            <Image
-                                src="/img/example.jpg"
-                                width="100"
-                                height="100"
+                        <div className="flex justify-center">
+                            <img
+                                src={apiUrl + '/resource/' + post.postId + '?s=' + Cookie.get('token')}
                                 alt="User image"
-                                className="w-full mb-2"
+                                className="max-width-200 max-height-200 min-width-100 min-height-100 mb-2"
                             />
                         </div>
                     )}

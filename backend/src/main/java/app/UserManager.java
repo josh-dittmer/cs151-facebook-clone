@@ -41,6 +41,7 @@ public class UserManager {
         return new User(userId, username, password, bio, 0, 0, true, false);
     }
 
+    //  should be changed to do not use getUsers
     public User getUser(String userId, String myUserId) {
         ArrayList<String> search = new ArrayList<String>();
         search.add(userId);

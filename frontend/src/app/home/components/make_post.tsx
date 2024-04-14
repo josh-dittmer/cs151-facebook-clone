@@ -2,14 +2,24 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { createPost, CreatePostResponse } from '@/deps/api_requests';
+import { createPost, CreatePostResponse, uploadFile } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
 export default function MakePostComponent() {
     const [postText, setPostText] = useState<string>('');
+    const [postFile, setPostFile] = useState();
 
     const router = useRouter();
+
+    const onPostFileChange = (e: any) => {
+        //console.log(e.target.files[0]);
+        setPostFile(e.target.files[0]);
+    }
+
+    const removePostFile = () => {
+        setPostFile(undefined);
+    }
 
     const handleMakePost = async (e: any) => {
         e.preventDefault();
@@ -19,8 +29,14 @@ export default function MakePostComponent() {
             return;
         }
 
-        createPost(postText, false, token)
-        .then((res: CreatePostResponse) => {
+        const hasImage: boolean = !!postFile;
+
+        createPost(postText, hasImage, token)
+        .then(async (res: CreatePostResponse) => {
+            if (hasImage) {
+                await clientUploadFile(res.postId, token);
+            }
+
             setPostText('');
             location.reload();
         })
@@ -35,18 +51,50 @@ export default function MakePostComponent() {
         })
     };
 
+    const clientUploadFile = async (postId: string, token: string) => {
+        if (!postFile) {
+            return;
+        }
+
+        await uploadFile(postFile, postId, token);
+    };
+
     return (
         <div className="flex justify-center mb-3">
             <div className="p-4 shadow w-96 md:w-3/5">
                 <div className="border-b-2 border-gray-200 p-2 mb-3">
                     <p className="text-lg">New Post</p>
                 </div>
+                {postFile && (
+                    <div className="relative p-4">
+                        <div className="">
+                            <img
+                                src={URL.createObjectURL(postFile)}
+                                alt="Image preview"
+                                className="max-width-200 max-height-200 min-width-100 min-height-100"
+                            />
+                        </div>
+                        <div className="absolute top-6 right-6">
+                            <button
+                                className="rounded bg-red-400 hover:bg-red-500 p-2"
+                                onClick={removePostFile}
+                            >
+                                <Image
+                                    src="/img/x_symbol.svg"
+                                    width="16"
+                                    height="16"
+                                    alt="Confirm delete post"
+                                    className=""
+                                />
+                            </button>
+                        </div>
+                    </div>
+                )}
                 <form onSubmit={handleMakePost}>
                     <textarea
                         value={postText}
                         onChange={(e) => setPostText(e.target.value)}
                         placeholder="What's on your mind?"
-                        required
                         className="w-full bg-blue-50 rounded p-3 resize-none"
                     />
                     <div className="mt-3 flex items-center">
@@ -75,6 +123,7 @@ export default function MakePostComponent() {
                             <input
                                 type="file"
                                 id="image-picker"
+                                onChange={onPostFileChange}
                                 accept="image/png, image/jpeg, image/gif"
                                 className="hidden"
                             />

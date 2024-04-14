@@ -4,10 +4,7 @@ import com.hellokaton.blade.Blade;
 import com.hellokaton.blade.options.CorsOptions;
 import com.hellokaton.blade.options.HttpOptions;
 
-import controllers.ContentController;
-import controllers.FollowController;
-import controllers.LoginController;
-import controllers.SearchController;
+import controllers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,18 +21,20 @@ public class Application {
     private LikeManager likeManager;
     private SearchManager searchManager;
     private FollowManager followManager;
+    private ResourceManager resourceManager;
 
     private LoginController loginController;
     private ContentController contentController;
     private SearchController searchController;
     private FollowController followController;
+    private ResourceController resourceController;
 
     public Application() throws Exception {
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/cs151-facebook-clone", "sa", "");
         this.databaseConn = new DatabaseConnection(conn);
 
         // database must be created
-        if (this.databaseConn.numTables() != 6) {
+        if (this.databaseConn.numTables() != 7) {
             log.warn("Database does not exist! Creating...");
             this.databaseConn.createDb();
             log.info("Database created successfully!");
@@ -47,11 +46,13 @@ public class Application {
         this.likeManager = new LikeManager(this);
         this.searchManager = new SearchManager(this);
         this.followManager = new FollowManager(this);
+        this.resourceManager = new ResourceManager(this);
 
         this.loginController = new LoginController(this);
         this.contentController = new ContentController(this);
         this.searchController = new SearchController(this);
         this.followController = new FollowController(this);
+        this.resourceController = new ResourceController(this);
     }
 
     public DatabaseConnection getDatabaseConn() {
@@ -75,6 +76,7 @@ public class Application {
     }
     public SearchManager getSearchManager() { return searchManager; }
     public FollowManager getFollowManager() { return followManager; }
+    public ResourceManager getResourceManager() { return resourceManager; }
 
     public LoginController getLoginController() {
         return loginController;
@@ -88,6 +90,7 @@ public class Application {
         return searchController;
     }
     public FollowController getFollowController() { return followController; }
+    public ResourceController getResourceController() { return resourceController; }
 
     public static void main(String[] args) {
         Application app;
@@ -115,6 +118,7 @@ public class Application {
         blade.register(app.getContentController());
         blade.register(app.getSearchController());
         blade.register(app.getFollowController());
+        blade.register(app.getResourceController());
 
         blade.start(args);
     }

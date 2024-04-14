@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { getUserFollowing, UserListResponse, User } from '@/deps/api_requests';
 import FeedComponent from "../components/feed";
