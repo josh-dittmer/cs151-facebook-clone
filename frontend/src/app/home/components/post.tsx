@@ -162,7 +162,7 @@ export default function PostComponent({ post }: PostProps) {
                             <img
                                 src={apiUrl + '/resource/' + post.postId + '?s=' + Cookie.get('token')}
                                 alt="User image"
-                                className="max-width-200 max-height-200 min-width-100 min-height-100 mb-2"
+                                className="max-w-96 max-h-96 min-w-60 min-h-60 mb-2"
                             />
                         </div>
                     )}

@@ -9,15 +9,17 @@ import Cookie from 'js-cookie';
 export default function MakePostComponent() {
     const [postText, setPostText] = useState<string>('');
     const [postFile, setPostFile] = useState();
+    const [postFilePickerValue, setPostFilePickerValue] = useState<string>('');
 
     const router = useRouter();
 
     const onPostFileChange = (e: any) => {
-        //console.log(e.target.files[0]);
+        setPostFilePickerValue(e.target.value);
         setPostFile(e.target.files[0]);
     }
 
     const removePostFile = () => {
+        setPostFilePickerValue('');
         setPostFile(undefined);
     }
 
@@ -67,11 +69,11 @@ export default function MakePostComponent() {
                 </div>
                 {postFile && (
                     <div className="relative p-4">
-                        <div className="">
+                        <div className="flex justify-center">
                             <img
                                 src={URL.createObjectURL(postFile)}
                                 alt="Image preview"
-                                className="max-width-200 max-height-200 min-width-100 min-height-100"
+                                className="max-w-96 max-h-96 min-w-60 min-h-60"
                             />
                         </div>
                         <div className="absolute top-6 right-6">
@@ -122,6 +124,7 @@ export default function MakePostComponent() {
                             </label>
                             <input
                                 type="file"
+                                value={postFilePickerValue}
                                 id="image-picker"
                                 onChange={onPostFileChange}
                                 accept="image/png, image/jpeg, image/gif"
