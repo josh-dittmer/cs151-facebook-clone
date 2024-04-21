@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MessageManager {
-    private static final Logger log = LoggerFactory.getLogger(LikeManager.class);
+    private static final Logger log = LoggerFactory.getLogger(MessageManager.class);
     private Application app;
     public MessageManager(Application app) {
         this.app = app;
