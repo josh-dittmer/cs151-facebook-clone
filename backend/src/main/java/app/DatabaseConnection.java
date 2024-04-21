@@ -1,9 +1,6 @@
 package app;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +14,14 @@ public class DatabaseConnection {
     public Connection getConnection() {
         return this.conn;
     }
+
+//WIP Prepared statment for sql
+//    public ResultSet lookup(String table, String column, String value) throws SQLException {
+//        String query = "SELECT * FROM " + table + " WHERE " + column + "=?";
+//        PreparedStatement prep = conn.prepareStatement(query);
+//        prep.setString(1, value);
+//        return prep.executeQuery();
+//    }
 
     public ResultSet lookup(String table, String column, String value) throws SQLException {
         Statement statement = this.conn.createStatement();
@@ -196,7 +201,17 @@ public class DatabaseConnection {
                 "    PRIMARY KEY (ID)\n" +
                 ");\n";
 
-        String sql = /*createUsers + createPosts + createLikes + createComments + createSessions + createFollows +*/ createUploads;
+        String createMessages = "CREATE TABLE MESSAGES (\n" +
+                "    ID INT NOT NULL AUTO_INCREMENT,\n" +
+                "    MESSAGE_ID VARCHAR(64) NOT NULL,\n" +
+                "    SENDER_ID VARCHAR(64) NOT NULL,\n" +
+                "    RECEIVER_ID VARCHAR(64) NOT NULL,\n" +
+                "    MESSAGE_TEXT TEXT NOT NULL,\n" +
+                "    TIMESTAMP DATETIME NOT NULL DEFAULT(CURRENT_TIMESTAMP()),\n" +
+                "    PRIMARY KEY (ID)\n" +
+                ");\n";
+
+        String sql = createUsers + createPosts + createLikes + createComments + createSessions + createFollows +createUploads + createMessages;
 
         Statement statement = this.conn.createStatement();
         statement.execute(sql);

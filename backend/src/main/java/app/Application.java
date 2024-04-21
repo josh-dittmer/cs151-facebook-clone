@@ -19,6 +19,7 @@ public class Application {
     private PostManager postManager;
     private UserManager userManager;
     private LikeManager likeManager;
+    private MessageManager messageManager;
     private SearchManager searchManager;
     private FollowManager followManager;
     private ResourceManager resourceManager;
@@ -44,6 +45,7 @@ public class Application {
         this.postManager = new PostManager(this);
         this.userManager = new UserManager(this);
         this.likeManager = new LikeManager(this);
+        this.messageManager = new MessageManager(this);
         this.searchManager = new SearchManager(this);
         this.followManager = new FollowManager(this);
         this.resourceManager = new ResourceManager(this);
@@ -71,6 +73,7 @@ public class Application {
         return userManager;
     }
 
+    public MessageManager getMessageManager() { return messageManager; }
     public LikeManager getLikeManager() {
         return likeManager;
     }
