@@ -4,16 +4,20 @@ import java.sql.Timestamp;
 
 public class Message {
 
+    private String message;
     private String messageId;
     private String userId;
     private String username;
     private String displayName;
+    private Timestamp timestamp;
 
-    public Message(String messageId, String userId, String username, String displayName) {
+    public Message(String message, String messageId, String userId, String username, String displayName, Timestamp timestamp) {
+        this.message = message;
         this.messageId = messageId;
         this.userId = userId;
         this.username = username;
         this.displayName = displayName;
+        this.timestamp = timestamp;
     }
 
     public String getMessageId() {
@@ -48,4 +52,19 @@ public class Message {
         this.displayName = displayName;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
 }
