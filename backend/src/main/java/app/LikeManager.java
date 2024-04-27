@@ -13,10 +13,20 @@ public class LikeManager {
 
     private Application app;
 
+    //Constructor
     public LikeManager(Application app) {
         this.app = app;
     }
 
+    /*
+     * Causes user with "userId" to likes the specified post with "postId"
+     *
+     * Params:  userId: the id of a user in String format
+     *          postId: the id of a post in String format
+     *
+     * Returns: True if successfully liked the post
+     *          False if not liked or exception occurred
+     */
     public boolean likePost(String userId, String postId) {
         try {
             if (checkLiked(userId, postId)) {
@@ -41,6 +51,15 @@ public class LikeManager {
         return true;
     }
 
+    /*
+     * Causes user with "userId" to unlike the specified post with "postId"
+     *
+     * Params:  userId: the id of a user in String format
+     *          postId: the id of a post in String format
+     *
+     * Returns: True if sucessfully unliked the post
+     *          False if post was never liked in the first place or exception occurred
+     */
     public boolean unlikePost(String userId, String postId) {
         try {
             if (!checkLiked(userId, postId)) {
@@ -65,6 +84,15 @@ public class LikeManager {
         return true;
     }
 
+    /*
+     * Checks if user with "userId" liked a post specified by "postId"
+     *
+     * Params:  userId: the id of a user in String format
+     *          postId: the id of a post in String format
+     *
+     * Returns: True if liked
+     *          False if not liked or exception occurred
+     */
     public boolean checkLiked(String userId, String postId) {
         try {
             Map<String, String> criteria = new HashMap<String, String>();

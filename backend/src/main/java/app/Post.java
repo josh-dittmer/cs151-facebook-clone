@@ -15,6 +15,7 @@ public class Post {
     private Timestamp timestamp;
     private boolean isMyPost;
 
+    //Constructor
     public Post(String postId, String userId, String username, String displayName, String text, boolean hasImage, boolean liked, int numLikes, int numComments, Timestamp timestamp, boolean isMyPost) {
         this.postId = postId;
         this.userId = userId;
@@ -28,6 +29,8 @@ public class Post {
         this.timestamp = timestamp;
         this.isMyPost = isMyPost;
     }
+
+    //Getters and Setters
 
     public String getPostId() {
         return postId;
