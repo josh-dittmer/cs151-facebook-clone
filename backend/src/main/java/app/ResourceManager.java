@@ -17,10 +17,23 @@ public class ResourceManager {
 
     private Application app;
 
+    //Constructor
     public ResourceManager(Application app) {
         this.app = app;
     }
 
+    /*
+     * Adds a resource to the database
+     *
+     * Params: resourceId  : String containing the ID for the specific resource
+     *         userID      : String containing the ID for the specific user
+     *         associatedID: String containing the ID associated with the data
+     *         isRemoteResource: Boolean for whether this resource is remote or not
+     *         resourceLocation: String containing the location for the resource
+     *
+     * Returns: True if resource was successfully added
+     *          False if an exception was encountered
+     */
     public boolean addResource(String resourceId, String userId, String associatedId, boolean isRemoteResource, String resourceLocation) {
         try {
             Map<String, String> resourceData = new HashMap<String, String>();
@@ -39,6 +52,13 @@ public class ResourceManager {
         return true;
     }
 
+    /*
+     * Gets a specific resource specified by associatedId
+     *
+     * Params: associatedId: String containing the ID associated with the data
+     *
+     * Returns a Resource object specified by the associated Id
+     */
     public Resource getResource(String associatedId) {
         Resource resource;
 
@@ -65,6 +85,13 @@ public class ResourceManager {
         return resource;
     }
 
+    /*
+     * Deletes a specified resource
+     *
+     * Params: associatedID: String containing the ID associated with the resource
+     *
+     * Returns a Resource object specified by the associated Id
+     */
     public Resource deleteResource(String associatedId) {
         Resource resource;
 
