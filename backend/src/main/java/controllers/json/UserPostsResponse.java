@@ -2,7 +2,9 @@ package controllers.json;
 
 import app.Post;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class UserPostsResponse {
     private ArrayList<Post> posts;
@@ -25,6 +27,9 @@ public class UserPostsResponse {
 
         for (int i = 0; i < posts.size(); i++) {
             Post post = posts.get(i);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US);
+            String formattedTimestamp = sdf.format(post.getTimestamp());
+
 
             str += "{\"postId\":\"" + post.getPostId() + "\",";
             str += "\"userId\":\"" + post.getUserId() + "\",";
@@ -35,7 +40,7 @@ public class UserPostsResponse {
             str += "\"liked\":" + post.isLiked() + ",";
             str += "\"numLikes\":\"" + post.getNumLikes() + "\",";
             str += "\"numComments\":\"" + post.getNumComments() + "\",";
-            str += "\"timestamp\":\"" + post.getTimestamp() + "\",";
+            str += "\"timestamp\":\"" + formattedTimestamp + "\",";
             str += "\"isMyPost\":" + post.isMyPost() + "}";
 
             if (i != posts.size() - 1) {
