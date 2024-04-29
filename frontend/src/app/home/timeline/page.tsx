@@ -32,7 +32,7 @@ export default function TimelinePage() {
             setFeedElement(<FeedComponent userIds={userIds}></FeedComponent>);
         })
         .catch((err) => {
-            console.log('Search failed!')
+            console.log('Get following failed!')
             console.log(err);
         })
     }, []);

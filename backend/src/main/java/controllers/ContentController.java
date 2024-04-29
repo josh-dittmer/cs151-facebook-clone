@@ -124,7 +124,7 @@ public class ContentController {
             return new ErrorResponse("session not found", -3).toString();
         }
 
-        if (!this.app.getPostManager().deletePost(session.getUserId(), data.getItemId(), session.getUserId())) {
+        if (!this.app.getPostManager().deletePost(session.getUserId(), data.getItemId())) {
             log.warn("/delete_post: Failed to delete post");
             return new ErrorResponse("failed to delete post", -10).toString();
         }

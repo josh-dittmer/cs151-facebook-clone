@@ -168,6 +168,7 @@ public class DatabaseConnection {
 
         String createComments = "CREATE TABLE COMMENTS (\n" +
                 "    ID INT NOT NULL AUTO_INCREMENT,\n" +
+                "    COMMENT_ID VARCHAR(64) NOT NULL,\n" +
                 "    POST_ID VARCHAR(64) NOT NULL,\n" +
                 "    USER_ID VARCHAR(64) NOT NULL,\n" +
                 "    TEXT TEXT NOT NULL,\n" +

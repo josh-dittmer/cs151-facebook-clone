@@ -105,17 +105,17 @@ public class PostManager {
         return postId;
     }
 
-    public boolean deletePost(String userId, String postId, String myUserId) {
+    public boolean deletePost(String userId, String postId) {
         Post post;
         User user;
 
         try {
-            user = this.app.getUserManager().getUser(userId, myUserId);
+            user = this.app.getUserManager().getUser(userId, userId);
             if (user == null) {
                 return false;
             }
 
-            post = this.getPost(user, postId, myUserId);
+            post = this.getPost(user, postId, userId);
             if (post == null) {
                 return false;
             }

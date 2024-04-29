@@ -95,7 +95,7 @@ public class ResourceController {
         return new SuccessResponse().toString();
     }
 
-    // in the future this will take a resourceId that can be looked up with /get_resources
+    // in the future this will take a resourceId that can be looked up with /get_resources (for posts with multiple images)
     @GET(value="/resource/:associatedId", responseType=ResponseType.PREVIEW)
     public void getResource(Response response, @PathParam String associatedId, @Query String s) {
         if (associatedId == null || s == null) {
