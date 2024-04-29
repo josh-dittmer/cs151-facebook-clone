@@ -10,6 +10,7 @@ public class Resource {
     private String resourceLocation;
     private Timestamp timestamp;
 
+    //Constructor
     public Resource(String resourceId, String userId, String associatedId, boolean isRemoteResource, String resourceLocation, Timestamp timestamp) {
         this.resourceId = resourceId;
         this.userId = userId;
@@ -19,6 +20,7 @@ public class Resource {
         this.timestamp = timestamp;
     }
 
+    //Getters and Setters
     public String getResourceId() {
         return resourceId;
     }

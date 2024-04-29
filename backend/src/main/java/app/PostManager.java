@@ -16,10 +16,19 @@ public class PostManager {
 
     private Application app;
 
+    //Constructor
     public PostManager(Application app) {
         this.app = app;
     }
 
+    /*
+     * Gets the posts of user with "myUserId"
+     *
+     * Params: users   : ArrayList containing all users
+     *         myUserId: String containing current userId
+     *
+     * Returns: ArrayList containing all the users' posts
+     */
     public ArrayList<Post> getUserPosts(ArrayList<User> users, String myUserId) {
         ArrayList<Post> posts = new ArrayList<Post>();
 
@@ -49,6 +58,15 @@ public class PostManager {
         return posts;
     }
 
+    /*
+     * Gets post from "user" with specified postId
+     *
+     * Params: user    : User object for specified user
+     *         postId  : String containing the id of the post
+     *         myUserId: String containing the specified user ID
+     *
+     * Returns: Returns a Post object containing the specified postId
+     */
     public Post getPost(User user, String postId, String myUserId) {
         Post post;
 
@@ -72,6 +90,15 @@ public class PostManager {
         return post;
     }
 
+    /*
+     * Gets a Post from a result set
+     *
+     * Params: results : ResultSet containing the results
+     *         user    : User object for specified user
+     *         myUserId: String containing the user's ID
+     *
+     * Returns: a Post object for the specified post
+     */
     public Post postFromResultSet(ResultSet results, User user, String myUserId) throws SQLException {
         String postId = results.getString("POST_ID");
         String userId = results.getString("USER_ID");
@@ -86,6 +113,15 @@ public class PostManager {
         return new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp, isMyPost);
     }
 
+    /*
+     * Creates a Post
+     *
+     * Params: userId  : String containing the id of the user
+     *         text    : String containing text of the post
+     *         hasImage: Boolean for whether the post has an image or not
+     *
+     * Returns: String containing the postId of the newly created post
+     */
     public String createPost(String userId, String text, boolean hasImage) {
         String postId = RandomUID.generate(64);
 
@@ -105,7 +141,17 @@ public class PostManager {
         return postId;
     }
 
-    public boolean deletePost(String userId, String postId) {
+    /*
+     * Deletes a post
+     *
+     * Params: userId  : String containing specified user's ID
+     *         postId  : String containing specified post's ID
+     *         myUserId: String containing current user's ID
+     *
+     * Returns: True : if successfully deleted post
+     *          False: user doesn't exist, post doesn't exist, or exception occurred
+     */
+    public boolean deletePost(String userId, String postId, String myUserId) {
         Post post;
         User user;
 

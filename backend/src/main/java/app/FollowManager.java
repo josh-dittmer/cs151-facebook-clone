@@ -15,10 +15,20 @@ public class FollowManager {
 
     private Application app;
 
+    //Constructor
     public FollowManager(Application app) {
         this.app = app;
     }
 
+    /*
+     * Checks if srcUserId is following destUserId
+     *
+     * Params:  srcUserId : source user ID in string format
+     *          destUserId: destination user ID in String format
+     *
+     * Returns: True if successfully followed destUserId
+     *          False if srcUserId was already following or exception occurred
+     */
     public boolean followUser(String srcUserId, String destUserId) {
         try {
             if (checkFollowing(srcUserId, destUserId)) {
@@ -47,6 +57,15 @@ public class FollowManager {
         return true;
     }
 
+    /*
+     * Unfollows srcUserId from destUserId if possible
+     *
+     * Params:  srcUserId : source user ID in string format
+     *          destUserId: destination user ID in String format
+     *
+     * Returns: True if successfully unfollowed
+     *          False if not followed in the first place or exception occurred
+     */
     public boolean unfollowUser(String srcUserId, String destUserId) {
         try {
             if (!checkFollowing(srcUserId, destUserId)) {
@@ -75,6 +94,15 @@ public class FollowManager {
         return true;
     }
 
+    /*
+     * Checks if srcUserId is following destUserId
+     *
+     * Params:  srcUserId : source user ID in string format
+     *          destUserId: destination user ID in String format
+     *
+     * Returns: True if following
+     *          False if not following or exception occurred
+     */
     public boolean checkFollowing(String srcUserId, String destUserId) {
         try {
             Map<String, String> criteria = new HashMap<String, String>();
@@ -93,6 +121,14 @@ public class FollowManager {
         return true;
     }
 
+    /*
+     * Gets the following list of a user
+     *
+     * Params:  userId  : user ID in string format
+     *          myUserId: current user's ID in String format
+     *
+     * Returns: ArrayList of all followers for that user
+     */
     public ArrayList<User> getUserFollowing(String userId, String myUserId) {
         ArrayList<User> users = new ArrayList<>();
 
