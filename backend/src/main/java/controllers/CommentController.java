@@ -2,6 +2,7 @@ package controllers;
 
 import app.Application;
 import app.Session;
+import app.User;
 import com.hellokaton.blade.annotation.Path;
 import com.hellokaton.blade.annotation.request.Body;
 import com.hellokaton.blade.annotation.route.POST;
@@ -38,13 +39,19 @@ public class CommentController {
             return new ErrorResponse("session not found", -3).toString();
         }
 
+        User user = this.app.getUserManager().getUser(session.getUserId(), session.getUserId());
+        if (user == null) {
+            log.warn("/create_comment: User not found");
+            return new ErrorResponse("user not found", -4).toString();
+        }
+
         String commentId = this.app.getCommentManager().createComment(data.getPostId(), session.getUserId(), data.getText());
         if (commentId == null) {
             log.warn("/create_comment: Failed to create comment");
             return new ErrorResponse("failed to create comment", -18).toString();
         }
 
-        return new CreateCommentResponse(commentId).toString();
+        return new CreateCommentResponse(commentId, user.getUserId(), user.getUsername(), user.getDisplayName()).toString();
     }
 
     @POST(value="/delete_comment", responseType= ResponseType.JSON)

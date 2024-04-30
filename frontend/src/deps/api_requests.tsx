@@ -273,7 +273,10 @@ export async function unlikePost(postId: string, token: string): Promise<Success
 
 export interface CreateCommentResponse {
     success: boolean,
-    commentId: string
+    commentId: string,
+    userId: string,
+    username: string,
+    displayName: string
 }
 
 export async function createComment(postId: string, text: string, token: string): Promise<CreateCommentResponse> {

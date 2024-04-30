@@ -124,9 +124,9 @@ export default function PostComponent({ post }: PostProps) {
             let newComment: PostComment = {
                 commentId: res.commentId,
                 postId: post.postId,
-                userId: post.userId,
-                username: post.username,
-                displayName: post.displayName,
+                userId: res.userId,
+                username: res.username,
+                displayName: res.displayName,
                 text: createCommentText,
                 isMyComment: true,
                 timestamp: 'Just now'
