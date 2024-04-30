@@ -114,7 +114,7 @@ export default function PostComponent({ post }: PostProps) {
                             <div className="flex items-center">
                                 <span className="text-xs text-gray-500 mr-1">Delete post?</span>
                                 <button
-                                    className="rounded hover:bg-gray-200 p-2"
+                                    className="rounded hover:bg-red-500 p-2"
                                     onClick={clientDeletePost}
                                 >
                                     <Image

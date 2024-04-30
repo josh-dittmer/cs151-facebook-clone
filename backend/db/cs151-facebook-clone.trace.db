@@ -1377,3 +1377,71 @@ CREATE TABLE USERS (
     NUM_FOLLOWING INTEGER NOT NULL DEFAULT(0),
     PRIMARY KEY (ID)
 ) [42101-224]
+2024-04-17 19:08:55.123647-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('AmqYQbaRxavGGaWHka0cwW7n7JL4KCoLvp4rl7KmtbklTzh0lWPladpItVV3TQLv', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('AmqYQbaRxavGGaWHka0cwW7n7JL4KCoLvp4rl7KmtbklTzh0lWPladpItVV3TQLv', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:08:58.021531-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('Bdc0m39Vq3hGLpR2LimV00NFbilJ2vCD0JDfsc0OAc7XPIU9u1Ir5ueDFNPzqrt1', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('Bdc0m39Vq3hGLpR2LimV00NFbilJ2vCD0JDfsc0OAc7XPIU9u1Ir5ueDFNPzqrt1', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:00.652153-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('rooUEtdWp4VXXkDJoRJjBcSZtB1dIjjGPKe3FoKWg6bzvYarBTD7RxwZ2ZsTQBBG', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('rooUEtdWp4VXXkDJoRJjBcSZtB1dIjjGPKe3FoKWg6bzvYarBTD7RxwZ2ZsTQBBG', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:04.168005-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('3cAbwaJo7tXhzRI0H5rOzY7l1bXRZDkWhCOstxeblPOQ5ReHQEF1VVZmkxvpPTUZ', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('3cAbwaJo7tXhzRI0H5rOzY7l1bXRZDkWhCOstxeblPOQ5ReHQEF1VVZmkxvpPTUZ', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:09.993478-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('I9jzqXDmNB80PyV3zOcoEPBlobBIQvGuRXfJR47ltwnCYC3KoaJ2ksDFE6KD0xaf', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('I9jzqXDmNB80PyV3zOcoEPBlobBIQvGuRXfJR47ltwnCYC3KoaJ2ksDFE6KD0xaf', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:12.062001-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('fyPzr97xEMbAex07t7dP05yRZN1w5BdUHzm0TvmpMKzbSrzrsZzNoxW09uftK4jj', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('fyPzr97xEMbAex07t7dP05yRZN1w5BdUHzm0TvmpMKzbSrzrsZzNoxW09uftK4jj', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:15.149729-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('UI1DL1MywS8BGUPpHlOU8Gs6mS8UuLmLApiFnLZtjeJpVtdvcau76vQk6CvMdFKu', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('UI1DL1MywS8BGUPpHlOU8Gs6mS8UuLmLApiFnLZtjeJpVtdvcau76vQk6CvMdFKu', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:16.168296-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('scOaLDjCPhKYDHzmoso3Pwut3B87O6AjQRUskIRrtjdWApJEvn0Zu5mxVI7jk9t5', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('scOaLDjCPhKYDHzmoso3Pwut3B87O6AjQRUskIRrtjdWApJEvn0Zu5mxVI7jk9t5', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:19.196797-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('iPIJppfyapHVkjsOELWUAhND9ivobCmp9tGY1aWKLutNO3z6FdcU1rYWsxtnRumo', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('iPIJppfyapHVkjsOELWUAhND9ivobCmp9tGY1aWKLutNO3z6FdcU1rYWsxtnRumo', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:24.729026-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('5kVU2hFi8WNS5XCh6dVbkfWIwcLiPpf9oTJOoDVqUcvw2mUtQRXc2xSOr5MWHSN0', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]!')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('5kVU2hFi8WNS5XCh6dVbkfWIwcLiPpf9oTJOoDVqUcvw2mUtQRXc2xSOr5MWHSN0', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon!') [42000-224]
+2024-04-17 19:09:32.202633-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('jnTN2gB9IdFeNzY7AjviHPxjXfGy0Nf8fzYXU088Qlviow0yxQLm6bqQI4FfAACf', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon[*]')"; SQL statement:
+INSERT INTO POSTS(POST_ID, HAS_IMAGE, USER_ID, TEXT) VALUES ('jnTN2gB9IdFeNzY7AjviHPxjXfGy0Nf8fzYXU088Qlviow0yxQLm6bqQI4FfAACf', 'FALSE', 'TVgdVlfDeeYAxUEBCz7FojoyM2rY3QkjRPNA9a0wFDKkqbvIBipCJBNLu1bETXbz', 'I'm going to watch the Hunger Games 2 very soon') [42000-224]
+2024-04-18 08:57:27.172536-07:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at app.Application.<init>(Application.java:33)
+	at app.Application.main(Application.java:99)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 19 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 13 more
+2024-04-18 08:59:06.567445-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SET [*]USERS WHERE USERNAME='josh.dittmer' (NUM_FOLLOWERS=NUM_FOLLOWERS-1)"; expected "@, AUTOCOMMIT, EXCLUSIVE, IGNORECASE, PASSWORD, SALT, MODE, DATABASE, COLLATION, CLUSTER, DATABASE_EVENT_LISTENER, ALLOW_LITERALS, DEFAULT_TABLE_TYPE, SCHEMA, CATALOG, SCHEMA_SEARCH_PATH, JAVA_OBJECT_SERIALIZER, IGNORE_CATALOGS, SESSION, TRANSACTION, TIME, NON_KEYWORDS, DEFAULT_NULL_ORDERING"; SQL statement:
+SET USERS WHERE USERNAME='josh.dittmer' (NUM_FOLLOWERS=NUM_FOLLOWERS-1) [42001-224]

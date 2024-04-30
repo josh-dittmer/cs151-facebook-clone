@@ -118,13 +118,13 @@ export default function ProfileComponent({ userId }: ProfileProps) {
                             <span className="text-xl p-2">{username}</span>
                             <br />
                             {isMyProfile === true ? (
-                                <button className="mt-3 ml-2 p-2 bg-gray-200 rounded">Edit Profile</button>
+                                <button className="mt-3 ml-2 p-2 bg-gray-200 hover:bg-gray-300 rounded">Edit Profile</button>
                             ) : (
                                 <div>
                                     {following === true ? (
-                                        <button onClick={unfollow} className="mt-3 ml-2 p-2 bg-gray-200 rounded">Unfollow</button>
+                                        <button onClick={unfollow} className="mt-3 ml-2 p-2 bg-gray-200 hover:bg-gray-300 rounded">Unfollow</button>
                                     ) : (
-                                        <button onClick={follow} className="mt-3 ml-2 p-2 bg-blue-500 text-white rounded">Follow</button>
+                                        <button onClick={follow} className="mt-3 ml-2 p-2 bg-blue-500 hover:bg-blue-600 text-white rounded">Follow</button>
                                     )}
                                 </div>
                             )}

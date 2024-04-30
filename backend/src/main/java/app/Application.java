@@ -23,12 +23,14 @@ public class Application {
     private SearchManager searchManager;
     private FollowManager followManager;
     private ResourceManager resourceManager;
+    private CommentManager commentManager;
 
     private LoginController loginController;
     private ContentController contentController;
     private SearchController searchController;
     private FollowController followController;
     private ResourceController resourceController;
+    private CommentController commentController;
 
     public Application() throws Exception {
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/cs151-facebook-clone", "sa", "");
@@ -49,12 +51,14 @@ public class Application {
         this.searchManager = new SearchManager(this);
         this.followManager = new FollowManager(this);
         this.resourceManager = new ResourceManager(this);
+        this.commentManager = new CommentManager(this);
 
         this.loginController = new LoginController(this);
         this.contentController = new ContentController(this);
         this.searchController = new SearchController(this);
         this.followController = new FollowController(this);
         this.resourceController = new ResourceController(this);
+        this.commentController = new CommentController(this);
     }
 
     public DatabaseConnection getDatabaseConn() {
@@ -71,6 +75,9 @@ public class Application {
 
     public UserManager getUserManager() {
         return userManager;
+    }
+    public CommentManager getCommentManager() {
+        return commentManager;
     }
 
     public MessageManager getMessageManager() { return messageManager; }
@@ -94,6 +101,7 @@ public class Application {
     }
     public FollowController getFollowController() { return followController; }
     public ResourceController getResourceController() { return resourceController; }
+    public CommentController getCommentController() { return commentController; }
 
     public static void main(String[] args) {
         Application app;
@@ -115,6 +123,7 @@ public class Application {
         Blade blade = Blade.create();
         blade.cors(corsOptions);
         blade.http(httpOptions);
+        blade.listen(9000);
 
         blade.scanPackages("controllers");
         blade.register(app.getLoginController());
@@ -122,6 +131,7 @@ public class Application {
         blade.register(app.getSearchController());
         blade.register(app.getFollowController());
         blade.register(app.getResourceController());
+        blade.register(app.getCommentController());
 
         blade.start(args);
     }
