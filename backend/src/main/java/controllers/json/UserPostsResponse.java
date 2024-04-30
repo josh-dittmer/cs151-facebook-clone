@@ -1,9 +1,11 @@
-package controllers.json;
+package controllers.json; //standard time
 
 import app.Comment;
 import app.Post;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class UserPostsResponse {
     private ArrayList<Post> posts;
@@ -27,6 +29,10 @@ public class UserPostsResponse {
         for (int i = 0; i < posts.size(); i++) {
             Post post = posts.get(i);
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US);
+
+            String formattedPostTimestamp = sdf.format(post.getTimestamp());
+
             str += "{\"postId\":\"" + post.getPostId() + "\",";
             str += "\"userId\":\"" + post.getUserId() + "\",";
             str += "\"username\":\"" + post.getUsername() + "\",";
@@ -36,12 +42,14 @@ public class UserPostsResponse {
             str += "\"liked\":" + post.isLiked() + ",";
             str += "\"numLikes\":\"" + post.getNumLikes() + "\",";
             str += "\"numComments\":\"" + post.getNumComments() + "\",";
-            str += "\"timestamp\":\"" + post.getTimestamp() + "\",";
+            str += "\"timestamp\":\"" + formattedPostTimestamp + "\",";
             str += "\"isMyPost\":" + post.isMyPost() + ",";
             str += "\"comments\":[";
 
             for (int j = 0; j < post.getComments().size(); j++) {
                 Comment comment = post.getComments().get(j);
+
+                String formattedCommentTimestamp = sdf.format(comment.getTimestamp());
 
                 str += "{\"commentId\":\"" + comment.getCommentId() + "\",";
                 str += "\"postId\":\"" + comment.getPostId() + "\",";
@@ -50,7 +58,7 @@ public class UserPostsResponse {
                 str += "\"displayName\":\"" + comment.getDisplayName() + "\",";
                 str += "\"text\":\"" + comment.getText() + "\",";
                 str += "\"isMyComment\":" + comment.isMyComment() + ",";
-                str += "\"timestamp\":\"" + comment.getTimestamp() + "\"}";
+                str += "\"timestamp\":\"" + formattedCommentTimestamp + "\"}";
 
                 if (j != post.getComments().size() - 1) {
                     str += ", ";
