@@ -1,6 +1,7 @@
 package app;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Post {
     private String postId;
@@ -14,9 +15,10 @@ public class Post {
     private int numComments;
     private Timestamp timestamp;
     private boolean isMyPost;
+    private ArrayList<Comment> comments;
 
     //Constructor
-    public Post(String postId, String userId, String username, String displayName, String text, boolean hasImage, boolean liked, int numLikes, int numComments, Timestamp timestamp, boolean isMyPost) {
+    public Post(String postId, String userId, String username, String displayName, String text, boolean hasImage, boolean liked, int numLikes, int numComments, Timestamp timestamp, boolean isMyPost, ArrayList<Comment> comments) {
         this.postId = postId;
         this.userId = userId;
         this.username = username;
@@ -28,6 +30,7 @@ public class Post {
         this.numComments = numComments;
         this.timestamp = timestamp;
         this.isMyPost = isMyPost;
+        this.comments = comments;
     }
 
     //Getters and Setters
@@ -119,4 +122,8 @@ public class Post {
     public void setMyPost(boolean myPost) {
         isMyPost = myPost;
     }
+
+    public ArrayList<Comment> getComments() { return comments; }
+
+    public void setComments(ArrayList<Comment> comments) { this.comments = comments; }
 }

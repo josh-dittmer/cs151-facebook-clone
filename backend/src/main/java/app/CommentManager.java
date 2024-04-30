@@ -25,6 +25,10 @@ public class CommentManager {
         String commentId = RandomUID.generate(64);
 
         try {
+            Map<String, String> postUpdates = new HashMap<String, String>();
+            postUpdates.put("NUM_COMMENTS", "NUM_COMMENTS+1");
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, postUpdates);
+
             Map<String, String> commentData = new HashMap<String, String>();
             commentData.put("COMMENT_ID", commentId);
             commentData.put("POST_ID", postId);
@@ -74,14 +78,13 @@ public class CommentManager {
         return comments;
     }
 
-    public boolean deleteComment(String userId, String commentId) {
+    public boolean deleteComment(String userId, String postId, String commentId) {
         User user;
 
         try {
-            user = this.app.getUserManager().getUser(userId, userId);
-            if (user == null) {
-                return false;
-            }
+            Map<String, String> postUpdates = new HashMap<String, String>();
+            postUpdates.put("NUM_COMMENTS", "NUM_COMMENTS-1");
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, postUpdates);
 
             Map<String, String> criteria = new HashMap<String, String>();
             criteria.put("COMMENT_ID", commentId);

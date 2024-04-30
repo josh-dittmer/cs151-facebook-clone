@@ -34,14 +34,14 @@ public class LikeManager {
                 return false;
             }
 
+            Map<String, String> likeUpdates = new HashMap<String, String>();
+            likeUpdates.put("NUM_LIKES", "NUM_LIKES+1");
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, likeUpdates);
+
             Map<String, String> likeData = new HashMap<String, String>();
             likeData.put("POST_ID", postId);
             likeData.put("USER_ID", userId);
             this.app.getDatabaseConn().insert("LIKES", likeData);
-
-            Map<String, String> likeUpdates = new HashMap<String, String>();
-            likeUpdates.put("NUM_LIKES", "NUM_LIKES+1");
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, likeUpdates);
 
         } catch(SQLException e) {
             log.error("SQL error while liking post: " + e.getMessage());

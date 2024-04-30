@@ -213,6 +213,7 @@ public class DatabaseConnection {
                 ");\n";
 
         String sql = createUsers + createPosts + createLikes + createComments + createSessions + createFollows +createUploads + createMessages;
+        //String sql = createComments;
 
         Statement statement = this.conn.createStatement();
         statement.execute(sql);

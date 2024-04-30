@@ -3,35 +3,64 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { SuccessResponse, likePost, unlikePost, deletePost, UserPost, apiUrl } from '@/deps/api_requests';
+import CommentComponent from './comment';
+import { PostComment, SuccessResponse, likePost, unlikePost, deletePost, UserPost, apiUrl, createComment, CreateCommentResponse } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
 interface PostProps {
     post: UserPost
-    /*postId: string,
-    userId: string,
-    username: string,
-    displayName: string,
-    text: string,
-    hasImage: boolean,
-    liked: boolean,
-    numLikes: number,
-    numComments: number,
-    timestamp: string*/
 }
 
 export default function PostComponent({ post }: PostProps) {
     const [likedState, setLikedState] = useState<boolean>(post.liked);
     const [numLikesState, setNumLikesState] = useState<number>(post.numLikes);
+
+    const [numCommentsState, setNumCommentsState] = useState<number>(post.numComments);
     
+    const [createCommentText, setCreateCommentText] = useState<string>('');
+
+    const [comments, setComments] = useState<PostComment[]>(post.comments);
+
+    const [commentElems, setCommentElems] = useState<React.ReactElement[]>([]);
+    const [topCommentElems, setTopCommentElems] = useState<React.ReactElement[]>([]);
+
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
 
     const toggleDeleteConfirmation = () => {
         setShowDeleteConfirmation(!showDeleteConfirmation);
     }
 
+    const [showComments, setShowComments] = useState<boolean>(false);
+
+    const toggleComments = () => {
+        setShowComments(!showComments);
+    }
+
+    const numTopComments = 1;
+
+
     const router = useRouter();
+
+    useEffect(() => {
+        const topCommentArr: React.ReactElement[] = [];
+        const commentArr: React.ReactElement[] = [];
+    
+        //console.log(comments);
+
+        comments.forEach((comment: PostComment, index) => {
+            let commentElem: React.ReactElement = <CommentComponent key={comment.commentId} comment={comment} commentsState={comments} setCommentsState={setComments} numCommentsState={numCommentsState} setNumCommentsState={setNumCommentsState} />;
+            
+            if (index < numTopComments) {
+                topCommentArr.push(commentElem);
+            } else {
+                commentArr.push(commentElem);
+            }
+        })
+    
+        setCommentElems(commentArr);
+        setTopCommentElems(topCommentArr);
+    }, [comments]);
 
     const token: string | undefined = Cookie.get('token');
     if (!token) {
@@ -88,10 +117,43 @@ export default function PostComponent({ post }: PostProps) {
         })
     }
 
-    // load comments here
-    useEffect(() => {
-        
-    }, []);
+    const clientCreateComment = () => {
+        createComment(post.postId, createCommentText, token)
+        .then((res: CreateCommentResponse) => {
+            //location.reload();
+            let newComment: PostComment = {
+                commentId: res.commentId,
+                postId: post.postId,
+                userId: post.userId,
+                username: post.username,
+                displayName: post.displayName,
+                text: createCommentText,
+                isMyComment: true,
+                timestamp: 'Just now'
+            };
+
+            setComments([
+                ...comments,
+                newComment
+            ]);
+
+            if (!showComments && + numCommentsState + 1 > 1) {
+                toggleComments();
+            }
+
+            setNumCommentsState(+ numCommentsState + 1);
+            setCreateCommentText('');
+        })
+        .catch((err) => {
+            if (err.code === -3) {
+                // session expired
+                router.push('/login');
+            } else {
+                console.log('Failed to create comment!');
+                console.log(err);
+            }
+        })
+    }
     
     return (
         <div className="flex justify-center mb-1">
@@ -202,15 +264,62 @@ export default function PostComponent({ post }: PostProps) {
                             )}
                             <span className="text-xs ml-2">{numLikesState}</span>
                         </div>
-                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 hover:border-gray-300w rounded-full">
-                            <Image
-                                src="/img/comment.png"
-                                width="23"
-                                height="23"
-                                alt="Comment"
-                                className=""
-                            />
-                            <span className="text-xs ml-1">{post.numComments}</span>
+                        <div className="flex items-center ml-2 p-2 border-2 border-gray-200 hover:border-gray-300 rounded-full">
+                            <a onClick={toggleComments}>
+                                <Image
+                                    src="/img/comment.png"
+                                    width="23"
+                                    height="23"
+                                    alt="Comment"
+                                    className=""
+                                />
+                            </a>
+                            <span className="text-xs ml-1">{numCommentsState}</span>
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <div className="flex items-center">
+                            <div className="p-1 border-2 border-gray-200 rounded-full w-full">
+                                <input
+                                    type="text"
+                                    value={createCommentText}
+                                    onChange={(e) => setCreateCommentText(e.target.value)}
+                                    placeholder="Add a comment..."
+                                    className="text-sm w-full bg-none focus:outline-none p-1"
+                                />
+                            </div>
+                            <div className="ml-2">
+                                <button
+                                    className="text-sm text-blue-500 hover:bg-blue-50 rounded p-1"
+                                    onClick={clientCreateComment}
+                                >
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-5">
+                            <div className="">
+                                {topCommentElems}
+                            </div>
+                            <div className={(showComments ? 'slide-down-toggled' : 'slide-down-untoggled') + ''}>
+                                {commentElems}
+                            </div>
+                            {numCommentsState > numTopComments && (
+                                <div className="">
+                                    <center>
+                                        <button
+                                            className="text-sm text-gray-500 hover:bg-gray-100 rounded p-2"
+                                            onClick={toggleComments}
+                                        >
+                                            {(showComments ? (
+                                                'Hide all ' + numCommentsState + ' comment(s)'
+                                            ) : (
+                                                'View all ' + numCommentsState + ' comment(s)'
+                                            ))}
+                                        </button>
+                                    </center>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 package controllers.json;
 
+import app.Comment;
 import app.Post;
 
 import java.util.ArrayList;
@@ -36,7 +37,27 @@ public class UserPostsResponse {
             str += "\"numLikes\":\"" + post.getNumLikes() + "\",";
             str += "\"numComments\":\"" + post.getNumComments() + "\",";
             str += "\"timestamp\":\"" + post.getTimestamp() + "\",";
-            str += "\"isMyPost\":" + post.isMyPost() + "}";
+            str += "\"isMyPost\":" + post.isMyPost() + ",";
+            str += "\"comments\":[";
+
+            for (int j = 0; j < post.getComments().size(); j++) {
+                Comment comment = post.getComments().get(j);
+
+                str += "{\"commentId\":\"" + comment.getCommentId() + "\",";
+                str += "\"postId\":\"" + comment.getPostId() + "\",";
+                str += "\"userId\":\"" + comment.getUserId() + "\",";
+                str += "\"username\":\"" + comment.getUsername() + "\",";
+                str += "\"displayName\":\"" + comment.getDisplayName() + "\",";
+                str += "\"text\":\"" + comment.getText() + "\",";
+                str += "\"isMyComment\":" + comment.isMyComment() + ",";
+                str += "\"timestamp\":\"" + comment.getTimestamp() + "\"}";
+
+                if (j != post.getComments().size() - 1) {
+                    str += ", ";
+                }
+            }
+
+            str += "]}";
 
             if (i != posts.size() - 1) {
                 str += ", ";

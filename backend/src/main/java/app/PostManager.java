@@ -110,7 +110,13 @@ public class PostManager {
         boolean postLiked = this.app.getLikeManager().checkLiked(myUserId, postId);
         boolean isMyPost = userId.equals(myUserId);
 
-        return new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp, isMyPost);
+        ArrayList<Comment> postComments = this.app.getCommentManager().getComments(postId, myUserId);
+        if (postComments == null) {
+            log.warn("Failed to get comments for post [" + postId + "]");
+            postComments = new ArrayList<Comment>();
+        }
+
+        return new Post(postId, user.getUserId(), user.getUsername(), user.getDisplayName(), postText, postHasImage, postLiked, postNumLikes, postNumComments, postTimestamp, isMyPost, postComments);
     }
 
     /*

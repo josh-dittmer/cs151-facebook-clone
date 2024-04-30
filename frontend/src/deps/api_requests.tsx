@@ -133,6 +133,17 @@ export async function getUserProfile(userId: string, token: string): Promise<Use
     });
 }
 
+export interface PostComment {
+    commentId: string,
+    postId: string,
+    userId: string,
+    username: string,
+    displayName: string,
+    text: string,
+    isMyComment: boolean,
+    timestamp: string
+}
+
 export interface UserPost {
     postId: string,
     userId: string,
@@ -145,6 +156,7 @@ export interface UserPost {
     numComments: number,
     timestamp: string,
     isMyPost: boolean
+    comments: Array<PostComment>
 }
 
 export interface UserPostsResponse {
@@ -258,6 +270,54 @@ export async function unlikePost(postId: string, token: string): Promise<Success
         });
     });
 }
+
+export interface CreateCommentResponse {
+    success: boolean,
+    commentId: string
+}
+
+export async function createComment(postId: string, text: string, token: string): Promise<CreateCommentResponse> {
+    return new Promise<CreateCommentResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/create_comment', 'post', {
+            postId: postId,
+            text: text,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let createCommentResponse: CreateCommentResponse = res as CreateCommentResponse;
+            resolve(createCommentResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+export async function deleteComment(postId: string, commentId: string, token: string): Promise<SuccessResponse> {
+    return new Promise<SuccessResponse>(async (resolve, reject) => {
+        makeRequest(apiUrl + '/delete_comment', 'post', {
+            postId: postId,
+            commentId: commentId,
+            token: token
+        })
+        .then((res) => {
+            if (!res.success) {
+                reject(res);
+            }
+
+            let deleteCommentResponse: SuccessResponse = res as SuccessResponse;
+            resolve(deleteCommentResponse);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
 
 export interface UserListResponse {
     success: boolean,
