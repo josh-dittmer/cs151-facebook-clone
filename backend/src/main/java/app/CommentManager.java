@@ -82,15 +82,15 @@ public class CommentManager {
         User user;
 
         try {
-            Map<String, String> postUpdates = new HashMap<String, String>();
-            postUpdates.put("NUM_COMMENTS", "NUM_COMMENTS-1");
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, postUpdates);
-
             Map<String, String> criteria = new HashMap<String, String>();
             criteria.put("COMMENT_ID", commentId);
             criteria.put("USER_ID", userId);
 
             this.app.getDatabaseConn().delete("COMMENTS", criteria);
+
+            Map<String, String> postUpdates = new HashMap<String, String>();
+            postUpdates.put("NUM_COMMENTS", "NUM_COMMENTS-1");
+            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, postUpdates);
         } catch(SQLException e) {
             log.error("SQL error while deleting user comment: " + e.getMessage());
             return false;

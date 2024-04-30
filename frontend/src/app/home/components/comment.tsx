@@ -72,7 +72,7 @@ export default function CommentComponent({ comment, commentsState, setCommentsSt
                         </div>
                     </Link>
                 </div>
-                <div className={'flex justify-end' + (comment.isMyComment ? '' : 'hidden')}>
+                <div className={'flex justify-end ' + (comment.isMyComment ? '' : 'hidden')}>
                     {showDeleteConfirmation ? (
                         <div className="flex items-center">
                             <span className="text-xs text-gray-500 mr-1">Delete comment?</span>
