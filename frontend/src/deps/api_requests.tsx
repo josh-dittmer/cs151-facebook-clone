@@ -7,6 +7,55 @@ export interface SuccessResponse {
     success: boolean
 }
 
+export interface Notification {
+    notificationId: string;
+    userId: string;
+    username: string;
+    action: string;
+    targetId: string;
+    targetType: string;
+    timestamp: string;
+}
+
+export interface NotificationListResponse {
+    success: boolean;
+    notifications: Notification[];
+}
+
+export async function getNotifications(token: string): Promise<NotificationListResponse> {
+    return new Promise<NotificationListResponse>((resolve, reject) => {
+        // Implementation to fetch notifications goes here
+        // This function is responsible for fetching notifications from the server
+        // You can replace the dummy data with actual API calls
+        // For now, we're just returning some dummy data for testing
+        setTimeout(() => {
+            resolve({
+                success: true,
+                notifications: [
+                    {
+                        notificationId: '1',
+                        userId: 'user123',
+                        username: 'user123',
+                        action: 'liked',
+                        targetId: 'post123',
+                        targetType: 'post',
+                        timestamp: '2024-04-30T12:00:00Z',
+                    },
+                    {
+                        notificationId: '2',
+                        userId: 'user456',
+                        username: 'user456',
+                        action: 'followed',
+                        targetId: 'user123',
+                        targetType: 'user',
+                        timestamp: '2024-04-29T12:00:00Z',
+                    },
+                ],
+            });
+        }, 1000); // Simulating a delay
+    });
+}
+
 export async function makeRequest(url: string, method: string, data: Object): Promise<any> {
     return new Promise((resolve, reject) => {
         fetch(url, {
@@ -434,3 +483,4 @@ export async function uploadFile(file: File, associatedId: string, token: string
         })
     });
 }
+
