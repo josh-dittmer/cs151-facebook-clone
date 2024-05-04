@@ -1,5 +1,7 @@
 package controllers.json;
 
+import util.Format;
+
 public class CreateCommentResponse {
     private String commentId;
     private String userId;
@@ -26,8 +28,8 @@ public class CreateCommentResponse {
         String str = "{\"success\":true,";
         str += "\"commentId\":\"" + commentId + "\",";
         str += "\"userId\":\"" + userId + "\",";
-        str += "\"username\":\"" + username + "\",";
-        str += "\"displayName\":\"" + displayName + "\"}";
+        str += "\"username\":\"" + Format.jsonEscape(username) + "\",";
+        str += "\"displayName\":\"" + Format.jsonEscape(displayName) + "\"}";
 
         return str;
     }

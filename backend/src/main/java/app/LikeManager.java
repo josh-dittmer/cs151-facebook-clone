@@ -36,7 +36,7 @@ public class LikeManager {
 
             Map<String, String> likeUpdates = new HashMap<String, String>();
             likeUpdates.put("NUM_LIKES", "NUM_LIKES+1");
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, likeUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("POSTS", "POST_ID", postId, likeUpdates);
 
             Map<String, String> likeData = new HashMap<String, String>();
             likeData.put("POST_ID", postId);
@@ -74,7 +74,7 @@ public class LikeManager {
 
             Map<String, String> likeUpdates = new HashMap<String, String>();
             likeUpdates.put("NUM_LIKES", "NUM_LIKES-1");
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, likeUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("POSTS", "POST_ID", postId, likeUpdates);
 
         } catch(SQLException e) {
             log.error("SQL error while unliking post: " + e.getMessage());

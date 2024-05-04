@@ -1,9 +1,9 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { PostComment, deleteComment, SuccessResponse } from '@/deps/api_requests';
+import { PostComment, deleteComment, SuccessResponse, apiUrl } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -22,14 +22,20 @@ export default function CommentComponent({ comment, commentsState, setCommentsSt
         setShowDeleteConfirmation(!showDeleteConfirmation);
     }
 
+    const [pfpUrl, setPfpUrl] = useState<string>('/img/no_pfp.png');
+
     const router = useRouter();
 
-    const token: string | undefined = Cookie.get('token');
-    if (!token) {
-        return;
-    }
+    useEffect(() => {
+        setPfpUrl(apiUrl + '/resource/' + comment.userId + '?s=' + Cookie.get('token'));
+    }, []);
 
     const clientDeleteComment = () => {
+        const token: string | undefined = Cookie.get('token');
+        if (!token) {
+            return;
+        }
+
         deleteComment(comment.postId, comment.commentId, token)
         .then((res: SuccessResponse) => {
             let updatedComments: PostComment[] = commentsState.filter((e: PostComment) => {
@@ -58,12 +64,12 @@ export default function CommentComponent({ comment, commentsState, setCommentsSt
                     <Link href={'/home/profile/' + comment.userId}>
                         <div className="flex my-2 items-center">
                             <div className="mr-2">
-                                <Image 
-                                    src="/img/no_pfp.png"
+                                <img 
+                                    src={pfpUrl}
                                     width="25"
                                     height="25"
                                     alt="Profile photo"
-                                    className="p-1 border-2 border-blue-500 rounded-full"
+                                    className="border-2 border-blue-500 rounded-full"
                                 />
                             </div>
                             <div className="">

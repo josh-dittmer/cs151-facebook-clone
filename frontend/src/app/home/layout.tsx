@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { getUserProfile, UserProfileResponse, logout, SuccessResponse } from '@/deps/api_requests';
+import { getUserProfile, UserProfileResponse, logout, SuccessResponse, apiUrl } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -24,6 +24,8 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
         setProfileDropdownShowing(!profileDropdownShowing);
     }
 
+    const [pfpUrl, setPfpUrl] = useState<string>('/img/no_pfp.png');
+
     const router = useRouter();
 
     useEffect(() => {
@@ -36,6 +38,8 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
         .then((res: UserProfileResponse) => {
             setUsername(res.user.username);
             setUserId(res.user.userId);
+
+            setPfpUrl(apiUrl + '/resource/' + res.user.userId + '?s=' + Cookie.get('token'));
         })
         .catch((err) => {
             if (err.code === -3) {
@@ -80,13 +84,13 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                     </div>
                     <div className="flex items-center justify-end">
                         <div className="flex items-center">
-                            <Image 
-                                src="/img/no_pfp.png"
+                            <img 
+                                src={pfpUrl}
                                 onClick={toggleProfileDropdown}
                                 width="30"
                                 height="30"
                                 alt="Profile photo"
-                                className="p-1 border-2 border-blue-500 rounded-full mr-1"
+                                className="border-2 border-blue-500 rounded-full mr-1"
                             />
                             <button onClick={toggleProfileDropdown} className="text-gray-500 hidden md:block">{username}⌄</button>
                         </div>

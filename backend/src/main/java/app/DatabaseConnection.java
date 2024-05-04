@@ -1,8 +1,12 @@
 package app;
 
+import org.h2.command.Prepared;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DatabaseConnection {
     private Connection conn;
@@ -24,53 +28,97 @@ public class DatabaseConnection {
 //    }
 
     public ResultSet lookup(String table, String column, String value) throws SQLException {
-        Statement statement = this.conn.createStatement();
-        return statement.executeQuery("SELECT * FROM " + table + " WHERE " + column + "='" + value + "';");
+        String sql = "SELECT * FROM " + table + " WHERE " + column + "= ?;";
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, value);
+
+        /*Statement statement = this.conn.createStatement();
+        return statement.executeQuery("SELECT * FROM " + table + " WHERE " + column + "='" + value + "';");*/
+        return statement.executeQuery();
     }
 
     public ResultSet lookupAll(String table, String column, Set<String> values) throws SQLException {
-        Statement statement = this.conn.createStatement();
-        String sql = "SELECT * FROM " + table + " WHERE ";
+        //Statement statement = this.conn.createStatement();
+        String sql = String.format("SELECT * FROM " + table + " WHERE " + column + " IN (%s);",
+                values.stream().map(v -> "?").collect(Collectors.joining(", ")));
+
+        /*String sql = "SELECT * FROM " + table + " WHERE ";
 
         for (String value : values) {
-            sql += column + "='" + value + "' OR ";
+            //sql += column + "='" + value + "' OR ";
+            sql += column + "= ? OR ";
         }
-        sql += "FALSE;";
+        sql += "FALSE;";*/
 
-        return statement.executeQuery(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
+        int valueCount = 0;
+        for (String value : values) {
+            statement.setString(++valueCount, value);
+        }
+
+        return statement.executeQuery();
     }
 
     public ResultSet contains(String table, Map<String, String> criteria) throws SQLException {
-        Statement statement = this.conn.createStatement();
+        //Statement statement = this.conn.createStatement();
         String sql = "SELECT * FROM " + table + " WHERE ";
 
+        ArrayList<String> values = new ArrayList<String>();
+
         for (Map.Entry<String, String> entry : criteria.entrySet()) {
-            sql += entry.getKey() + " LIKE '%" + entry.getValue() + "%' OR ";
+            //sql += entry.getKey() + " LIKE '%" + entry.getValue() + "%' OR ";
+            sql += entry.getKey() + " LIKE ? OR ";
+            values.add(entry.getValue());
         }
         sql += "FALSE;";
 
-        return statement.executeQuery(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
+        int valueCount = 0;
+        for (String value : values) {
+            value = value
+                    .replace("!", "!!")
+                    .replace("%", "!%")
+                    .replace("_", "!_")
+                    .replace("[", "![");
+
+            statement.setString(++valueCount, "%" + value + "%");
+        }
+
+        return statement.executeQuery();
     }
 
     public ResultSet lookup(String table, String selection, Map<String, String> criteria) throws SQLException {
-        Statement statement = this.conn.createStatement();
+        //Statement statement = this.conn.createStatement();
         String sql = "SELECT " +  selection + " FROM " + table + " WHERE ";
 
+        ArrayList<String> values = new ArrayList<String>();
+
         for (Map.Entry<String, String> entry : criteria.entrySet()) {
-            sql += entry.getKey() + "='" + entry.getValue() + "' AND ";
+            //sql += entry.getKey() + "='" + entry.getValue() + "' AND ";
+            sql += entry.getKey() + "= ? AND ";
+            values.add(entry.getValue());
         }
         sql += "TRUE;";
 
-        return statement.executeQuery(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
+        int valueCount = 0;
+        for (String value : values) {
+            statement.setString(++valueCount, value);
+        }
+
+        return statement.executeQuery();
     }
 
     public void insert(String table, Map<String, String> data) throws SQLException {
-        Statement statement = this.conn.createStatement();
+        //Statement statement = this.conn.createStatement();
 
         boolean first = true;
 
         String columns = "";
         String values = "";
+
+        ArrayList<String> valuesList = new ArrayList<String>();
 
         for (Map.Entry<String, String> entry : data.entrySet()) {
             if (!first) {
@@ -81,15 +129,55 @@ public class DatabaseConnection {
             }
 
             columns += entry.getKey();
-            values += "'" + entry.getValue() + "'";
+            values += "?";
+            valuesList.add(entry.getValue());
         }
 
-        String sql = "INSERT INTO " + table + "(" + columns + ") VALUES (" + values + ")";
-        statement.executeUpdate(sql);
+        String sql = "INSERT INTO " + table + "(" + columns + ") VALUES (" + values + ");";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        int valueCount = 0;
+        for (String value : valuesList) {
+            statement.setString(++valueCount, value);
+        }
+
+        statement.executeUpdate();
     }
 
     public void update(String table, String column, String value, Map<String, String> updates) throws SQLException {
-        Statement statement = this.conn.createStatement();
+        //Statement statement = this.conn.createStatement();
+
+        boolean first = true;
+
+        String updateStr = "";
+
+        ArrayList<String> updateList = new ArrayList<String>();
+
+        for (Map.Entry<String, String> entry : updates.entrySet()) {
+            if (!first) {
+                updateStr += ", ";
+            } else {
+                first = false;
+            }
+
+            updateStr += entry.getKey() + "= ?";
+            updateList.add(entry.getValue());
+        }
+
+        String sql = "UPDATE " + table + " SET " + updateStr + " WHERE " + column + "= ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        int updateCount = 0;
+        for (String update : updateList) {
+            statement.setString(++updateCount, update);
+        }
+
+        statement.setString(++updateCount, value);
+        System.out.println(sql);
+
+        statement.executeUpdate();
+    }
+
+    public void uncheckedUpdate(String table, String column, String value, Map<String, String> updates) throws SQLException {
+        String sql = "UPDATE " + table + " SET ";
 
         boolean first = true;
 
@@ -102,23 +190,46 @@ public class DatabaseConnection {
                 first = false;
             }
 
-            updateStr += entry.getKey() + "=" + entry.getValue();
+            updateStr += entry.getKey() + "= " + entry.getValue();
         }
 
-        String sql = "UPDATE " + table + " SET " + updateStr + " WHERE " + column + "='" + value + "'";
-        statement.executeUpdate(sql);
+        sql += updateStr + " WHERE " + column + "= ?;";
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, value);
+
+        statement.executeUpdate();
+    }
+
+    public void updateTimestamp(String table, String column, String value) throws SQLException {
+        String sql = "UPDATE " + table + " SET TIMESTAMP=CURRENT_TIMESTAMP() WHERE " + column + " = ?;";
+
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, value);
+
+        statement.executeUpdate();
     }
 
     public void delete(String table, Map<String, String> criteria) throws SQLException {
-        Statement statement = this.conn.createStatement();
+        //Statement statement = this.conn.createStatement();
         String sql = "DELETE FROM " +  table + " WHERE ";
 
+        ArrayList<String> values = new ArrayList<String>();
+
         for (Map.Entry<String, String> entry : criteria.entrySet()) {
-            sql += entry.getKey() + "='" + entry.getValue() + "' AND ";
+            //sql += entry.getKey() + "='" + entry.getValue() + "' AND ";
+            sql += entry.getKey() + "= ? AND ";
+            values.add(entry.getValue());
         }
         sql += "TRUE;";
 
-        statement.executeUpdate(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
+        int valueCount = 0;
+        for (String value : values) {
+            statement.setString(++valueCount, value);
+        }
+
+        statement.executeUpdate();
     }
 
     public int numTables() throws SQLException {

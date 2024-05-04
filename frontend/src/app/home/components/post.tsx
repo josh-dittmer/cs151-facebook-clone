@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,17 +10,18 @@ import Cookie from 'js-cookie';
 
 interface PostProps {
     post: UserPost
+    postsState: UserPost[],
+    setPostsState: Dispatch<SetStateAction<UserPost[]>>,
 }
 
-export default function PostComponent({ post }: PostProps) {
+export default function PostComponent({ post, postsState, setPostsState }: PostProps) {
     const [likedState, setLikedState] = useState<boolean>(post.liked);
     const [numLikesState, setNumLikesState] = useState<number>(post.numLikes);
-
-    const [numCommentsState, setNumCommentsState] = useState<number>(post.numComments);
     
     const [createCommentText, setCreateCommentText] = useState<string>('');
 
     const [comments, setComments] = useState<PostComment[]>(post.comments);
+    const [numCommentsState, setNumCommentsState] = useState<number>(post.numComments);
 
     const [commentElems, setCommentElems] = useState<React.ReactElement[]>([]);
     const [topCommentElems, setTopCommentElems] = useState<React.ReactElement[]>([]);
@@ -37,12 +38,17 @@ export default function PostComponent({ post }: PostProps) {
         setShowComments(!showComments);
     }
 
-    const numTopComments = 1;
+    const [pfpUrl, setPfpUrl] = useState<string>('/img/no_pfp.png');
+    const [postUrl, setPostUrl] = useState<string>('/img/no_pfp.png');
 
+    const numTopComments = 1;
 
     const router = useRouter();
 
     useEffect(() => {
+        setPfpUrl(apiUrl + '/resource/' + post.userId + '?s=' + Cookie.get('token'));
+        setPostUrl(apiUrl + '/resource/' + post.postId + '?s=' + Cookie.get('token') )
+
         const topCommentArr: React.ReactElement[] = [];
         const commentArr: React.ReactElement[] = [];
     
@@ -104,7 +110,11 @@ export default function PostComponent({ post }: PostProps) {
     const clientDeletePost = () => {
         deletePost(post.postId, token)
         .then((res: SuccessResponse) => {
-            location.reload();
+            let updatedPosts: UserPost[] = postsState.filter((e: UserPost) => {
+                return e.postId !== post.postId;
+            });
+
+            setPostsState(updatedPosts);
         })
         .catch((err) => {
             if (err.code === -3) {
@@ -161,12 +171,12 @@ export default function PostComponent({ post }: PostProps) {
                 <div className="flex justify-between items-center">
                     <Link href={'/home/profile/' + post.userId}>
                         <div className="p-1 flex justify-start whitespace-nowrap">
-                            <Image 
-                                src="/img/no_pfp.png"
+                            <img 
+                                src={pfpUrl}
                                 width="40"
                                 height="40"
                                 alt="Profile photo"
-                                className="p-1 border-2 border-blue-500 rounded-full"
+                                className="border-2 border-blue-500 rounded-full"
                             />
                             <span className="p-2">{post.displayName}</span>
                         </div>
@@ -222,7 +232,7 @@ export default function PostComponent({ post }: PostProps) {
                     {post.hasImage === true && (
                         <div className="flex justify-center">
                             <img
-                                src={apiUrl + '/resource/' + post.postId + '?s=' + Cookie.get('token')}
+                                src={postUrl}
                                 alt="User image"
                                 className="max-w-96 max-h-96 min-w-60 min-h-60 mb-2"
                             />

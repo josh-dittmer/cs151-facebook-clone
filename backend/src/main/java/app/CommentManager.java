@@ -27,7 +27,7 @@ public class CommentManager {
         try {
             Map<String, String> postUpdates = new HashMap<String, String>();
             postUpdates.put("NUM_COMMENTS", "NUM_COMMENTS+1");
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, postUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("POSTS", "POST_ID", postId, postUpdates);
 
             Map<String, String> commentData = new HashMap<String, String>();
             commentData.put("COMMENT_ID", commentId);
@@ -90,7 +90,7 @@ public class CommentManager {
 
             Map<String, String> postUpdates = new HashMap<String, String>();
             postUpdates.put("NUM_COMMENTS", "NUM_COMMENTS-1");
-            this.app.getDatabaseConn().update("POSTS", "POST_ID", postId, postUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("POSTS", "POST_ID", postId, postUpdates);
         } catch(SQLException e) {
             log.error("SQL error while deleting user comment: " + e.getMessage());
             return false;

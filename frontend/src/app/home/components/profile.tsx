@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-import { getUserProfile, UserProfileResponse, followUser, unfollowUser, SuccessResponse } from '@/deps/api_requests';
+import { getUserProfile, UserProfileResponse, followUser, unfollowUser, SuccessResponse, apiUrl } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 import MakePostComponent from './make_post';
@@ -21,6 +21,7 @@ export default function ProfileComponent({ userId }: ProfileProps) {
     const [numFollowing, setNumFollowing] = useState<number>(0);
     const [isMyProfile, setIsMyProfile] = useState<boolean>(false);
     const [following, setFollowing] = useState<boolean>(false);
+    const [pfpUrl, setPfpUrl] = useState<string>('/img/no_pfp.png');
 
     const router = useRouter();
 
@@ -75,6 +76,8 @@ export default function ProfileComponent({ userId }: ProfileProps) {
             return;
         }
 
+        setPfpUrl(apiUrl + '/resource/' + userId + '?s=' + Cookie.get('token'));
+
         getUserProfile(userId, token)
         .then((res: UserProfileResponse) => {
             setUsername(res.user.username);
@@ -107,12 +110,12 @@ export default function ProfileComponent({ userId }: ProfileProps) {
             <div className="flex justify-center shadow mb-3">
                 <div className="p-2 w-full">
                     <div className="p-1 flex items-center">
-                        <Image 
-                            src="/img/no_pfp.png"
+                        <img 
+                            src={pfpUrl}
                             width="100"
                             height="100"
                             alt="Profile photo"
-                            className="p-1 border-2 border-blue-500 rounded-full"
+                            className="border-2 border-blue-500 rounded-full"
                         />
                         <div className="ml-5">
                             <span className="text-xl p-2">{username}</span>

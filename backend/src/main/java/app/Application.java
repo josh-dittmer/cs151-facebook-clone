@@ -37,7 +37,7 @@ public class Application {
         this.databaseConn = new DatabaseConnection(conn);
 
         // database must be created
-        if (this.databaseConn.numTables() != 7) {
+        if (this.databaseConn.numTables() != 8) {
             log.warn("Database does not exist! Creating...");
             this.databaseConn.createDb();
             log.info("Database created successfully!");

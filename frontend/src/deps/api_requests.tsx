@@ -58,12 +58,15 @@ export async function getNotifications(token: string): Promise<NotificationListR
 
 export async function makeRequest(url: string, method: string, data: Object): Promise<any> {
     return new Promise((resolve, reject) => {
+        let body: string = JSON.stringify(data);
+        body = body.replaceAll('%', ''); // NOT on my watch
+
         fetch(url, {
             method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: body
         })
         .then((res) => {
             resolve(res.json());

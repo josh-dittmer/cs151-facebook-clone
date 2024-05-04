@@ -28,6 +28,7 @@ public class SessionManager {
 
             // no results
             if (!resultSet.next()) {
+                System.out.println("test");
                 return null;
             }
 
@@ -78,10 +79,11 @@ public class SessionManager {
             String sessionUserId = resultSet.getString("USER_ID");
 
             // update session timestamp
-            Map<String, String> sessionUpdates = new HashMap<String, String>();
+            /*Map<String, String> sessionUpdates = new HashMap<String, String>();
             sessionUpdates.put("TIMESTAMP", "CURRENT_TIMESTAMP()");
 
-            this.app.getDatabaseConn().update("SESSIONS", "TOKEN", token, sessionUpdates);
+            this.app.getDatabaseConn().update("SESSIONS", "TOKEN", token, sessionUpdates);*/
+            this.app.getDatabaseConn().updateTimestamp("SESSIONS", "TOKEN", token);
 
             session = new Session(token, sessionUserId);
 

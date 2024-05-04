@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { User } from '@/deps/api_requests';
+import { User, apiUrl } from '@/deps/api_requests';
 
 import Cookie from 'js-cookie';
 
@@ -11,16 +11,22 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCardComponent({ user }: ProfileCardProps) {
+    const [pfpUrl, setPfpUrl] = useState<string>('/img/no_pfp.png');
+
+    useEffect(() => {
+        setPfpUrl(apiUrl + '/resource/' + user.userId + '?s=' + Cookie.get('token'));
+    }, []);
+
     return (
         <div>
             <div className="flex p-3 shadow my-2 items-center">
                 <div className="mr-2">
-                    <Image 
-                        src="/img/no_pfp.png"
+                    <img 
+                        src={pfpUrl}
                         width="30"
                         height="30"
                         alt="Profile photo"
-                        className="p-1 border-2 border-blue-500 rounded-full"
+                        className="border-2 border-blue-500 rounded-full"
                     />
                 </div>
                 <div className="">

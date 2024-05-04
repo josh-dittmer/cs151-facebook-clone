@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { signup, TokenResponse } from '@/deps/api_requests';
+import { signup, TokenResponse, uploadFile } from '@/deps/api_requests';
 
 export default function SignupPage() {
     const [username, setUsername] = useState<string>('');
@@ -17,19 +17,52 @@ export default function SignupPage() {
 
     const [errorMessage, setErrorMessage] = useState<string>('');
 
+    const [profilePicFile, setProfilePicFile] = useState();
+    const [profilePicFilePickerValue, setProfilePicFilePickerValue] = useState<string>('');
+
     const router = useRouter();
+
+    const onProfilePicFileChange = (e: any) => {
+        setProfilePicFilePickerValue(e.target.value);
+        setProfilePicFile(e.target.files[0]);
+    }
+
+    const removeProfilePicFile = () => {
+        setProfilePicFilePickerValue('');
+        setProfilePicFile(undefined);
+    }
 
     const handleSignup = async (e: any) => {
         e.preventDefault();
+
+        if (username.length < 3 || username.length > 32) {
+            setErrorMessage('Username must be between 3 and 32 characters!');
+            return;
+        } else if (displayName.length > 32) {
+            setErrorMessage("Display name can't be greater than 32 characters!");
+            return;
+        } else if (!username.match('^[a-zA-Z0-9._\-]{3,}$')) {
+            setErrorMessage('Username can only contain alphanumeric characters or ". _ -"');
+            return;
+        }
         
         signup(username, password, displayName, bio)
-        .then((res: TokenResponse) => {
+        .then(async (res: TokenResponse) => {
             setErrorMessage('');
             document.cookie = 'token=' + res.token + '; path=/';
+
+            if (profilePicFile) {
+                await uploadFile(profilePicFile, 'profile_pic', res.token);
+            }
+
             router.push('/home/timeline');
         })
         .catch((err) => {
-            setErrorMessage('Signup failed! Please try again.');
+            if (err.code === -22) {
+                setErrorMessage('Username is taken!');
+            } else {
+                setErrorMessage('Signup failed! Please try again.');
+            }
         });
     }
 
@@ -49,16 +82,37 @@ export default function SignupPage() {
                     )}
                     <form onSubmit={handleSignup}>
                         <center>
-                            <div className="p-2">
-                                <Image 
-                                    src="/img/no_pfp.png"
-                                    width="100"
-                                    height="100"
-                                    alt="Profile photo"
-                                    className="p-1 border-2 border-blue-500 rounded-full"
-                                />
-                                <p className="mt-3">Click to add your profile picture!</p>
-                            </div>
+                            <label htmlFor="image-picker">
+                                <div className="p-2">
+                                    {profilePicFile ? (
+                                        <Image 
+                                            src={URL.createObjectURL(profilePicFile)}
+                                            width="100"
+                                            height="100"
+                                            alt="Profile photo"
+                                            className="p-1 border-2 border-blue-500 rounded-full"
+                                        />
+                                    ) : (
+                                        <Image 
+                                            src="/img/no_pfp.png"
+                                            width="100"
+                                            height="100"
+                                            alt="Profile photo"
+                                            className="p-1 border-2 border-blue-500 rounded-full"
+                                        />
+                                    )}
+    
+                                    <p className="mt-3">Click to add your profile picture!</p>
+                                </div>
+                            </label>
+                            <input
+                                type="file"
+                                value={profilePicFilePickerValue}
+                                id="image-picker"
+                                onChange={onProfilePicFileChange}
+                                accept="image/png, image/jpeg, image/gif"
+                                className="hidden"
+                            />
                         </center>
                         <div className="md:flex max-w-2xl min-w-min">
                             <div className="p-2">

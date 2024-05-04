@@ -43,11 +43,11 @@ public class FollowManager {
 
             Map<String, String> userSrcUpdates = new HashMap<String, String>();
             userSrcUpdates.put("NUM_FOLLOWING", "NUM_FOLLOWING+1");
-            this.app.getDatabaseConn().update("USERS", "USER_ID", srcUserId, userSrcUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("USERS", "USER_ID", srcUserId, userSrcUpdates);
 
             Map<String, String> userDestUpdates = new HashMap<String, String>();
             userDestUpdates.put("NUM_FOLLOWERS", "NUM_FOLLOWERS+1");
-            this.app.getDatabaseConn().update("USERS", "USER_ID", destUserId, userDestUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("USERS", "USER_ID", destUserId, userDestUpdates);
 
         } catch(SQLException e) {
             log.error("SQL error while following user: " + e.getMessage());
@@ -80,11 +80,11 @@ public class FollowManager {
 
             Map<String, String> userSrcUpdates = new HashMap<String, String>();
             userSrcUpdates.put("NUM_FOLLOWING", "NUM_FOLLOWING-1");
-            this.app.getDatabaseConn().update("USERS", "USER_ID", srcUserId, userSrcUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("USERS", "USER_ID", srcUserId, userSrcUpdates);
 
             Map<String, String> userDestUpdates = new HashMap<String, String>();
             userDestUpdates.put("NUM_FOLLOWERS", "NUM_FOLLOWERS-1");
-            this.app.getDatabaseConn().update("USERS", "USER_ID", destUserId, userDestUpdates);
+            this.app.getDatabaseConn().uncheckedUpdate("USERS", "USER_ID", destUserId, userDestUpdates);
 
         } catch(SQLException e) {
             log.error("SQL error while unfollowing user: " + e.getMessage());

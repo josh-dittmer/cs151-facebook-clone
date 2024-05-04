@@ -13,6 +13,9 @@ import controllers.json.generic.TokenResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Path
 public class LoginController {
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
@@ -61,6 +64,24 @@ public class LoginController {
         if (data == null) {
             log.warn("/signup: Request had invalid parameters");
             return new ErrorResponse("invalid parameters", -1).toString();
+        }
+
+        Pattern p = Pattern.compile("^[a-zA-Z0-9._\\-]{3,}$");
+        Matcher m = p.matcher(data.getUsername());
+        if (!m.matches()) {
+            return new ErrorResponse("bad characters in username", -19).toString();
+        }
+
+        if (data.getUsername().length() > 32 || data.getDisplayName().length() > 32 || data.getBio().length() > 512) {
+            return new ErrorResponse("field too long", -20).toString();
+        }
+
+        if (data.getUsername().isEmpty() || data.getPassword().isEmpty()) {
+            return new ErrorResponse("field is empty", -21).toString();
+        }
+
+        if (this.app.getUserManager().getUserByUsername(data.getUsername(), "") != null) {
+            return new ErrorResponse("username taken", -22).toString();
         }
 
         User user = this.app.getUserManager().createUser(data.getUsername(), data.getPassword(), data.getDisplayName(), data.getBio());

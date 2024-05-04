@@ -72,6 +72,7 @@ public class ResourceController {
         String path;
         if (associatedId.equals("profile_pic")) {
             path = "uploads/profile_pics/";
+            associatedId = session.getUserId();
         } else {
             path = "uploads/posts/";
         }
@@ -108,14 +109,18 @@ public class ResourceController {
 
         Session session = this.app.getSessionManager().validateSession(s);
         if (session == null) {
-            log.warn("/upload: Session not found");
+            log.warn("/resource: Session not found");
             response.unauthorized();
             return;
         }
 
+        if (associatedId.equals("me")) {
+            associatedId = session.getUserId();
+        }
+
         Resource resource = this.app.getResourceManager().getResource(associatedId);
         if (resource == null) {
-            log.warn("/upload: Resource not found");
+            log.warn("/resource: Resource not found");
             filePath = "./static/not_found.png";
         } else if (resource.isRemoteResource()) {
             log.info("Remote resource, sending redirect");
@@ -129,7 +134,7 @@ public class ResourceController {
             log.info("Local resource, sending file");
             response.write(new File(filePath));
         } catch(IOException e) {
-            log.warn("/upload: Failed to open resource");
+            log.warn("/resource: Failed to open resource");
             response.notFound();
         }
     }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { getUserPosts, UserPostsResponse, UserPost } from '@/deps/api_requests';
 import PostComponent from './post';
+import MakePostComponent from './make_post';
 
 import Cookie from 'js-cookie';
 
@@ -12,7 +13,8 @@ interface FeedProps {
 };
 
 export default function FeedComponent({ userIds }: FeedProps) {
-    const [posts, setPosts] = useState<React.ReactElement[]>([]);
+    //const [posts, setPosts] = useState<React.ReactElement[]>([]);
+    const [posts, setPosts] = useState<UserPost[]>([]);
     const [noPosts, setNoPosts] = useState<boolean>(false);
     
     const loadPosts = async () => {
@@ -21,7 +23,7 @@ export default function FeedComponent({ userIds }: FeedProps) {
             return;
         }
 
-        const postArr: React.ReactElement[] = [];
+        //const postArr: React.ReactElement[] = [];
 
         let res: UserPostsResponse = await getUserPosts(userIds, 0, token);
         if (res.posts.length === 0) {
@@ -29,14 +31,14 @@ export default function FeedComponent({ userIds }: FeedProps) {
             return;
         }
 
-        res.posts.forEach((post: UserPost) => {
+        /*res.posts.forEach((post: UserPost) => {
             postArr.push(<PostComponent 
                 key={post.postId}
                 post={post}
             />);
-        });
+        });*/
 
-        setPosts(postArr);
+        setPosts(res.posts);
     };
 
     // load posts here
@@ -53,7 +55,9 @@ export default function FeedComponent({ userIds }: FeedProps) {
                     </div>
                 </center>
             )}
-            {posts}
+            {posts.map((post) => (
+                <PostComponent key={post.postId} post={post} postsState={posts} setPostsState={setPosts}/>
+            ))}
         </div>
     )
 }

@@ -41,6 +41,26 @@ public class UserManager {
         return new User(userId, username, password, bio, 0, 0, true, false);
     }
 
+    public User getUserByUsername(String username, String myUserId) {
+        User user;
+
+        try {
+            ResultSet resultSet = this.app.getDatabaseConn().lookup("USERS", "USERNAME", username);
+
+            // no results
+            if (!resultSet.next()) {
+                return null;
+            }
+
+            user = userFromResultSet(resultSet, myUserId);
+        } catch(SQLException e) {
+            log.error("SQL error while validating session: " + e.getMessage());
+            return null;
+        }
+
+        return user;
+    }
+
     //  should be changed to do not use getUsers
     public User getUser(String userId, String myUserId) {
         ArrayList<String> search = new ArrayList<String>();
