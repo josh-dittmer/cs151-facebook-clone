@@ -26,7 +26,7 @@ export default function ProfileCardComponent({ user }: ProfileCardProps) {
                         width="30"
                         height="30"
                         alt="Profile photo"
-                        className="border-2 border-blue-500 rounded-full"
+                        className="border-2 border-blue-500 rounded-full w-10 h-10"
                     />
                 </div>
                 <div className="">

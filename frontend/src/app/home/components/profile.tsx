@@ -115,7 +115,7 @@ export default function ProfileComponent({ userId }: ProfileProps) {
                             width="100"
                             height="100"
                             alt="Profile photo"
-                            className="border-2 border-blue-500 rounded-full"
+                            className="border-2 border-blue-500 rounded-full w-24 h-24"
                         />
                         <div className="ml-5">
                             <span className="text-xl p-2">{username}</span>

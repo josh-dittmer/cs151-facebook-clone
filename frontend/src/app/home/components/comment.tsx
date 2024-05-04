@@ -69,7 +69,7 @@ export default function CommentComponent({ comment, commentsState, setCommentsSt
                                     width="25"
                                     height="25"
                                     alt="Profile photo"
-                                    className="border-2 border-blue-500 rounded-full"
+                                    className="border-2 border-blue-500 rounded-full w-8 h-8"
                                 />
                             </div>
                             <div className="">

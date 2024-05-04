@@ -90,7 +90,7 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                                 width="30"
                                 height="30"
                                 alt="Profile photo"
-                                className="border-2 border-blue-500 rounded-full mr-1"
+                                className="border-2 border-blue-500 rounded-full mr-1 w-10 h-10"
                             />
                             <button onClick={toggleProfileDropdown} className="text-gray-500 hidden md:block">{username}⌄</button>
                         </div>

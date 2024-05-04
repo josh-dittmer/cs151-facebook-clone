@@ -170,13 +170,13 @@ export default function PostComponent({ post, postsState, setPostsState }: PostP
             <div className="p-4 shadow w-96 md:w-3/5">
                 <div className="flex justify-between items-center">
                     <Link href={'/home/profile/' + post.userId}>
-                        <div className="p-1 flex justify-start whitespace-nowrap">
+                        <div className="p-1 flex justify-start whitespace-nowrap items-center">
                             <img 
                                 src={pfpUrl}
-                                width="40"
-                                height="40"
+                                width=""
+                                height=""
                                 alt="Profile photo"
-                                className="border-2 border-blue-500 rounded-full"
+                                className="border-2 border-blue-500 rounded-full w-12 h-12"
                             />
                             <span className="p-2">{post.displayName}</span>
                         </div>
