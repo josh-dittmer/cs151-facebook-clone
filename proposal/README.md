@@ -3,7 +3,7 @@
 ## Project Details
 
 * Project Title: Facebook/Instagram Clone
-* Team Members: Josh Dittmer, Nathan Wong, Brandon Ho
+* Team Members: Josh Dittmer, Nathan Wong, Brandon Ho, Joseph Hawkins
 * Problem/Issue to Solve: Create a social media application that enables users to share text posts and images
 * Operating environment/Intended usage: Backend running on a server that will allow users to access a website where they can use the application
 
