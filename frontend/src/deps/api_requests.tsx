@@ -17,6 +17,7 @@ export interface Notification {
     timestamp: string;
 }
 
+// used to generate the notification message for notifications
 export function generateNotificationMessage(action: string, targetType: string, targetId: string): string {
     switch (action) {
         case 'like':

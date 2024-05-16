@@ -6,6 +6,7 @@ interface NotificationProps {
     notification: Notification;
 }
 
+
 // const NotificationComponent: React.FC<NotificationProps> = ({ notification }) => {
 //     return (
 //         <div>
