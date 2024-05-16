@@ -23,7 +23,7 @@
 * fix this title later
 
 ## Diagrams
-* 
+* The diagrams are located here: https://github.com/josh-dittmer/cs151-facebook-clone/blob/main/diagrams/README.md
 
 ## Functionality
 * 
