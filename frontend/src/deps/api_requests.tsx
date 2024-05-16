@@ -17,6 +17,17 @@ export interface Notification {
     timestamp: string;
 }
 
+export function generateNotificationMessage(action: string, targetType: string, targetId: string): string {
+    switch (action) {
+        case 'like':
+            return `You received a like on your ${targetType} (${targetId}).`;
+        case 'follow':
+            return `You have a new follower (${targetId}).`;
+        default:
+            return `New notification: ${action} ${targetType} (${targetId}).`;
+    }
+}
+
 export interface NotificationListResponse {
     success: boolean;
     notifications: Notification[];
