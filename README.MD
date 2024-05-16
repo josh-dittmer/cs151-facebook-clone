@@ -3,13 +3,13 @@
 ## Team 4 
 * Josh Dittmer, Nathan Wong, Brandon Ho, Joseph Hawkins
 
-## Proposal
+## Proposal Contributions
+* 
+
+## Project Presentation Contributions
 *
 
-## Project Presentation
-*
-
-## Project Code
+## Project Code Contributions
 *
 
 ## Problems and Issues
