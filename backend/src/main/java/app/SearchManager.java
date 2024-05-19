@@ -14,9 +14,12 @@ public class SearchManager {
 
     private Application app;
 
+    //Constructor
     public SearchManager(Application app) {
         this.app = app;
     }
+
+    //Searches db for user
     public ArrayList<User> search(String query, String myUserId) {
         ArrayList<User> users = new ArrayList<User>();
 

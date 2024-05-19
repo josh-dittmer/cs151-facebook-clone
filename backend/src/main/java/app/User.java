@@ -9,6 +9,7 @@ public class User {
     private boolean isMyProfile;
     private boolean isFollowing;
 
+    //Constructor
     public User(String userId, String username, String displayName, String bio, int numFollowers, int numFollowing, boolean isMyProfile, boolean isFollowing) {
         this.userId = userId;
         this.username = username;
@@ -20,6 +21,7 @@ public class User {
         this.isFollowing = isFollowing;
     }
 
+    //Getters and Setters
     public String getUserId() {
         return userId;
     }

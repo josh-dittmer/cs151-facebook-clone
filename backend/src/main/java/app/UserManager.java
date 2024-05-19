@@ -17,10 +17,21 @@ public class UserManager {
 
     private Application app;
 
+    //Constructor
     public UserManager(Application app) {
         this.app = app;
     }
 
+    /*
+     * Creates a user based on the specified parameters
+     *
+     * Params: username   : a String containing the username
+     *         password   : a String containing the password
+     *         displayName: a String containing the displayName (different from username)
+     *         bio        : a String containing the user's bio / information
+     *
+     * Returns: the created User Object
+     */
     public User createUser(String username, String password, String displayName, String bio) {
         String userId = RandomUID.generate(64);
 
@@ -41,6 +52,14 @@ public class UserManager {
         return new User(userId, username, password, bio, 0, 0, true, false);
     }
 
+    /*
+     * Gets a User from the provided username
+     *
+     * Params: username: a String containing the username
+     *         myUserId: a String containing current user's ID
+     *
+     * Returns: a User object that is being looked for
+     */
     public User getUserByUsername(String username, String myUserId) {
         User user;
 
@@ -74,6 +93,14 @@ public class UserManager {
         return result.get(0);
     }
 
+    /*
+     * Gets an ArrayList containing User objects
+     *
+     * Params: userIDs: an ArrayList containing a list of Strings which are the userIds
+     *         myUserId: a String containing current user's ID
+     *
+     * Returns an ArrayList containing User objects
+     */
     public ArrayList<User> getUsers(ArrayList<String> userIds, String myUserId) {
         ArrayList<User> users = new ArrayList<>();
 
@@ -103,6 +130,16 @@ public class UserManager {
         return users;
     }
 
+    /*
+     * Gets a User from a ResultSet which was retrieved from the Database
+     *
+     * Params: results    : the ResultSet which was obtainined from the Database
+     *         myUserId   : current user's userID
+     *         isFollowing: boolean value stating whether or not user is following these other users
+     *
+     * Returns: a User from the database specified by the params
+     *
+     */
     public User userFromResultSet(ResultSet results, String myUserId, boolean isFollowing) throws SQLException {
         String userId = results.getString("USER_ID");
         String userUsername = results.getString("USERNAME");
@@ -116,6 +153,14 @@ public class UserManager {
         return new User(userId, userUsername, userDisplayName, userBio, userNumFollowers, userNumFollowing, isMyProfile, isFollowing);
     }
 
+    /*
+     * Goes through the database and finds a specified user
+     *
+     * Params: results : a ResultSet from the database
+     *         myUserId: String containing current user's userID
+     *
+     * Returns: A user specified by the userID
+     */
     public User userFromResultSet(ResultSet results, String myUserId) throws SQLException {
         User user = userFromResultSet(results, myUserId, false);
         user.setIsFollowing(this.app.getFollowManager().checkFollowing(myUserId, user.getUserId()));

@@ -16,10 +16,19 @@ public class SessionManager {
 
     private Application app;
 
+    //Constructor
     public SessionManager(Application app) {
         this.app = app;
     }
 
+    /*
+     * creates a session for the specified user
+     *
+     * Params: username
+     *         password
+     *
+     * Returns: Returns a Session object
+     */
     public Session createSession(String username, String password) {
         Session session;
 
@@ -60,6 +69,13 @@ public class SessionManager {
         return session;
     }
 
+    /*
+     * Validates the session based on a token and then returns it
+     *
+     * Params: token: a String containing the token
+     *
+     * Returns a Session object
+     */
     public Session validateSession(String token) {
         Session session;
 
@@ -97,6 +113,13 @@ public class SessionManager {
         return session;
     }
 
+    /*
+     * Deletes a session specified by the token
+     *
+     * Params: token: String containing the token
+     *
+     * Returns the Session object
+     */
     public Session deleteSession(String token) {
         Session session;
 
