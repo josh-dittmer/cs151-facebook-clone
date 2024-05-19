@@ -4,10 +4,14 @@
 * Josh Dittmer, Nathan Wong, Brandon Ho, Joseph Hawkins
 
 ## Proposal Contributions
-* 
+*
 
 ## Project Presentation Contributions
-*
+* Josh Dittmer: Application of Object Oriented Principles, Testing and error handling
+* Nathan Wong: Class and Interface Design (Back-End)
+* Brandon Ho: Class and Interface Design (Front-End)
+* Joseph Hawkins: Explanation of Design Decisions
+
 
 ## Project Code Contributions
 *
