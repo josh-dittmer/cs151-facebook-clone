@@ -4,10 +4,10 @@
 * Josh Dittmer, Nathan Wong, Brandon Ho, Joseph Hawkins
 
 ## Proposal Contributions
-* Josh Dittmer:
-* Nathan Wong:
-* Brandon Ho: 
-* Joseph Hawkins:
+* Josh Dittmer: Project details, operations
+* Nathan Wong: Project approach/design, project functionality
+* Brandon Ho: Project details
+* Joseph Hawkins: Operations
 
 
 ## Project Presentation Contributions
@@ -18,21 +18,16 @@
 
 
 ## Project Code Contributions
-* Josh Dittmer: 
-* Nathan Wong: 
-* Brandon Ho: 
-* Joseph Hawkins: 
+* Josh Dittmer: Main UI, backend requests/responses, database-related code, code structure/organization
+* Nathan Wong: General frontend/backend contributions, messages, database-related code, code structure/organization
+* Brandon Ho: General frontend/backend contributions
+* Joseph Hawkins: General frontend/backend contributions, notifications, UI formatting
 
 
 ## Problems and Issues
 * Problem
   * Creating an application that would allow users to communicate and share posts to other users on the same platform.
     * Initial Challenge: Setting up a integration between frontend and backend.
-
-
-##  If applicable, briefly survey previous works if any (include references) 
-* fix this title later 
-
 
 ## If applicable, describe assumptions / operating environments / intended usage 
 * fix this title later
@@ -44,7 +39,13 @@
 * The diagrams are located here: https://github.com/josh-dittmer/cs151-facebook-clone/blob/main/diagrams/README.md
 
 ## Functionality
-* 
+* Communication between the frontend and backend is achieved via an HTTP API
+* The frontend sends the backend an HTTP request any time a user wishes to perform an an action
+   * For example, logging in, creating/deleting a post, following/unfollowing a user, creating/deleting a comment, liking/unliking a post
+* All requests to the backend are authenticated with a session ID, which is generated when the user logs in
+* The backend stores information about posts, comments, users, sessions, etc. in an SQL database (H2)
+* The frontend uses the Javascript fetch API to perform requests to the backend
+* The backend uses a Java HTTP framework called Blade
 
 ## Operations
 * User
@@ -56,19 +57,31 @@
    - View notifications
 
 ## Solution
-* 
+* Our project solves the problem of creating an application that allows users to communicate by:
+   - Allowing users to share posts with captions and images
+   - Allowing users to like other users' posts
+   - Allowing users to comment on other users' posts
+   - Allowing users to follow other users so their posts appear on their feed
+   - Allowing users to search for other users by username or display name
+   - Allowing users to customize their profile with a bio, profile picture, and display name
+* All of these features contribute to creating a platform where users can communicate with each other and express themselves
 
 ## Steps to run the code
 1) First clone the code from the github using the link: https://github.com/josh-dittmer/cs151-facebook-clone.git
-2) Next open it in a Java IDE like IntelliJ or Eclipse
-3) Once the application is open, a popup on the lower right hand corner will show up (IntelliJ) saying "Maven Build Script Found". Click the Load Button to load the script.
-4) Now head to the Application class. It can be found using the path ../backend/src/main/java/apps/Application.java
+2) Open the "backend" folder in IntelliJ
+3) Once the application is open, a popup on the lower right hand corner will show up saying "Maven Build Script Found". Click the Load Button to load the script.
+4) Now head to the Application class. It is located at the path backend/src/main/java/apps/Application.java
 5) Once you are at the Application.java file, run it. 
-   * Note: If you get a message in the terminal saying "Failed to create app" then you might have to delete all the "db" folders before re-running
-6) Now head to the terminal and go to the frontend directory (../frontend). Run "npm install" (npm i framer-motion clsx tailwind-merge) if this is your first time running the program
+   * Note: If you are having trouble starting the application, please make sure the following folders exist in the app's working directory:
+      * db/
+      * static/
+      * uploads/posts/
+      * uploads/profile_pics/
+   * The app will automatically create the database in the "db" folder if it doesn't already exist, but the folder must exist first
+6) Now head to the terminal and go to the "frontend" directory. Run "npm install" (npm i framer-motion clsx tailwind-merge) if this is your first time running the program
 7) Now once npm is installed type "npm run dev" into the terminal
-8) A link should then pop up on the terminal. http://localhost:3000. Click it and it should lead you to the website.
-   * Note: If you get a blank white page, run this link instead:  http://localhost:3000/login
+8) A link should then pop up on the terminal. http://localhost:3000/login. Click it and it should lead you to the website.
+   * Note: Going to http://localhost:3000/ will automatically redirect to http://localhost:3000/login
 9) Congratulations! You are now at the login page. You will have to Sign-up if it is your first time. 
 
  > One last note, make sure both the backend or the frontend are running. Otherwise the program will not work properly!

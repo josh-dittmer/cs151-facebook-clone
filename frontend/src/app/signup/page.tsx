@@ -90,7 +90,7 @@ export default function SignupPage() {
                                             width="100"
                                             height="100"
                                             alt="Profile photo"
-                                            className="p-1 border-2 border-blue-500 rounded-full"
+                                            className="p-1 border-2 border-blue-500 rounded-full w-36 h-36"
                                         />
                                     ) : (
                                         <Image 
@@ -98,7 +98,7 @@ export default function SignupPage() {
                                             width="100"
                                             height="100"
                                             alt="Profile photo"
-                                            className="p-1 border-2 border-blue-500 rounded-full"
+                                            className="p-1 border-2 border-blue-500 rounded-full w-36 h-36"
                                         />
                                     )}
     

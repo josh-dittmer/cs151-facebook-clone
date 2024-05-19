@@ -7,25 +7,28 @@
 ![img_1.png](img_1.png)
 
 ## Home/Timeline page
-![img_2.png](img_2.png)
+![timeline.png](timeline.png)
 
 ## Profile Page
-![img_3.png](img_3.png)
+![profile.png](profile.png)
 
-## Creating new Post
-![img_4.png](img_4.png)
+## Timeline after a new post
+![created_post.png](created_post.png)
 
 ## Liking the Post
-![img_5.png](img_5.png)
+![like_post.png](like_post.png)
 
 ## Commenting on Post
-![img_6.png](img_6.png)
+![comment.png](comment.png)
 
 ## Notifications 
 ![img_7.png](img_7.png)
 
 ## Searching for Users
-![img_8.png](img_8.png)
+![search.png](search.png)
+
+## Deleting a comment
+1[delete_comment.png](delete_comment.png)
 
 ## Deleting a post
-![img_9.png](img_9.png)
+![delete_post.png](delete_post.png)

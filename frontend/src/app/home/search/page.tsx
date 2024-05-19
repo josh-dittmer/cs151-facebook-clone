@@ -46,7 +46,7 @@ export default function SearchPage() {
 
   return (
     <div>
-      <Boxes className="fixed inset-0 z-[-1]" />
+      {/*<Boxes className="fixed inset-0 z-[-1]" />*/}
       <div className="flex justify-center">
         <div className="flex p-2 border-2 border-gray-500 rounded-full inner-focus-scale w-3/4">
           <Image src="/img/search.png" width="30" height="30" alt="Search" />
