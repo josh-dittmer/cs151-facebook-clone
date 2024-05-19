@@ -25,7 +25,9 @@
 
 
 ## Problems and Issues
-*Initial Challenge: Setting up a integration between frontend and backend.
+* Problem
+  * Creating an application that would allow users to communicate and share posts to other users on the same platform.
+    * Initial Challenge: Setting up a integration between frontend and backend.
 
 
 ##  If applicable, briefly survey previous works if any (include references) 
