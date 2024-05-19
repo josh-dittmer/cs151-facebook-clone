@@ -28,7 +28,7 @@
 ![search.png](search.png)
 
 ## Deleting a comment
-1[delete_comment.png](delete_comment.png)
+![delete_comment.png](delete_comment.png)
 
 ## Deleting a post
 ![delete_post.png](delete_post.png)
