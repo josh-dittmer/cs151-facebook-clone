@@ -9,6 +9,8 @@ import {
 import Cookie from "js-cookie";
 import MessageComponent from "../components/messages";
 import { Boxes } from "../components/ui/background-boxes";
+import GradientBackground from "../components/ui/gradient";
+
 
 export default function MessagesPage() {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -34,7 +36,6 @@ export default function MessagesPage() {
 
     return (
         <div>
-            <Boxes className="fixed inset-0 z-[-1]" />
             <div className="border-b-2 border-b-blue-50 mb-5 p-5">
                 <h1 className="text-3xl font-bold">Direct Messages</h1>
             </div>
