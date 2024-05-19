@@ -69,6 +69,7 @@
 ## Steps to run the code
 1) First clone the code from the github using the link: https://github.com/josh-dittmer/cs151-facebook-clone.git
 2) Open the "backend" folder in IntelliJ
+   * Note: For the project to work correctly, you must open the "backend" folder in IntelliJ, not the "cs151-facebook-clone" folder
 3) Once the application is open, a popup on the lower right hand corner will show up saying "Maven Build Script Found". Click the Load Button to load the script.
 4) Now head to the Application class. It is located at the path backend/src/main/java/apps/Application.java
 5) Once you are at the Application.java file, run it. 
@@ -78,6 +79,7 @@
       * uploads/posts/
       * uploads/profile_pics/
    * The app will automatically create the database in the "db" folder if it doesn't already exist, but the folder must exist first
+   * If you are having further issues, try deleting all files in the "db" directory and restart the backend
 6) Now head to the terminal and go to the "frontend" directory. Run "npm install" (npm i framer-motion clsx tailwind-merge) if this is your first time running the program
 7) Now once npm is installed type "npm run dev" into the terminal
 8) A link should then pop up on the terminal. http://localhost:3000/login. Click it and it should lead you to the website.
