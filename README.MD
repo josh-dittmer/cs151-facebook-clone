@@ -45,7 +45,7 @@
 4) Now head to the Application class. It can be found using the path ../backend/src/main/java/apps/Application.java
 5) Once you are at the Application.java file, run it. 
    * Note: If you get a message in the terminal saying "Failed to create app" then you might have to delete all the "db" folders before re-running
-6) Now head to the terminal and go to the frontend directory (../frontend). Run "npm install" if this is your first time running the program
+6) Now head to the terminal and go to the frontend directory (../frontend). Run "npm install" (npm i framer-motion clsx tailwind-merge) if this is your first time running the program
 7) Now once npm is installed type "npm run dev" into the terminal
 8) A link should then pop up on the terminal. http://localhost:3000. Click it and it should lead you to the website.
    * Note: If you get a blank white page, run this link instead:  http://localhost:3000/login
