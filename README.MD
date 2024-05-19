@@ -65,3 +65,4 @@
  > One last note, make sure both the backend or the frontend are running. Otherwise the program will not work properly!
 
 ## Snapshots of running program
+* Link to running program snapshots: https://github.com/josh-dittmer/cs151-facebook-clone/blob/main/Working%20Code%20Snapshots/README.md
