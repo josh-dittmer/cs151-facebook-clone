@@ -36,8 +36,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-uploads/posts/*
-uploads/profile_pics/*
-db_old/*
-db_old/**
