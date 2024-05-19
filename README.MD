@@ -44,7 +44,13 @@
 * 
 
 ## Operations
-* 
+* User
+   - Can sign in with exisiting account or sign up and create a new account
+   - Create posts, and comment/like other posts
+   - Follow/Unfollow other users
+   - View timeline containing posts of people the user follows
+   - Search up other users in the search bar
+   - View notifications
 
 ## Solution
 * 
