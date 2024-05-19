@@ -1,0 +1,322 @@
+2024-05-03 16:00:02.652416-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" already exists; SQL statement:
+CREATE TABLE USERS (
+    ID INT NOT NULL AUTO_INCREMENT,
+    USER_ID VARCHAR(64) NOT NULL,
+    USERNAME VARCHAR(64) NOT NULL,
+    PASSWORD TEXT NOT NULL,
+    DISPLAY_NAME VARCHAR(64) NOT NULL,
+    BIO TEXT NOT NULL,
+    NUM_FOLLOWERS INTEGER NOT NULL DEFAULT(0),
+    NUM_FOLLOWING INTEGER NOT NULL DEFAULT(0),
+    PRIMARY KEY (ID)
+) [42101-224]
+2024-05-03 16:00:20.824843-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" already exists; SQL statement:
+CREATE TABLE USERS (
+    ID INT NOT NULL AUTO_INCREMENT,
+    USER_ID VARCHAR(64) NOT NULL,
+    USERNAME VARCHAR(64) NOT NULL,
+    PASSWORD TEXT NOT NULL,
+    DISPLAY_NAME VARCHAR(64) NOT NULL,
+    BIO TEXT NOT NULL,
+    NUM_FOLLOWERS INTEGER NOT NULL DEFAULT(0),
+    NUM_FOLLOWING INTEGER NOT NULL DEFAULT(0),
+    PRIMARY KEY (ID)
+) [42101-224]
+2024-05-03 16:01:52.859079-07:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at app.Application.<init>(Application.java:36)
+	at app.Application.main(Application.java:110)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 19 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/josh/Desktop/Coding/School/CS151/cs151-facebook-clone/backend/db/cs151-facebook-clone.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 13 more
+2024-05-03 16:10:32.107606-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Parameter "#2" is not set; SQL statement:
+UPDATE SESSIONS SET TIMESTAMP= ? WHERE TOKEN= ? [90012-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:658)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:75)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:207)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:159)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:216)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:174)
+	at app.DatabaseConnection.update(DatabaseConnection.java:167)
+	at app.SessionManager.validateSession(SessionManager.java:85)
+	at controllers.FollowController.getUserFollowing(FollowController.java:83)
+	at controllers.FollowControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-05-03 16:10:32.109592-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Parameter "#2" is not set; SQL statement:
+UPDATE SESSIONS SET TIMESTAMP= ? WHERE TOKEN= ? [90012-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:658)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:75)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:207)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:159)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:216)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:174)
+	at app.DatabaseConnection.update(DatabaseConnection.java:167)
+	at app.SessionManager.validateSession(SessionManager.java:85)
+	at controllers.FollowController.getUserFollowing(FollowController.java:83)
+	at controllers.FollowControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-05-03 16:10:32.109377-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Parameter "#2" is not set; SQL statement:
+UPDATE SESSIONS SET TIMESTAMP= ? WHERE TOKEN= ? [90012-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:658)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.Parameter.checkSet(Parameter.java:75)
+	at org.h2.command.Prepared.checkParameters(Prepared.java:207)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:159)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:216)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:174)
+	at app.DatabaseConnection.update(DatabaseConnection.java:167)
+	at app.SessionManager.validateSession(SessionManager.java:85)
+	at controllers.ContentController.viewUserProfile(ContentController.java:37)
+	at controllers.ContentControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2024-05-03 16:12:43.322923-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Cannot parse "TIMESTAMP" constant "CURRENT_TIMESTAMP()"; SQL statement:
+UPDATE SESSIONS SET TIMESTAMP= ? WHERE TOKEN= ? [22007-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:518)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.value.ValueTimestamp.parse(ValueTimestamp.java:88)
+	at org.h2.value.Value.convertToTimestamp(Value.java:2001)
+	at org.h2.value.Value.convertTo(Value.java:1174)
+	at org.h2.value.Value.convertForAssignTo(Value.java:1113)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:369)
+	at org.h2.table.Table.convertUpdateRow(Table.java:978)
+	at org.h2.command.dml.SetClauseList.prepareUpdate(SetClauseList.java:149)
+	at org.h2.command.dml.Update.update(Update.java:82)
+	at org.h2.command.dml.DataChangeStatement.update(DataChangeStatement.java:74)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:216)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:174)
+	at app.DatabaseConnection.update(DatabaseConnection.java:170)
+	at app.SessionManager.validateSession(SessionManager.java:85)
+	at controllers.FollowController.getUserFollowing(FollowController.java:83)
+	at controllers.FollowControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.IllegalArgumentException: CURRENT_TIMESTAMP()
+	at org.h2.util.DateTimeUtils.parseDateValue(DateTimeUtils.java:187)
+	at org.h2.util.DateTimeUtils.parseTimestamp(DateTimeUtils.java:338)
+	at org.h2.value.ValueTimestamp.parse(ValueTimestamp.java:86)
+	... 28 more
+2024-05-03 16:12:43.331956-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Cannot parse "TIMESTAMP" constant "CURRENT_TIMESTAMP()"; SQL statement:
+UPDATE SESSIONS SET TIMESTAMP= ? WHERE TOKEN= ? [22007-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:518)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.value.ValueTimestamp.parse(ValueTimestamp.java:88)
+	at org.h2.value.Value.convertToTimestamp(Value.java:2001)
+	at org.h2.value.Value.convertTo(Value.java:1174)
+	at org.h2.value.Value.convertForAssignTo(Value.java:1113)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:369)
+	at org.h2.table.Table.convertUpdateRow(Table.java:978)
+	at org.h2.command.dml.SetClauseList.prepareUpdate(SetClauseList.java:149)
+	at org.h2.command.dml.Update.update(Update.java:82)
+	at org.h2.command.dml.DataChangeStatement.update(DataChangeStatement.java:74)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:216)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:174)
+	at app.DatabaseConnection.update(DatabaseConnection.java:170)
+	at app.SessionManager.validateSession(SessionManager.java:85)
+	at controllers.ContentController.viewUserProfile(ContentController.java:37)
+	at controllers.ContentControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.IllegalArgumentException: CURRENT_TIMESTAMP()
+	at org.h2.util.DateTimeUtils.parseDateValue(DateTimeUtils.java:187)
+	at org.h2.util.DateTimeUtils.parseTimestamp(DateTimeUtils.java:338)
+	at org.h2.value.ValueTimestamp.parse(ValueTimestamp.java:86)
+	... 28 more
+2024-05-03 16:12:43.327445-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Cannot parse "TIMESTAMP" constant "CURRENT_TIMESTAMP()"; SQL statement:
+UPDATE SESSIONS SET TIMESTAMP= ? WHERE TOKEN= ? [22007-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:518)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.value.ValueTimestamp.parse(ValueTimestamp.java:88)
+	at org.h2.value.Value.convertToTimestamp(Value.java:2001)
+	at org.h2.value.Value.convertTo(Value.java:1174)
+	at org.h2.value.Value.convertForAssignTo(Value.java:1113)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:369)
+	at org.h2.table.Table.convertUpdateRow(Table.java:978)
+	at org.h2.command.dml.SetClauseList.prepareUpdate(SetClauseList.java:149)
+	at org.h2.command.dml.Update.update(Update.java:82)
+	at org.h2.command.dml.DataChangeStatement.update(DataChangeStatement.java:74)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:216)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:174)
+	at app.DatabaseConnection.update(DatabaseConnection.java:170)
+	at app.SessionManager.validateSession(SessionManager.java:85)
+	at controllers.FollowController.getUserFollowing(FollowController.java:83)
+	at controllers.FollowControllerMethodAccess.invoke(Unknown Source)
+	at com.hellokaton.blade.asm.MethodAccess.invoke(MethodAccess.java:51)
+	at com.hellokaton.blade.server.RouteMethodHandler.routeHandle(RouteMethodHandler.java:259)
+	at com.hellokaton.blade.server.RouteMethodHandler.handle(RouteMethodHandler.java:83)
+	at com.hellokaton.blade.server.HttpServerHandler.executeLogic(HttpServerHandler.java:149)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(CompletableFuture.java:646)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:469)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.IllegalArgumentException: CURRENT_TIMESTAMP()
+	at org.h2.util.DateTimeUtils.parseDateValue(DateTimeUtils.java:187)
+	at org.h2.util.DateTimeUtils.parseTimestamp(DateTimeUtils.java:338)
+	at org.h2.value.ValueTimestamp.parse(ValueTimestamp.java:86)
+	... 28 more
+2024-05-03 16:26:19.874713-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:19.878582-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:19.877710-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:19.874744-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:24.234021-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:24.234224-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:24.266955-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 16:26:24.267103-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE [*]IN (?);"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+SELECT * FROM USERS WHERE IN (?); [42001-224]
+2024-05-03 17:00:12.817119-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USERS WHERE USERNAME LIKE [*]%?% OR DISPLAY_NAME LIKE %?% OR FALSE;"; SQL statement:
+SELECT * FROM USERS WHERE USERNAME LIKE %?% OR DISPLAY_NAME LIKE %?% OR FALSE; [42000-224]
+2024-05-03 18:25:58.486562-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESOURCES" not found; SQL statement:
+SELECT * FROM RESOURCES [42102-224]
+2024-05-03 18:27:59.478341-07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "KIWDWUXHJCMMPCN0BLFRPPNK7G2JTIDFHQTG4RU1XJCOTLQLYSNKVB05D4MV6YHW" not found; SQL statement:
+DELETE FROM UPLOADS WHERE RESOURCE_ID= kiWDwUxhJCMMPcN0bLFrPpNk7G2JTiDFHQtG4Ru1xJCOTlQlYsnkVB05d4mV6Yhw [42122-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.expression.ExpressionColumn.getColumnException(ExpressionColumn.java:244)
+	at org.h2.expression.ExpressionColumn.optimizeOther(ExpressionColumn.java:226)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:213)
+	at org.h2.expression.condition.Comparison.optimize(Comparison.java:148)
+	at org.h2.expression.Expression.optimizeCondition(Expression.java:148)
+	at org.h2.command.dml.Delete.doPrepare(Delete.java:112)
+	at org.h2.command.dml.DataChangeStatement.prepare(DataChangeStatement.java:37)
+	at org.h2.command.Parser.prepareCommand(Parser.java:489)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:639)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:559)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1166)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1109)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1096)
+	at org.h2.server.web.WebThread.process(WebThread.java:190)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
