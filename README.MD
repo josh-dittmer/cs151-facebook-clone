@@ -25,7 +25,7 @@
 
 
 ## Problems and Issues
-*Initial Challenge: Setting up a seamless integration between frontend and backend.
+*Initial Challenge: Setting up a integration between frontend and backend.
 
 
 ##  If applicable, briefly survey previous works if any (include references) 
