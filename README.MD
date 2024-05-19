@@ -36,6 +36,9 @@
 
 ## If applicable, describe assumptions / operating environments / intended usage 
 * fix this title later
+* Assumptions:
+   - the users are familiar with using social media sites such as facebook
+   - UI facilitates easy navigation 
 
 ## Diagrams
 * The diagrams are located here: https://github.com/josh-dittmer/cs151-facebook-clone/blob/main/diagrams/README.md
