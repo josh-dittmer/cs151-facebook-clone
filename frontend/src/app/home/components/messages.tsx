@@ -26,6 +26,9 @@ const MessageComponent: React.FC<MessageProps> = ({ message }) => {
             <div className="bg-gray-100 p-3 rounded-lg">
                 <p className="text-sm">{message.content}</p>
                 <p className="text-xs text-gray-500">{message.timestamp}</p>
+                <button className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                    Message Back
+                </button>
             </div>
         </div>
     );
