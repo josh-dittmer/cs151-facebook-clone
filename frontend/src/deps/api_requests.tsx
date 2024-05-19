@@ -68,6 +68,53 @@ export async function getNotifications(token: string): Promise<NotificationListR
     });
 }
 
+export interface Message {
+    messageId: string;
+    senderId: string;
+    senderName: string;
+    receiverId: string;
+    receiverName: string;
+    content: string;
+    timestamp: string;
+}
+
+export interface MessageListResponse {
+    success: boolean;
+    messages: Message[];
+}
+
+export async function getMessages(token: string): Promise<MessageListResponse> {
+    return new Promise<MessageListResponse>((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                success: true,
+                messages: [
+                    {
+                        messageId: '1',
+                        senderId: 'user123',
+                        senderName: 'user123',
+                        receiverId: 'user456',
+                        receiverName: 'user456',
+                        content: 'Hello!',
+                        timestamp: '2024-05-01T12:00:00Z',
+                    },
+                    {
+                        messageId: '2',
+                        senderId: 'user456',
+                        senderName: 'user456',
+                        receiverId: 'user123',
+                        receiverName: 'user123',
+                        content: 'Hi there!',
+                        timestamp: '2024-05-02T12:00:00Z',
+                    },
+                ],
+            });
+        }, 1000); // Simulating a delay
+    });
+}
+
+
+
 export async function makeRequest(url: string, method: string, data: Object): Promise<any> {
     return new Promise((resolve, reject) => {
         let body: string = JSON.stringify(data);
