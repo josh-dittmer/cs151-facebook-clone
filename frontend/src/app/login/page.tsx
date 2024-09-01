@@ -71,7 +71,7 @@ export default function LoginPage() {
                         </button>
                     </form>
                     <div className="mt-5">
-                        <span className="text-sm">Don't have an account? </span>
+                        <span className="text-sm">Don&apos;t have an account? </span>
                         <Link 
                             href="/signup"
                             className="text-blue-500 underline text-sm"

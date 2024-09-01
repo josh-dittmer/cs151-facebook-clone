@@ -133,24 +133,24 @@ export default function HomeLayout({ children }: Readonly<{children: React.React
                             <span className="flex-1 ms-3 whitespace-nowrap">Search</span>
                         </Link>
                     </li>
-                    <li>
+                    {/*<li>
                         <Link href="/home/notifications" onClick={toggleSidebar}
                               className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                             <img src="/img/notification.png"
                                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"/>
                             <span className="flex-1 ms-3 whitespace-nowrap">Notifications</span>
-                            {/*<span
-                                className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-500 bg-blue-100 rounded-full">69</span>*/}
+                            <span
+                                className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-500 bg-blue-100 rounded-full">69</span>
                         </Link>
-                    </li>
-                    <li>
+                    </li>*/}
+                    {/*<li>
                         <Link href="/home/messages" onClick={toggleSidebar}
                               className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                             <img src="/img/messages.png"
                                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"/>
                             <span className="flex-1 ms-3 whitespace-nowrap">Messages</span>
                         </Link>
-                    </li>
+                    </li>*/}
                     <li>
                         <Link href="/home/profile/me" onClick={toggleSidebar}
                               className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
