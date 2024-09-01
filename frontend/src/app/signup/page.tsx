@@ -44,6 +44,21 @@ export default function SignupPage() {
         } else if (!username.match('^[a-zA-Z0-9._\-]{3,}$')) {
             setErrorMessage('Username can only contain alphanumeric characters or ". _ -"');
             return;
+        } else if (password.length < 6) {
+            setErrorMessage('Password must have more than 6 characters!');
+            return;
+        } else if (!password.match('.*[A-Z].*')){
+            setErrorMessage('Password must contain a capital letter!');
+            return;
+        } else if (!password.match('.*[a-z].*')){
+            setErrorMessage('Password must contain a lower case letter!');
+            return;
+        } else if (!password.match('.*[!@#$%^&*,.?].*')){
+            setErrorMessage('Password must contain a special character!');
+            return;
+        } else if (!password.match('.*[0-9].*')){
+            setErrorMessage('Password must contain a number!');
+            return;
         }
         
         signup(username, password, displayName, bio)

@@ -29,11 +29,15 @@
   * Creating an application that would allow users to communicate and share posts to other users on the same platform.
     * Initial Challenge: Setting up a integration between frontend and backend.
 
-## If applicable, describe assumptions / operating environments / intended usage 
-* fix this title later
+## Assumptions / Operating Environments / Intended usage 
 * Assumptions:
    - the users are familiar with using social media sites such as facebook
-   - UI facilitates easy navigation 
+   - UI facilitates easy navigation and usage
+* Operating Environments
+   - SQL database H2 will handle storage of user and program information
+* Intended Usage
+   - Social interaction and community building between users
+   - Content creation using posts with texts and images
 
 ## Diagrams
 * The diagrams are located here: https://github.com/josh-dittmer/cs151-facebook-clone/blob/main/diagrams/README.md
@@ -49,7 +53,7 @@
 
 ## Operations
 * User
-   - Can sign in with exisiting account or sign up and create a new account
+   - Can sign in with existing account or sign up and create a new account
    - Create posts, and comment/like other posts
    - Follow/Unfollow other users
    - View timeline containing posts of people the user follows
