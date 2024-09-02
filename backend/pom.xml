@@ -21,12 +21,12 @@
       <groupId>com.hellokaton</groupId>
       <artifactId>blade-core</artifactId>
       <version>2.1.2.RELEASE</version>
-      <exclusions>
+      <!--<exclusions>
         <exclusion>
           <groupId>com.hellokaton</groupId>
           <artifactId>blade-log</artifactId>
         </exclusion>
-      </exclusions>
+      </exclusions>!-->
     </dependency>
   <dependency>
       <groupId>org.slf4j</groupId>
