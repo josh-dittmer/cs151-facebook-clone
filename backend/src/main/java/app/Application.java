@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.Properties;
 
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -33,6 +34,9 @@ public class Application {
     private CommentController commentController;
 
     public Application() throws Exception {
+        Properties props = System.getProperties();
+        props.setProperty("com.blade.logger.rootLevel", "debug");
+
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/cs151-facebook-clone", "sa", "");
         this.databaseConn = new DatabaseConnection(conn);
 
@@ -132,6 +136,8 @@ public class Application {
         blade.register(app.getFollowController());
         blade.register(app.getResourceController());
         blade.register(app.getCommentController());
+
+
 
         blade.start(args);
     }
