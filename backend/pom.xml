@@ -23,26 +23,16 @@
       <version>2.1.2.RELEASE</version>
       <exclusions>
         <exclusion>
-          <groupId>com.hellokaton</groupId> <!-- Exclude Project-D from Project-B -->
+          <groupId>com.hellokaton</groupId>
           <artifactId>blade-log</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.36</version>
+      <artifactId>slf4j-reload4j</artifactId>
+      <version>2.0.16</version>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.23.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.23.1</version>
     </dependency>
   </dependencies>
   <build>
