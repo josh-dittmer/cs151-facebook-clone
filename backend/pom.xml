@@ -21,6 +21,12 @@
       <groupId>com.hellokaton</groupId>
       <artifactId>blade-core</artifactId>
       <version>2.1.2.RELEASE</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.hellokaton</groupId> <!-- Exclude Project-D from Project-B -->
+          <artifactId>blade-log</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
