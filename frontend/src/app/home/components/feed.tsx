@@ -51,7 +51,7 @@ export default function FeedComponent({ userIds }: FeedProps) {
             {noPosts && (
                 <center>
                     <div className="mt-10">
-                        <span className="text-gray-500">No posts here yet!</span>
+                        <span className="text-gray-500">No posts here yet! <Link href="/home/search" className="underline">Search</Link> for some friends to follow!</span>
                     </div>
                 </center>
             )}
